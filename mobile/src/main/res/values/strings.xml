@@ -1,0 +1,20 @@
+<resources>
+
+    <string name="app_name">Connected World</string>
+    <string name="jarvis">jarvis</string>
+    <string name="home">home</string>
+    <string name="smartHome">smart home</string>
+
+    <string name="action_settings">ქართული</string>
+    <string name="searching">Searching new device</string>
+    <string name="cancel">Cancel</string>
+    <string name="on">"on    "</string>
+    <string name="off">"off    "</string>
+
+    <string name="lightBulb">"Light bulb"</string>
+    <string name="gasSensor">"Gas sensor"</string>
+    <string name="deviceName">"Device name"</string>
+    <string name="wifiName">"Wifi name"</string>
+    <string name="wifiPassword">"Wifi password"</string>
+
+</resources>

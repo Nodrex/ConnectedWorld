@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="longMonths">
+        <item>იანვარი</item>
+        <item>თებერვალი</item>
+        <item>მარტი</item>
+        <item>აპრილი</item>
+        <item>მაისი</item>
+        <item>ივნისი</item>
+        <item>ივლისი</item>
+        <item>აგვისტო</item>
+        <item>სექტემბერი</item>
+        <item>ოქტომბერი</item>
+        <item>ნოემბერი</item>
+        <item>დეკემბერი</item>
+    </string-array>
+    
+    <string-array name="shortMonths">
+        <item>იან</item>
+        <item>თებ</item>
+        <item>მარ</item>
+        <item>აპრ</item>
+        <item>მაი</item>
+        <item>ივნ</item>
+        <item>ივლ</item>
+        <item>აგვ</item>
+        <item>სექ</item>
+        <item>ოქტ</item>
+        <item>ნოე</item>
+        <item>დეკ</item>
+    </string-array>
+
+</resources>

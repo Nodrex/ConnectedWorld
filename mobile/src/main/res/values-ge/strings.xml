@@ -1,0 +1,15 @@
+<resources>
+
+    <string name="action_settings">English</string>
+    <string name="searching">ვეძებ ახალ მოწყობილობას</string>
+    <string name="cancel">გაუქმება</string>
+    <string name="on">"კუ    "</string>
+    <string name="off">"არა    "</string>
+
+    <string name="lightBulb">"ნათურა"</string>
+    <string name="gasSensor">"გაზის სენსორი"</string>
+    <string name="deviceName">"მოწყობილობის სახელი"</string>
+    <string name="wifiName">"Wifi სახელი"</string>
+    <string name="wifiPassword">"Wifi პაროლი"</string>
+
+</resources>

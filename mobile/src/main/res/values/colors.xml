@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--<color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>-->
+
+    <color name="lightBulb">#ffbb00</color>
+    <color name="statusBar">#E65100</color>
+    <color name="actionBar">#F57C00</color>
+    <color name="gasSensor">#616161</color>
+    <color name="green">#388E3C</color>
+    <color name="greyLight">#757575</color>
+    <color name="soSoTransparent">#AA000000</color>
+    <color name="lightGreen">#00BFA5</color>
+    <color name="greyLighter">#FAFAFA</color>
+    <color name="brown">#8D6E63</color>
+
+</resources>
