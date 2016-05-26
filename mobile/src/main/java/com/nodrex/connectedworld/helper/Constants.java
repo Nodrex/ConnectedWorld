@@ -8,6 +8,8 @@ public interface Constants {
     String JARVIS ="Jarvis is ready";
     String WEAR_MESSAGE= "/WEAR_MESSAGE_by_NODRXE_SMART_home";
 
+    String ButlerTypeKey = "ButlerTypeKey";
+
     String LIGHT_ON[] = new String[]{"Turn on light",
             "turn on light", "Turn on lights", "turn on lights",
             "Light", "light", "Lights", "lights", "Switch on light",

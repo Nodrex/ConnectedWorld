@@ -1,11 +1,15 @@
 package com.nodrex.connectedworld.helper;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 
 import com.nodrex.android.tools.Util;
+import com.nodrex.connectedworld.MainActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -167,6 +171,16 @@ public abstract class Helper {
 
         return text;
 
+    }
+
+    public static void startAppFromOkGoogle(Activity activity,int butlerType){
+        if(activity == null) return;
+        Intent intent = new Intent(activity, MainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.ButlerTypeKey, butlerType);
+        intent.putExtras(bundle);
+        activity.startActivity(intent);
+        activity.finish();
     }
 
 }
