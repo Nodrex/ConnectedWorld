@@ -176,7 +176,9 @@ public abstract class Helper {
     public static void startAppFromOkGoogle(Activity activity,int butlerType){
         if(activity == null) return;
         Intent intent = new Intent(activity, MainActivity.class);
+        if(intent == null) return;
         Bundle bundle = new Bundle();
+        if(bundle == null) return;
         bundle.putInt(Constants.ButlerTypeKey, butlerType);
         intent.putExtras(bundle);
         activity.startActivity(intent);
