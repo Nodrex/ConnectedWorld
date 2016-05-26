@@ -22,7 +22,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<Device> data;
     private MainActivity activity;
     private LayoutInflater inflater;
-    //private PopupWindow popupWindow;
     private PopupWindow popupWindow;
     private View moreTools;
     private View renameInput;
@@ -52,16 +51,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         View v = moreTools.findViewById(R.id.rename);
         v.setOnClickListener(this);
         popupWindow.setOnDismissListener(this);
-        //popupWindow.setInputMethodMode(PopupWindow.INPUT_);
-        //popupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+
     }
 
     @Override
     public boolean onLongClick(final View v) {
-        //initPopupWindow();
-        //popupWindow.showAsDropDown(v, 100, -210);
-        //activity.letBeDark();
-
 
         //TODO /////////////////////////////////////////////////////////
         //Helper.go();
@@ -86,33 +80,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         }
 
-
-
-/*
-        Animation a = new Animation() {
-            @Override
-            protected void applyTransformation(float interpolatedTime, Transformation t) {
-                //super.applyTransformation(interpolatedTime, t);
-                GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) v.getLayoutParams();
-                //params.topMargin = (int) (100 * interpolatedTime);
-                //params.rightMargin = (int) (100 * interpolatedTime);
-
-                params.setMargins(0, 0, (int) (100 * interpolatedTime), (int) (100 * interpolatedTime));
-
-                v.setLayoutParams(params);
-                //v.setPadding(0,(int)(1000 * interpolatedTime),(int)(1000 * interpolatedTime),0);
-            }
-        };
-        a.setDuration(200);
-        v.startAnimation(a);
-*/
-
-
-        /*int tmpx = v.getWidth()/9;
-        int tmpy = v.getHeight()/10;
-
-        ViewCompat.animate(v).scaleX(0.7F).translationX(-tmpx).scaleY(0.8F).translationY(tmpy).setInterpolator(new LinearInterpolator()).start();
-*/
         int count = gridLayoutManager.getChildCount();
         for (int i=0; i< count; i++){
             View innerV  = gridLayoutManager.getChildAt(i);
@@ -126,9 +93,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onClick(View v) {
-        //int visibility = renameInput.getVisibility();
-        //if(visibility == View.GONE) renameInput.setVisibility(View.VISIBLE);
-        //else renameInput.setVisibility(View.GONE);
 
         AppCompatCheckBox checkBox = (AppCompatCheckBox) v.findViewById(R.id.selection);
         checkBox.setChecked(!checkBox.isChecked());
@@ -185,21 +149,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void onClick(View v) {
-           /* Util.toast(activity, "ait");
-
-            int index = (int) v.getTag(R.id.jarvis);
-
-            com.nodrex.connectedworld.unit.LightBulb lb = (com.nodrex.connectedworld.unit.LightBulb) data.get(index);
-
-            boolean isOn = lb.isOn();
-
-            if(index == 0){
-                Helper.go(isOn ? -1 : 1);
-            }else if(index == 1){
-                Helper.go(isOn ? -2 : 2);
-            }else{
-                Helper.go(isOn ? -3 : 3);
-            }*/
 
 
         }
@@ -228,18 +177,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 view = inflate(parent,R.layout.gas_sensor);
                 return new GasSensor(view);
             }
-
-            /*case DeviceType.Garaje:{
-                view = inflate(parent, R.layout.garaje);
-                view.setTag(R.id.jarvis,1);
-                return new LightBulb(view);
-            }
-
-            case DeviceType.Dor:{
-                view = inflate(parent, R.layout.dor);
-                view.setTag(R.id.jarvis,2);
-                return new LightBulb(view);
-            }*/
 
             default: return null;
         }

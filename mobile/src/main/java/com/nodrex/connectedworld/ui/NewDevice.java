@@ -95,24 +95,8 @@ public class NewDevice extends FragmentPagerAdapter{
             }
         });
 
-        /*this.addFragment(new LightBalbFragment(), "Light bulb");
-        this.addFragment(new LightBalbFragment(), "Gas sensor");*/
-
-
         this.addFragment(new LightBalbFragment(), "ნათურა");
         this.addFragment(new LightBalbFragment(), "გაზის სენსორი");
-
-        /*this.addFragment(new LightBalbFragment(), "light bulb 3");
-        this.addFragment(new LightBalbFragment(), "gas sensor 4");
-        this.addFragment(new LightBalbFragment(), "soso 5");
-        this.addFragment(new LightBalbFragment(),"ababa 6");
-        this.addFragment(new LightBalbFragment(), "7");
-        this.addFragment(new LightBalbFragment(),"8");
-        this.addFragment(new LightBalbFragment(),"9");
-        this.addFragment(new LightBalbFragment(),"10");
-        this.addFragment(new LightBalbFragment(),"11");
-        this.addFragment(new LightBalbFragment(),"12");*/
-
 
         viewPager.setAdapter(this);
         tabLayout.setupWithViewPager(viewPager);

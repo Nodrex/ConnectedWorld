@@ -26,24 +26,4 @@ public interface Constants {
             "Lights off", "lights off", "turn off the light",
             "turn off the lights", "switch off the light", "switch off the lights",};
 
-/*
-    String DOOR_ON[] = new String[]{"Open door", "open door", "door open", "Door open", "open gate",
-            "Open gate", "gate open", "Gate open", "door on", "Door on", "gate on", "Gate on", "let me in",
-            "Let me in", "acess" , "enter" , "entrance" , "open the door", "Open the door" , "open the main door",
-            "open the main door"};
-
-    String DOOR_OFF[] = new String[]{"Close door", "close door", "door close", "Door close", "close gate",
-            "Close gate", "gate close", "Gate close", "door off", "Door off", "gate off", "Gate off",
-            "close the door", "Close the door" , "Close the main door",
-            "Close the main door"};
-
-    String GARAGE_ON[] = new String[]{"Open garage", "open garage", "garage open", "Garage open",
-            "garage on", "Garage on" , "Open the garage", "open the garage" , "open garage door" ,
-            "open the garage door", "Open the garage door" , "Open garage door"};
-
-    String GARAGE_OFF[] = new String[]{"Close garage", "close garage", "garage close", "Garage close",
-            "garage off", "Garage off" , "Close the garage", "close the garage" , "close garage door" ,
-            "close the garage door", "Close the garage door" , "Close garage door"};
-*/
-
 }

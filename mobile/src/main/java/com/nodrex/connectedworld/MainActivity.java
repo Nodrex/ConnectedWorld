@@ -40,7 +40,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity /*implements View.OnDragListener*/ {
+public class MainActivity extends AppCompatActivity {
 
     public static String bla = "light bulb";
 
@@ -80,28 +80,10 @@ public class MainActivity extends AppCompatActivity /*implements View.OnDragList
             ping(this, 1);
         }else if(checkWord(Constants.LIGHT_OFF,text)){
             ping(this, -1);
-        /*}else if(checkWord(Constants.DOOR_ON,text)){
-            ping(this, 2);
-        }else if(checkWord(Constants.DOOR_OFF,text)){
-            ping(this, -2);
-        }else if(checkWord(Constants.GARAGE_ON,text)){
-            ping(this, 3);
-        }else if(checkWord(Constants.GARAGE_OFF,text)){
-            ping(this, -3);*/
         }else{
             Util.toast(this,"es sityva ar vici, xelaxla tqvi: " + text);
             Util.log("Unknown order");
         }
-
-        /*
-        else if("temperature".equals(text)){
-            //Server.ping(4);
-            //speakOut("25 Grads Celsius");
-        }else if("feed dog".equals(text)){
-            Server.ping(5);
-        }else{
-            Util.log("Unknown order");
-        }*/
     }
 
     private boolean checkWord(String words[], String text){
@@ -187,11 +169,6 @@ public class MainActivity extends AppCompatActivity /*implements View.OnDragList
         List<Device> data = new ArrayList<Device>();
         for(int i=0; i<10; i++)
             data.add(new LightBulb(0));
-
-
-        /*data.add(new LightBulb(1,DeviceType.Garaje));
-        data.add(new LightBulb(2,DeviceType.Dor));*/
-        //data.add(new LightBulb(3));
 
         for(int i=0; i<10; i++)
             data.add(new GasSensor(0));
@@ -492,44 +469,9 @@ public class MainActivity extends AppCompatActivity /*implements View.OnDragList
                 }
             });
         }else if(id == R.id.jarvis){
-            //jarvis();
-
-            new Runnable() {
-                public void run() {
-                    Util.log("jarvice service started");
-                    //startService(new Intent(MainActivity.this, MyService.class));
-                }
-            }.run();
-
+            jarvis();
         }
         return super.onOptionsItemSelected(item);
     }
 
-
-    /*@Override
-    public boolean onDrag(View v, DragEvent event) {
-        int dragEvent = event.getAction();
-       // TextView dropText = (TextView) v;
-
-        switch(dragEvent)
-        {
-            case DragEvent.ACTION_DRAG_ENTERED:
-                //dropText.setTextColor(Color.GREEN);
-                Util.log("ACTION_DRAG_ENTERED");
-                break;
-
-            case DragEvent.ACTION_DRAG_EXITED:
-                //dropText.setTextColor(Color.RED);
-                Util.log("ACTION_DRAG_EXITED");
-                break;
-
-            case DragEvent.ACTION_DROP:
-                Util.log("ACTION_DROP");
-                //TextView draggedText = (TextView)event.getLocalState();
-                //dropText.setText(draggedText.getText());
-                break;
-        }
-
-        return true;
-    }*/
 }
