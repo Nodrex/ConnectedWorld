@@ -107,19 +107,9 @@ public abstract class Helper {
         new Ping().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,index);
     }
 
-    public static final String pingESP(/*String surl*//*, List<Pair<String, String>> postList*/int index) throws Exception {
+    public static final String pingESP(int index) throws Exception {
         Util.log("int index: " + index);
         String data = "/?" /*+ URLEncoder.encode("pin", "UTF-8") + "="*/ + URLEncoder.encode(""+ index/*"11"*/, "UTF-8");
-
-        /*if (postList != null) {
-            for (Pair<String, String> pair : postList) {
-                if (pair.second != null) {
-                    if (data.length() > 0) data += "&";
-                    data += (URLEncoder.encode(pair.first, "UTF-8") + "=" +
-                            URLEncoder.encode(pair.second, "UTF-8"));
-                }
-            }
-        }*/
 
         String text = null;
         BufferedReader reader = null;
@@ -127,7 +117,6 @@ public abstract class Helper {
         // Send data
         try {
 
-            // Defined URL where to send data
             URL url = new URL("http://192.168.0.4:80");
             // Send POST data request
 

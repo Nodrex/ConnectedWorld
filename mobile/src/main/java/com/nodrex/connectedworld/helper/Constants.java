@@ -5,8 +5,8 @@ public interface Constants {
     int PORT = 5000;
     int JARVIS_RESULT = 1000;
 
-    String JARVIS ="Jarvis is ready";
-    String WEAR_MESSAGE= "/WEAR_MESSAGE_by_NODRXE_SMART_home";
+    //String JARVIS ="Jarvis is ready";
+    //String WEAR_MESSAGE= "/WEAR_MESSAGE_by_NODRXE_SMART_home";
 
     String ButlerTypeKey = "ButlerTypeKey";
 
@@ -26,6 +26,6 @@ public interface Constants {
             "Light off", "light off", "Switch off light",
             "switch off light", "Switch off lights", "switch off lights",
             "Lights off", "lights off", "turn off the light",
-            "turn off the lights", "switch off the light", "switch off the lights",};
+            "turn off the lights", "switch off the light", "switch off the lights"};
 
 }

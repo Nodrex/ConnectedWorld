@@ -42,8 +42,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String bla = "light bulb";
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -63,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, Constants.JARVIS);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, /*Constants.JARVIS*/ "");
         try {
             startActivityForResult(intent, Constants.JARVIS_RESULT);
         } catch (ActivityNotFoundException a) {
