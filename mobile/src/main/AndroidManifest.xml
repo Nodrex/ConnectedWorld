@@ -26,7 +26,11 @@
             android:name=".launcher.Jarvis"
             android:label="@string/jarvis"
             android:autoRemoveFromRecents="true"
+            android:noHistory="true"
             android:launchMode="singleTask">
+
+            <!--  aba vnaxot ra xdebaaaaaaa autoRemoveFromRecents -->
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
