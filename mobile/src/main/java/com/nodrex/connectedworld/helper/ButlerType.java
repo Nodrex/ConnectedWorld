@@ -5,6 +5,8 @@ package com.nodrex.connectedworld.helper;
  */
 public interface ButlerType {
 
+    String Key = "ButlerTypeKey";
+
     int Jarvis = 0;
     int Home = 1;
     int SmartHome = 2;

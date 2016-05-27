@@ -162,14 +162,25 @@ public abstract class Helper {
 
     }
 
+    public static boolean isFromLauncher() {
+        return fromLauncher;
+    }
+
+    public static void setFromLauncher(boolean fromLauncher) {
+        Helper.fromLauncher = fromLauncher;
+    }
+
+    private static boolean fromLauncher;
+
     public static void startAppFromOkGoogle(Activity activity,int butlerType){
         if(activity == null) return;
         Intent intent = new Intent(activity, MainActivity.class);
         if(intent == null) return;
         Bundle bundle = new Bundle();
         if(bundle == null) return;
-        bundle.putInt(Constants.ButlerTypeKey, butlerType);
+        bundle.putInt(ButlerType.Key, butlerType);
         intent.putExtras(bundle);
+        fromLauncher = true;
         activity.startActivity(intent);
         activity.finish();
     }

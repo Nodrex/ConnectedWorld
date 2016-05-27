@@ -22,8 +22,10 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import com.nodrex.android.tools.Util;
+import com.nodrex.connectedworld.helper.ButlerType;
 import com.nodrex.connectedworld.helper.Constants;
 import com.nodrex.connectedworld.helper.FPoint;
 import com.nodrex.connectedworld.helper.FabState;
@@ -120,6 +122,33 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        if(Helper.isFromLauncher()){
+            Intent intent = getIntent();
+            if(intent != null){
+                Bundle bundle = intent.getExtras();
+                if(bundle != null){
+                    int butlerType = bundle.getInt(ButlerType.Key);
+                    switch(butlerType){
+                        case ButlerType.Jarvis:
+                            Util.log("ButlerType.Jarvis");
+                            Helper.setFromLauncher(false);
+                            jarvis();
+                            break;
+                        case ButlerType.Home:
+                            Helper.setFromLauncher(false);
+                            jarvis();
+                            break;
+                        case ButlerType.SmartHome:
+                            Helper.setFromLauncher(false);
+                            jarvis();
+                            break;
+                        default: Util.log("Unsupported butler");
+                    }
+                }
+            }
+        }
 
         Util.log(savedInstanceState  + "");
 
@@ -404,7 +433,8 @@ public class MainActivity extends AppCompatActivity {
                 cancelNewDevice();
                 return;
         }
-        super.onBackPressed();
+        //super.onBackPressed();
+        finish();
     }
 
     public void activateDelete(boolean activate){
