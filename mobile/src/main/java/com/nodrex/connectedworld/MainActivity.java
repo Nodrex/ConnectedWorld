@@ -119,36 +119,32 @@ public class MainActivity extends AppCompatActivity {
     private MenuItem delete;
     private MenuItem rename;
 
-
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Util.log("onNewIntent");
-        if(Helper.isFromLauncher()){
-            //Intent intent = getIntent();
-            if(intent != null){
-                Bundle bundle = intent.getExtras();
-                if(bundle != null){
-                    int butlerType = bundle.getInt(ButlerType.Key);
-                    switch(butlerType){
-                        case ButlerType.Jarvis:
-                            Util.log("ButlerType.Jarvis");
-                            Helper.setFromLauncher(false);
-                            jarvis();
-                            break;
-                        case ButlerType.Home:
-                            Helper.setFromLauncher(false);
-                            jarvis();
-                            break;
-                        case ButlerType.SmartHome:
-                            Helper.setFromLauncher(false);
-                            jarvis();
-                            break;
-                        default: Util.log("Unsupported butler");
-                    }
-                }
-            }
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent){
+        if(intent == null) return;
+        if(!Helper.isFromLauncher()) return;
+        Bundle bundle = intent.getExtras();
+        if(bundle == null) return;
+        int butlerType = bundle.getInt(ButlerType.Key);
+        switch(butlerType){
+            case ButlerType.Jarvis:
+                jarvis();
+                break;
+            case ButlerType.Home:
+                jarvis();
+                break;
+            case ButlerType.SmartHome:
+                jarvis();
+                break;
+            default: Util.log("Unsupported butler");
         }
+        Helper.setFromLauncher(false);
     }
 
     @Override
@@ -156,31 +152,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-        if(Helper.isFromLauncher()){
-            Intent intent = getIntent();
-            if(intent != null){
-                Bundle bundle = intent.getExtras();
-                if(bundle != null){
-                    int butlerType = bundle.getInt(ButlerType.Key);
-                    switch(butlerType){
-                        case ButlerType.Jarvis:
-                            Util.log("ButlerType.Jarvis");
-                            Helper.setFromLauncher(false);
-                            jarvis();
-                            break;
-                        case ButlerType.Home:
-                            Helper.setFromLauncher(false);
-                            jarvis();
-                            break;
-                        case ButlerType.SmartHome:
-                            Helper.setFromLauncher(false);
-                            jarvis();
-                            break;
-                        default: Util.log("Unsupported butler");
-                    }
-                }
-            }
-        }
+        handleIntent(getIntent());
 
         Util.log(savedInstanceState  + "");
 
