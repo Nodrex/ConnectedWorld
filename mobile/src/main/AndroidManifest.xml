@@ -25,12 +25,8 @@
         <activity
             android:name=".launcher.Jarvis"
             android:label="@string/jarvis"
-            android:autoRemoveFromRecents="true"
-            android:noHistory="true"
-            android:launchMode="singleTask">
-
-            <!--  aba vnaxot ra xdebaaaaaaa autoRemoveFromRecents -->
-
+            android:launchMode="singleInstance"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -40,7 +36,7 @@
         <activity
             android:name=".launcher.Home"
             android:label="@string/home"
-            android:launchMode="singleTask">
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -50,7 +46,7 @@
         <activity
             android:name=".launcher.SmartHome"
             android:label="@string/smartHome"
-            android:launchMode="singleTask">
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
