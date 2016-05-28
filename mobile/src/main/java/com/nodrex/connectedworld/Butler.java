@@ -11,7 +11,7 @@ import com.nodrex.android.tools.Util;
 import java.util.Locale;
 
 /**
- * Useful class for manage butler like Jarvis, home or smart home. (Voice recognition)
+ * Useful class for manage butler(Voice recognition) like Jarvis, home or smart home.
  * @author Nodar Tchumbadze
  * @since 2016
  * @version 1.0
@@ -32,16 +32,9 @@ public class Butler {
         return fromLauncher;
     }
 
-   /* public static void setFromLauncher(boolean fromLauncher) {
-        Butler.fromLauncher = fromLauncher;
-    }*/
-
     public static void start(Activity activity,int type){
         if(activity == null) return;
-        //setFromLauncher(false);
-
         fromLauncher = false;
-
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());

@@ -4,11 +4,7 @@ public interface Constants {
 
     int PORT = 5000;
 
-
-    //String JARVIS ="Jarvis is ready";
     //String WEAR_MESSAGE= "/WEAR_MESSAGE_by_NODRXE_SMART_home";
-
-
 
     String LIGHT_ON[] = new String[]{"Turn on light",
             "turn on light", "Turn on lights", "turn on lights",
