@@ -18,20 +18,14 @@ public class FABBehavior extends FloatingActionButton.Behavior {
         super();
     }
 
-
-
     @Override
-    public boolean onStartNestedScroll(final CoordinatorLayout coordinatorLayout, final FloatingActionButton child,
-                                       final View directTargetChild, final View target, final int nestedScrollAxes) {
+    public boolean onStartNestedScroll(final CoordinatorLayout coordinatorLayout, final FloatingActionButton child, final View directTargetChild, final View target, final int nestedScrollAxes) {
         // Ensure we react to vertical scrolling
-        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL
-                || super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
+        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL || super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
     }
 
     @Override
-    public void onNestedScroll(final CoordinatorLayout coordinatorLayout, final FloatingActionButton child,
-                               final View target, final int dxConsumed, final int dyConsumed,
-                               final int dxUnconsumed, final int dyUnconsumed) {
+    public void onNestedScroll(final CoordinatorLayout coordinatorLayout, final FloatingActionButton child, final View target, final int dxConsumed, final int dyConsumed, final int dxUnconsumed, final int dyUnconsumed) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
         if (dyConsumed > 0 && !this.mIsAnimatingOut && child.getVisibility() == View.VISIBLE) {
             // User scrolled down and the FAB is currently visible -> hide the FAB
@@ -44,32 +38,29 @@ public class FABBehavior extends FloatingActionButton.Behavior {
 
     // Same animation that FloatingActionButton.Behavior uses to hide the FAB when the AppBarLayout exits
     private void animateOut(final FloatingActionButton button) {
+        ViewCompat.animate(button).scaleX(0.0F).scaleY(0.0F).alpha(0.0F).setInterpolator(INTERPOLATOR).withLayer()
+                .setListener(new ViewPropertyAnimatorListener() {
+                    public void onAnimationStart(View view) {
+                        FABBehavior.this.mIsAnimatingOut = true;
+                    }
 
-            ViewCompat.animate(button).scaleX(0.0F).scaleY(0.0F).alpha(0.0F).setInterpolator(INTERPOLATOR).withLayer()
-                    .setListener(new ViewPropertyAnimatorListener() {
-                        public void onAnimationStart(View view) {
-                            FABBehavior.this.mIsAnimatingOut = true;
-                        }
+                    public void onAnimationCancel(View view) {
+                        FABBehavior.this.mIsAnimatingOut = false;
+                    }
 
-                        public void onAnimationCancel(View view) {
-                            FABBehavior.this.mIsAnimatingOut = false;
-                        }
-
-                        public void onAnimationEnd(View view) {
-                            FABBehavior.this.mIsAnimatingOut = false;
-                            view.setVisibility(View.GONE);
-                        }
-                    }).start();
-
+                    public void onAnimationEnd(View view) {
+                        FABBehavior.this.mIsAnimatingOut = false;
+                        view.setVisibility(View.GONE);
+                    }
+                }).start();
     }
 
     // Same animation that FloatingActionButton.Behavior uses to show the FAB when the AppBarLayout enters
     private void animateIn(FloatingActionButton button) {
         button.setVisibility(View.VISIBLE);
-
-            ViewCompat.animate(button).scaleX(1.0F).scaleY(1.0F).alpha(1.0F)
-                    .setInterpolator(INTERPOLATOR).withLayer().setListener(null)
-                    .start();
+        ViewCompat.animate(button).scaleX(1.0F).scaleY(1.0F).alpha(1.0F)
+                .setInterpolator(INTERPOLATOR).withLayer().setListener(null)
+                .start();
 
     }
 }

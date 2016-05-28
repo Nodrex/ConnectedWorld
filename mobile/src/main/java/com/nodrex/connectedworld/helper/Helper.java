@@ -36,7 +36,6 @@ public abstract class Helper {
     public static final String unknownDevice = "Unknown Device";
     public static final String GEORGIAN = "ge";
 
-
     public static class Ping extends AsyncTask<Integer,Void,String>{
 
         @Override
@@ -162,6 +161,11 @@ public abstract class Helper {
 
     }
 
+
+    //TODO ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static boolean fromLauncher;
+
     public static boolean isFromLauncher() {
         return fromLauncher;
     }
@@ -169,8 +173,6 @@ public abstract class Helper {
     public static void setFromLauncher(boolean fromLauncher) {
         Helper.fromLauncher = fromLauncher;
     }
-
-    private static boolean fromLauncher;
 
     public static void startAppFromOkGoogle(Activity activity,int butlerType){
         if(activity == null) return;

@@ -13,7 +13,6 @@ import android.view.ViewGroup.LayoutParams;
 import com.nodrex.connectedworld.MainActivity;
 import com.nodrex.connectedworld.R;
 import com.nodrex.connectedworld.unit.Device;
-import com.nodrex.connectedworld.unit.DeviceType;
 
 import java.util.List;
 
@@ -161,19 +160,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if(data == null || data.size() == 0) return itemViewType;
         Device d = data.get(position);
         if(d == null) return itemViewType;
-        return d.getDeviceType();
+        return d.getType();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
         switch (viewType){
-            case DeviceType.LightBulb:{
+            case Device.Types.LightBulb:{
                 view = inflate(parent, R.layout.light_bulb);
                 view.setTag(R.id.jarvis,0);
                 return new LightBulb(view);
             }
-            case DeviceType.GasSensor:{
+            case Device.Types.GasSensor:{
                 view = inflate(parent,R.layout.gas_sensor);
                 return new GasSensor(view);
             }
@@ -196,4 +195,3 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return data.size();
     }
 }
-

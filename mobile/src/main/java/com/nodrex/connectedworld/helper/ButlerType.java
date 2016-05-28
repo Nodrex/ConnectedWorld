@@ -1,7 +1,10 @@
 package com.nodrex.connectedworld.helper;
 
 /**
- * Created by nchum on 5/26/2016.
+ * Butler type, like Jarvis, Home or SmartHome.
+ * @author Nodar Tchumbadze
+ * @since 2016
+ * @version 1.0
  */
 public interface ButlerType {
 

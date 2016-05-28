@@ -10,30 +10,34 @@ import com.nodrex.connectedworld.helper.Helper;
  */
 public abstract class Device {
 
-    protected int deviceType;
+    /**
+     * All device types.
+     */
+    public interface Types {
+        int LightBulb = 0;
+        int GasSensor = 1;
+    }
+
+    protected int type;
     protected int id;
+    /**
+     * User assigned name.
+     */
     protected String name;
+    /**
+     * Developer assigned description.
+     */
+    protected String description = "Device";
 
-    public Device(int deviceType,int id){
-        this.deviceType = deviceType;
+    public Device(int type,int id,String name,String description){
+        this.type = type;
         this.id = id;
-    }
-
-    public Device(int deviceType,int id,String name){
-        this(deviceType,id);
         this.name = name;
+        this.description = description;
     }
 
-    public int getDeviceType(){
-        return this.deviceType;
-    }
-
-    public String getDeviceType(int deviceType){
-        switch (deviceType){
-            case 0: return LightBulb.Description;
-            case 1: return GasSensor.Description;
-            default: return Helper.unknownDevice;
-        }
+    public int getType(){
+        return this.type;
     }
 
     public int getId() {
@@ -48,19 +52,23 @@ public abstract class Device {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String toString() {
-        String deviceTypeStr = getDeviceType(deviceType);
-        StringBuilder strBuilder = new StringBuilder(deviceTypeStr);
+        StringBuilder strBuilder = new StringBuilder(description);
         strBuilder.append(Helper.newLineAndTab);
         strBuilder.append("id");
         strBuilder.append(this.id);
         strBuilder.append(Helper.newLineAndTab);
-        strBuilder.append("name");
-        strBuilder.append(this.name);
+        if(this.name != null){
+            strBuilder.append("name");
+            strBuilder.append(this.name);
+        }
         strBuilder.append(Helper.newLineAndTab);
         return strBuilder.toString();
-        //return getDeviceType(deviceType) + Helper.newLineAndTab + "id: " + this.id + Helper.newLineAndTab + "name: " + this.name + Helper.newLineAndTab ;
     }
 
     @Override
@@ -78,7 +86,7 @@ public abstract class Device {
         }catch (NullPointerException e){
             if(second.name == null) nameEquals = true;
         }
-        return this.id == second.id && this.deviceType == second.deviceType && nameEquals;
+        return this.id == second.id && this.type == second.type && nameEquals;
     }
 
     @Override

@@ -10,19 +10,18 @@ import com.nodrex.connectedworld.helper.Helper;
  */
 public class LightBulb extends Device{
 
-    public static final String Description = "Light Bulb";
     private boolean on;
 
     public LightBulb(int id){
-        super(DeviceType.LightBulb,id);
+        this(id,null,false);
     }
 
     public LightBulb(int id,String name){
-        super(DeviceType.LightBulb,id,name);
+        this(id, name, false);
     }
 
     public LightBulb(int id, String name, boolean isOn){
-        super(DeviceType.LightBulb,id,name);
+        super(Types.LightBulb,id,name,"Light Bulb");
         this.on = isOn;
     }
 
@@ -53,7 +52,6 @@ public class LightBulb extends Device{
         strBuilder.append(this.on ? "on" : "off");
         strBuilder.append(Helper.newLine);
         return strBuilder.toString();
-        //return super.toString() + "State" + (this.on ? "on" : "off") + Helper.newLine;
     }
 
     @Override

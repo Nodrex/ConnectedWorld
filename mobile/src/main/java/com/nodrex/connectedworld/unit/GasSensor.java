@@ -8,19 +8,18 @@ package com.nodrex.connectedworld.unit;
  */
 public class GasSensor extends Device {
 
-    public static final String Description = "Gas Sensor";
-
     public GasSensor(int id) {
-        super(DeviceType.GasSensor,id);
+        this(id,null);
     }
 
     public GasSensor(int id,String name){
-        super(DeviceType.LightBulb,id,name);
+        super(Types.GasSensor,id,name,"Gas Sensor");
     }
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return new GasSensor(this.id,this.name);
     }
+
 }
 
