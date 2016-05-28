@@ -3,8 +3,7 @@ package com.nodrex.connectedworld.launcher;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.nodrex.connectedworld.helper.ButlerType;
-import com.nodrex.connectedworld.helper.Helper;
+import com.nodrex.connectedworld.Butler;
 
 /**
  * This class is used to start when ok google hears start smart home.
@@ -17,6 +16,6 @@ public class SmartHome extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Helper.startAppFromOkGoogle(this, ButlerType.SmartHome);
+        Butler.startAppFromOkGoogle(this, Butler.Types.SmartHome);
     }
 }

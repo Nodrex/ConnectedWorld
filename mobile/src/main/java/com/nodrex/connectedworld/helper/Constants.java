@@ -3,7 +3,7 @@ package com.nodrex.connectedworld.helper;
 public interface Constants {
 
     int PORT = 5000;
-    int JARVIS_RESULT = 1000;
+
 
     //String JARVIS ="Jarvis is ready";
     //String WEAR_MESSAGE= "/WEAR_MESSAGE_by_NODRXE_SMART_home";

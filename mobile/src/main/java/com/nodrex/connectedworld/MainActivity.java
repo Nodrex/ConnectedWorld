@@ -3,7 +3,6 @@ package com.nodrex.connectedworld;
 import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -22,10 +21,8 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-import android.widget.Switch;
 
 import com.nodrex.android.tools.Util;
-import com.nodrex.connectedworld.helper.ButlerType;
 import com.nodrex.connectedworld.helper.Constants;
 import com.nodrex.connectedworld.helper.FPoint;
 import com.nodrex.connectedworld.helper.FabState;
@@ -40,7 +37,6 @@ import com.nodrex.connectedworld.unit.LightBulb;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case Constants.JARVIS_RESULT: {
+            case Butler.RESULT_CODE: {
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String text  = result.get(0);
@@ -59,11 +55,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void jarvis() {
+    /*private void jarvis() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, /*Constants.JARVIS*/ "");
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, *//*Constants.JARVIS*//* "");
         try {
             startActivityForResult(intent, Constants.JARVIS_RESULT);
         } catch (ActivityNotFoundException a) {
@@ -71,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e){
             Util.toast(this,"Can not start speech recognition, something went wrong");
         }
-    }
+    }*/
 
 
     private void convertToOrder(String text){
@@ -128,11 +124,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void handleIntent(Intent intent){
         if(intent == null) return;
-        if(!Helper.isFromLauncher()) return;
+        if(!Butler.isFromLauncher()) return;
         Bundle bundle = intent.getExtras();
         if(bundle == null) return;
-        int butlerType = bundle.getInt(ButlerType.Key);
-        switch(butlerType){
+        int butlerType = bundle.getInt(Butler.KEY);
+        Butler.start(this,butlerType);
+        /*switch(butlerType){
             case ButlerType.Jarvis:
                 jarvis();
                 break;
@@ -143,8 +140,8 @@ public class MainActivity extends AppCompatActivity {
                 jarvis();
                 break;
             default: Util.log("Unsupported butler");
-        }
-        Helper.setFromLauncher(false);
+        }*/
+        //Helper.setFromLauncher(false);
     }
 
     @Override
@@ -501,7 +498,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }else if(id == R.id.jarvis){
-            jarvis();
+            //jarvis();
+            Butler.start(this,Butler.Types.Jarvis);
         }
         return super.onOptionsItemSelected(item);
     }
