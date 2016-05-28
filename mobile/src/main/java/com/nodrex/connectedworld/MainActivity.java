@@ -6,7 +6,6 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,7 +22,6 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 import com.nodrex.android.tools.Util;
-import com.nodrex.connectedworld.helper.Constants;
 import com.nodrex.connectedworld.helper.FPoint;
 import com.nodrex.connectedworld.helper.FabState;
 import com.nodrex.connectedworld.helper.Helper;
@@ -44,43 +42,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case Butler.RESULT_CODE: {
-                if (resultCode == RESULT_OK && null != data) {
-                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    String text  = result.get(0);
-                    convertToOrder(text);
-                }
+            case Butler.REQUEST_CODE:
+                Butler.handleResult(this,resultCode,data);
                 break;
-            }
         }
-    }
-
-    private void convertToOrder(String text){
-        Util.log(text);
-        if(checkWord(Constants.LIGHT_ON,text)) {
-            ping(this, 1);
-        }else if(checkWord(Constants.LIGHT_OFF,text)){
-            ping(this, -1);
-        }else{
-            Util.toast(this,"es sityva ar vici, xelaxla tqvi: " + text);
-            Util.log("Unknown order");
-        }
-    }
-
-    private boolean checkWord(String words[], String text){
-        for(String keyWord : words){
-            if(keyWord.equals(text)){
-                return true;
-            }
-        }
-        return false;
     }
 
     public void ping(MainActivity activity,int param){
         Util.log("aba ra parami movida :" + param);
     }
-
-
 
     private int fabState = FabState.DEFAULT; //0 init condition , 1 searching device , 2 new device
     private Point display;//width and height of display
