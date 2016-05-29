@@ -12,6 +12,7 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.nodrex.connectedworld.MainActivity;
 import com.nodrex.connectedworld.R;
+import com.nodrex.connectedworld.helper.Helper;
 import com.nodrex.connectedworld.unit.Device;
 
 import java.util.List;
@@ -57,7 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public boolean onLongClick(final View v) {
 
         //TODO /////////////////////////////////////////////////////////
-        //Helper.go();
+        Helper.go();
 
         //Helper.goB();
         //TODO /////////////////////////////////////////////////////////

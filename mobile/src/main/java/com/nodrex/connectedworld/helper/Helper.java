@@ -37,7 +37,7 @@ public abstract class Helper {
         @Override
         protected String doInBackground(Integer... params) {
             try {
-                return pingESP(params[0]);
+                return pingESP();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -98,13 +98,13 @@ public abstract class Helper {
         }
     }
 
-    public static void go(int index){
-        new Ping().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,index);
+    public static void go(){
+        new Ping().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public static final String pingESP(int index) throws Exception {
-        Util.log("int index: " + index);
-        String data = "/?" /*+ URLEncoder.encode("pin", "UTF-8") + "="*/ + URLEncoder.encode(""+ index/*"11"*/, "UTF-8");
+    public static final String pingESP() throws Exception {
+        String data = /*"/?" +*/ /*URLEncoder.encode("pin", "UTF-8") + "=" +*/ URLEncoder.encode("11", "UTF-8");
+        Util.log("trying to send data: " + data);
 
         String text = null;
         BufferedReader reader = null;
@@ -112,8 +112,8 @@ public abstract class Helper {
         // Send data
         try {
 
-            URL url = new URL("http://192.168.0.4:80");
-            // Send POST data request
+            URL url = new URL("http://192.168.2.107:80");
+            // Send POST data request 192.168.2.107
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
@@ -123,6 +123,8 @@ public abstract class Helper {
             OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
             wr.write(data);
             wr.flush();
+
+            Util.log("data sent: " + data);
 
             String line = null;
             StringBuilder sb = new StringBuilder();

@@ -11,7 +11,8 @@ void setup()
   esp8266.begin(115200); // your esp's baud rate might be different
 
   Serial.println("setup");
-
+  
+  /*
   pinMode(11,OUTPUT);
   digitalWrite(11,LOW);
   
@@ -23,19 +24,14 @@ void setup()
   
   pinMode(10,OUTPUT);
   digitalWrite(10,LOW);
-
+  */
+   
   sendCommand("AT+RST\r\n",2000,DEBUG); // reset module
-  sendCommand("AT+CWMODE=1\r\n",10000,DEBUG); // configure as access point
-  //sendCommand("AT+CWJAP=\"NODREX\",\"vergamoicnobt\"\r\n",3000,DEBUG);
-  //sendCommand("AT+CWJAP=\"Campus\",\"\"\r\n",3000,DEBUG);
-  sendCommand("AT+CWJAP=\"DIR-300NRUB6\",\"password123\"\r\n",3000,DEBUG);
+  sendCommand("AT+CWMODE=1\r\n",1000,DEBUG); // configure as access point
+  //sendCommand("AT+CWJAP=\"mySSID\",\"myPassword\"\r\n",3000,DEBUG);
+  sendCommand("AT+CWJAP=\"NODREX\",\"vergamoicnobt\"\r\n",3000,DEBUG);
   delay(10000);
-  
-  //sendCommand("AT+CIFSR\r\n",2000,DEBUG); // get ip address
-
   sendCommand("AT+CIFSR\r\n",10000,DEBUG); // get ip address
-  
-  
   sendCommand("AT+CIPMUX=1\r\n",1000,DEBUG); // configure for multiple connections
   sendCommand("AT+CIPSERVER=1,80\r\n",1000,DEBUG); // turn on server on port 80
   
@@ -44,39 +40,34 @@ void setup()
  
 void loop()
 {
-
-  //Serial.println("loop");
-  
   if(esp8266.available()) // check if the esp is sending a message 
   {
-
- Serial.println("esp avaliable");
+ 
     
     if(esp8266.find("+IPD,"))
     {
-
-    Serial.println("+ipd");
-      
      delay(1000); // wait for the serial buffer to fill up (read all the serial data)
      // get the connection id so that we can then disconnect
-     int connectionId = esp8266.read()/*-48*/; // subtract 48 because the read() function returns 
+     int connectionId = esp8266.read()-48; // subtract 48 because the read() function returns 
+                                           // the ASCII decimal value and 0 (the first decimal number) starts at 48
 
-Serial.println("==================");
-      Serial.println(connectionId);
+     Serial.print("+IPD was found: connectionId= ");
+     Serial.println(connectionId);
           
-     esp8266.find("pin="); // advance cursor to "pin="
-      
+     //esp8266.find("pin="); // advance cursor to "pin="
+          
      int pinNumber = (esp8266.read()-48); // get first number i.e. if the pin 13 then the 1st number is 1
-    Serial.println("____________________________________");
-    Serial.println(pinNumber);
-     
+     Serial.println(pinNumber);
      int secondNumber = (esp8266.read()-48);
+     Serial.println(secondNumber);
      if(secondNumber>=0 && secondNumber<=9)
      {
-      Serial.println(pinNumber);
       pinNumber*=10;
       pinNumber +=secondNumber; // get second number, i.e. if the pin number is 13 then the 2nd number is 3, then add to the first number
      }
+     Serial.println("__________________________");
+     Serial.println(pinNumber);
+     Serial.println("_________Done______________");
      
      digitalWrite(pinNumber, !digitalRead(pinNumber)); // toggle pin    
      
@@ -205,25 +196,18 @@ String sendCommand(String command, const int timeout, boolean debug)
     
     while( (time+timeout) > millis())
     {
-
-    //Serial.println("(time+timeout) > millis()"); 
-
-/*
-      while(esp8266.available() == false) {
-        Serial.println("false yet"); 
-      }
-*/
-      
       while(esp8266.available())
       {
-
-        //Serial.println("esp8266.available()"); 
         
         // The esp has data so display its output to the serial window 
         char c = esp8266.read(); // read the next character.
+
+        
         Serial.print("c: ");
         Serial.print(c);
         Serial.println("");
+        
+        
         response+=c;
         delay(100);
       }  
@@ -233,7 +217,7 @@ String sendCommand(String command, const int timeout, boolean debug)
     Serial.print(response);
 
     Serial.println("");
-
+    
     if(debug)
     {
       //Serial.print(response);
@@ -241,4 +225,3 @@ String sendCommand(String command, const int timeout, boolean debug)
     
     return response;
 }
-
