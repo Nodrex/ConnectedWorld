@@ -56,13 +56,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public boolean onLongClick(final View v) {
-
         //TODO /////////////////////////////////////////////////////////
         Helper.go();
-
         //Helper.goB();
         //TODO /////////////////////////////////////////////////////////
-
 
         selectedItemCount++;
         inSelectinMode = true;

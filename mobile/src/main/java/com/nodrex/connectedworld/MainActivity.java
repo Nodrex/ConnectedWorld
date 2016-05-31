@@ -38,6 +38,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private boolean isRenameOpen;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -189,12 +191,12 @@ public class MainActivity extends AppCompatActivity {
         newDeviceFabLocation.post(new Runnable() {
             @Override
             public void run() {
-                float x = (newDeviceFabLocation.getX() - display.x );
-                float y = (newDeviceFabLocation.getY() - display.y );
-                newDeviceTranslation = new FPoint(x,y);
+                float x = (newDeviceFabLocation.getX() - display.x);
+                float y = (newDeviceFabLocation.getY() - display.y);
+                newDeviceTranslation = new FPoint(x, y);
 
                 float fabW = (display.x - fab.getX());
-                float fabH = (display.y -fab.getY());
+                float fabH = (display.y - fab.getY());
 
                 newDeviceTranslation.offset(fabW, fabH);
             }
@@ -362,6 +364,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        if(isRenameOpen){
+            View v = postRenameAction();
+            if( v!= null) v.performClick();
+            return;
+        }
+
         if(recyclerViewAdapter.isInSelectinMode()){
             recyclerViewAdapter.exitSelectinMode();
             activateDelete(false);
@@ -419,31 +427,37 @@ public class MainActivity extends AppCompatActivity {
         }else if(id == R.id.rename && renameLayout.getVisibility() == View.GONE){
             renameLayout.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.rename_show));
             renameLayout.setVisibility(View.VISIBLE);
+            isRenameOpen = true;
 
-            View RenameDone = findViewById(R.id.RenameDone);
-            RenameDone.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    renameLayout.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.rename_hide));
-                    renameLayout.setVisibility(View.GONE);
-
-                    Snackbar snackbar = Snackbar
-                            .make(recyclerView, "Device renamed", Snackbar.LENGTH_LONG)
-                            .setAction("UNDO", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-                            });
-
-                    snackbar.show();
-                }
-            });
+            postRenameAction();
         }else if(id == R.id.jarvis){
             //jarvis();
             Butler.start(this,Butler.Types.Jarvis);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private View postRenameAction() {
+        View RenameDone = findViewById(R.id.RenameDone);
+        RenameDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                renameLayout.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.rename_hide));
+                renameLayout.setVisibility(View.GONE);
+                isRenameOpen = false;
+                Snackbar snackbar = Snackbar
+                        .make(recyclerView, "Device renamed", Snackbar.LENGTH_LONG)
+                        .setAction("UNDO", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                            }
+                        });
+
+                snackbar.show();
+            }
+        });
+        return RenameDone;
     }
 
 }
