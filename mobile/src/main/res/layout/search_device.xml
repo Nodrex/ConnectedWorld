@@ -25,9 +25,6 @@
             android:textSize="20sp"
             android:maxLines="2"/>
 
-        <!-- style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
-        <!--android:indeterminate="true"-->
-
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="50dp"

@@ -421,9 +421,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            //item.setTitle("ა");
-            //Helper.goB0();
+        if (id == R.id.more) {
+            //TODO change lang of app.
             return true;
         }else if(id == R.id.rename && renameLayout.getVisibility() == View.GONE){
             renameLayout.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.rename_show));

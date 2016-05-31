@@ -39,7 +39,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.gridLayoutManager = gridLayoutManager;
     }
 
-    private void initPopupWindow(){
+    /*private void initPopupWindow(){
         if(popupWindow != null) return;
         inflater = (LayoutInflater) activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         moreTools = inflater.inflate(R.layout.more_tools, null);
@@ -52,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         v.setOnClickListener(this);
         popupWindow.setOnDismissListener(this);
 
-    }
+    }*/
 
     @Override
     public boolean onLongClick(final View v) {

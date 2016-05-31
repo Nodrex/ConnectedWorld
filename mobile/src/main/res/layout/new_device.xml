@@ -8,9 +8,6 @@
     android:orientation="vertical"
     android:visibility="gone">
 
-    <!--android:translationY="200dp"-->
-    <!--app:layout_behavior="android.support.design.widget.BottomSheetBehavior"-->
-
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
