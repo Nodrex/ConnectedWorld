@@ -29,7 +29,7 @@
         android:layout_below="@+id/input_layout_name">
 
         <EditText
-            android:id="@+id/input_email"
+            android:id="@+id/wifiName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/wifiName"
