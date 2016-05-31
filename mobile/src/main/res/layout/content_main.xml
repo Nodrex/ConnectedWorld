@@ -34,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:imeOptions="actionDone"
                 android:textColor="@android:color/black" />
 
         </android.support.design.widget.TextInputLayout>
