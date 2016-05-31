@@ -51,10 +51,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void ping(MainActivity activity,int param){
-        Util.log("aba ra parami movida :" + param);
-    }
-
     private int fabState = FabState.DEFAULT; //0 init condition , 1 searching device , 2 new device
     private Point display;//width and height of display
     private FPoint searchDeviceTranslation;//x and y for fab device search translation animation.
@@ -139,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        List<Device> data = new ArrayList<Device>();
+        List<Device> data = new ArrayList<>();
         for(int i=0; i<10; i++)
             data.add(new LightBulb(0));
 

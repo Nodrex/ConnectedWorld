@@ -1,6 +1,5 @@
 package com.nodrex.connectedworld.ui;
 
-import android.app.Activity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
-import android.view.ViewGroup.LayoutParams;
 
 import com.nodrex.connectedworld.MainActivity;
 import com.nodrex.connectedworld.R;
@@ -163,7 +161,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = null;
+        View view;
         switch (viewType){
             case Device.Types.LightBulb:{
                 view = inflate(parent, R.layout.light_bulb);
