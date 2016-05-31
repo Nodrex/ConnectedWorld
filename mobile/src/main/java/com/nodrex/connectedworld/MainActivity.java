@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nodrex.android.tools.Util;
 import com.nodrex.connectedworld.helper.FPoint;
@@ -445,6 +446,10 @@ public class MainActivity extends AppCompatActivity {
                 renameLayout.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.rename_hide));
                 renameLayout.setVisibility(View.GONE);
                 isRenameOpen = false;
+
+                TextView textView = (TextView) findViewById(R.id.renameInput);
+                Util.hideKeyboard(MainActivity.this,textView.getWindowToken());
+
                 Snackbar snackbar = Snackbar
                         .make(recyclerView, "Device renamed", Snackbar.LENGTH_LONG)
                         .setAction("UNDO", new View.OnClickListener() {

@@ -30,7 +30,7 @@
             android:paddingRight="10dp">
 
             <EditText
-                android:id="@+id/input_name"
+                android:id="@+id/renameInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
