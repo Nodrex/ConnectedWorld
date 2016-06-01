@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     private View renameLayout;
     private MenuItem delete;
     private MenuItem rename;
+    private EditText renameDevice;
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -440,9 +442,8 @@ public class MainActivity extends AppCompatActivity {
                 renameLayout.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.rename_hide));
                 renameLayout.setVisibility(View.GONE);
                 isRenameOpen = false;
-
-                TextView textView = (TextView) findViewById(R.id.renameInput);
-                Util.hideKeyboard(MainActivity.this,textView.getWindowToken());
+                renameDevice = (EditText) findViewById(R.id.renameInput);
+                Util.hideKeyboard(MainActivity.this,renameDevice.getWindowToken());
 
                 Snackbar snackbar = Snackbar
                         .make(recyclerView, "Device renamed", Snackbar.LENGTH_LONG)
@@ -459,4 +460,9 @@ public class MainActivity extends AppCompatActivity {
         return RenameDone;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Util.hideKeyboard(getWindow());
+    }
 }

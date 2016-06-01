@@ -12,6 +12,7 @@ import android.view.View;
 import com.nodrex.android.tools.Util;
 import com.nodrex.connectedworld.MainActivity;
 import com.nodrex.connectedworld.R;
+import com.nodrex.connectedworld.unit.LightBulb;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class NewDevice extends FragmentPagerAdapter{
         super(fm);
         this.activity = activity;
         tabLayout = (TabLayout) activity.findViewById(R.id.tabLayout);
-        tabLayout.setSelectedTabIndicatorColor(Util.getColorFromRes(activity,android.R.color.white));
+        tabLayout.setSelectedTabIndicatorColor(Util.getColorFromRes(activity, android.R.color.white));
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         activity.findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
@@ -95,8 +96,12 @@ public class NewDevice extends FragmentPagerAdapter{
             }
         });
 
-        this.addFragment(new LightBalbFragment(), "ნათურა");
-        this.addFragment(new LightBalbFragment(), "გაზის სენსორი");
+        LightBalbFragment lightBulbFragment = new LightBalbFragment();
+        lightBulbFragment.setActivity(activity);
+        this.addFragment(lightBulbFragment, "ნათურა");
+        lightBulbFragment = new LightBalbFragment();
+        lightBulbFragment.setActivity(activity);
+        this.addFragment(lightBulbFragment, "გაზის სენსორი");
 
         viewPager.setAdapter(this);
         tabLayout.setupWithViewPager(viewPager);

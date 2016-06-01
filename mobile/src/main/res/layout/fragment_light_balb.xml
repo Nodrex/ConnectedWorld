@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/input_name"
+            android:id="@+id/deviceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/deviceName"
@@ -44,7 +44,7 @@
         android:layout_below="@+id/input_layout_wifi">
 
         <EditText
-            android:id="@+id/input_password"
+            android:id="@+id/wifiPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/wifiPassword"
