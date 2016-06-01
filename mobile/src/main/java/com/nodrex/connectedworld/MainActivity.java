@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         if(isRenameOpen){
-            View v = postRenameAction();
+            View v = postRenameAction(false);
             if( v!= null) v.performClick();
             return;
         }
@@ -426,7 +426,7 @@ public class MainActivity extends AppCompatActivity {
             renameLayout.setVisibility(View.VISIBLE);
             isRenameOpen = true;
 
-            postRenameAction();
+            postRenameAction(true);
         }else if(id == R.id.jarvis){
             //jarvis();
             Butler.start(this,Butler.Types.Jarvis);
@@ -434,7 +434,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private View postRenameAction() {
+    private View postRenameAction(final boolean showSnackbar) {
         View RenameDone = findViewById(R.id.RenameDone);
         RenameDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -443,18 +443,21 @@ public class MainActivity extends AppCompatActivity {
                 renameLayout.setVisibility(View.GONE);
                 isRenameOpen = false;
                 renameDevice = (EditText) findViewById(R.id.renameInput);
-                Util.hideKeyboard(MainActivity.this,renameDevice.getWindowToken());
+                Util.hideKeyboard(MainActivity.this, renameDevice.getWindowToken());
 
-                Snackbar snackbar = Snackbar
-                        .make(recyclerView, "Device renamed", Snackbar.LENGTH_LONG)
-                        .setAction("UNDO", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+                if(showSnackbar){
+                    Snackbar snackbar = Snackbar
+                            .make(recyclerView, "Device renamed", Snackbar.LENGTH_LONG)
+                            .setAction("UNDO", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
 
-                            }
-                        });
+                                }
+                            });
 
-                snackbar.show();
+                    snackbar.show();
+                }
+
             }
         });
         return RenameDone;
