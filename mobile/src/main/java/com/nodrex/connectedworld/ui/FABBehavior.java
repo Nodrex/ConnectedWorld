@@ -11,6 +11,17 @@ import android.view.View;
 import android.view.animation.Interpolator;
 
 public class FABBehavior extends FloatingActionButton.Behavior {
+
+
+    /**
+     * Floating action button states.
+     */
+    public interface FabState {
+        int DEFAULT = 0;
+        int SEARCHING_DEVICE = 1;
+        int NEW_DEVICE = 2;
+    }
+
     private static final Interpolator INTERPOLATOR = new FastOutSlowInInterpolator();
     private boolean mIsAnimatingOut = false;
 

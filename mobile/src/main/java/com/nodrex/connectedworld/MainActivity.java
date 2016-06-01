@@ -24,7 +24,6 @@ import android.widget.TextView;
 
 import com.nodrex.android.tools.Util;
 import com.nodrex.connectedworld.helper.FPoint;
-import com.nodrex.connectedworld.helper.FabState;
 import com.nodrex.connectedworld.helper.Helper;
 import com.nodrex.connectedworld.ui.FABBehavior;
 import com.nodrex.connectedworld.ui.NewDevice;
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private int fabState = FabState.DEFAULT; //0 init condition , 1 searching device , 2 new device
+    private int fabState = FABBehavior.FabState.DEFAULT; //0 init condition , 1 searching device , 2 new device
     private Point display;//width and height of display
     private FPoint searchDeviceTranslation;//x and y for fab device search translation animation.
     private FPoint newDeviceTranslation;//x and y for fab new device translation animation.
@@ -119,9 +118,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(fabState == FabState.SEARCHING_DEVICE) {
+                if(fabState == FABBehavior.FabState.SEARCHING_DEVICE) {
                     cancelDeviceSearch(true);
-                }else if(fabState == FabState.NEW_DEVICE){
+                }else if(fabState == FABBehavior.FabState.NEW_DEVICE){
                     cancelNewDevice();
                 }else{
                     searchDevice();
