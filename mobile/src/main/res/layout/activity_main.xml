@@ -33,8 +33,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:visibility="gone"
-        android:background="@android:color/transparent"
-        />
+        android:background="@android:color/transparent" />
 
     <include layout="@layout/content_main" />
 
@@ -50,7 +49,6 @@
         android:id="@+id/newDevice"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
-
         android:layout_gravity="bottom"/>
 
     <android.support.design.widget.FloatingActionButton
@@ -60,8 +58,7 @@
         android:src="@drawable/ic_add_white_24dp"
         app:layout_behavior="com.nodrex.connectedworld.ui.FABBehavior"
         android:layout_margin="@dimen/fab_margin"
-        android:layout_gravity="bottom|end"
-        />
+        android:layout_gravity="bottom|end" />
 
     <View
         android:id="@+id/newDeviceFabLocation"
@@ -70,7 +67,6 @@
         android:layout_gravity="bottom|right"
         android:layout_marginRight="76dp"
         android:layout_marginBottom="278dp"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
 </android.support.design.widget.CoordinatorLayout>

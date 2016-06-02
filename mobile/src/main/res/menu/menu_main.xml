@@ -29,11 +29,4 @@
         android:title="Rename"
         app:showAsAction="always" />
 
-    <!--
-        <item
-            android:id="@+id/rename_show"
-            android:orderInCategory="100"
-            android:title="Rename"
-            />-->
-
 </menu>

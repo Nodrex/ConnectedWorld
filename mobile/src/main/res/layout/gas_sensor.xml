@@ -9,16 +9,9 @@
     card_view:cardCornerRadius="4dp"
     card_view:cardUseCompatPadding="true">
 
-    <!--android:background="@android:color/transparent"
-    card_view:cardCornerRadius="0dp"
-    card_view:cardElevation="0dp"-->
-
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:background="@color/gasSensor">
 
         <ImageView
@@ -51,23 +44,6 @@
             android:id="@+id/selection"
             android:visibility="gone"
             android:layout_height="wrap_content" />
-
-
-        <!--<LinearLayout
-            android:id="@+id/selection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView"
-            android:background="@android:color/white"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <android.support.v7.widget.AppCompatCheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>-->
 
     </RelativeLayout>
 
