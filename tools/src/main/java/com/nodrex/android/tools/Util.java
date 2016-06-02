@@ -7,6 +7,8 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.NotificationManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -110,6 +112,7 @@ public class Util {
 
     private static ConnectivityManager connectivityManager;
     private static TelephonyManager telephonyManager;
+    private static ClipboardManager clipboardManager;
     private static NotificationManager notification;
     private static PowerManager powerManager;
 
@@ -143,6 +146,17 @@ public class Util {
         if (activity == null) return null;
         telephonyManager = (TelephonyManager) activity.getSystemService(Activity.TELEPHONY_SERVICE);
         return telephonyManager;
+    }
+
+    /**
+     * @param activity
+     * @return ClipboardManager for future use.
+     */
+    public static ClipboardManager getClipboardManager(Activity activity) {
+        if(clipboardManager != null) return clipboardManager;
+        if(activity == null)return null;
+        clipboardManager = (ClipboardManager) activity.getSystemService(Activity.CLIPBOARD_SERVICE);
+        return clipboardManager;
     }
 
     /**
@@ -274,6 +288,19 @@ public class Util {
         int flag = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
         if (on) window.addFlags(flag);
         else window.clearFlags(flag);
+    }
+
+    /**
+     * Copy Text into clipboard.
+     * @param activity
+     * @param toastText
+     * @param copyText
+     */
+    public static void copyTextToClipboard(Activity activity, String toastText,String copyText){
+        getClipboardManager(activity);
+        if(clipboardManager == null) return;
+        ClipData clip = ClipData.newPlainText(toastText, copyText);
+        clipboardManager.setPrimaryClip(clip);
     }
 
     /**
