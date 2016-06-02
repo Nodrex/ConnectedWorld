@@ -21,7 +21,6 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.nodrex.android.tools.Util;
 import com.nodrex.connectedworld.helper.FPoint;

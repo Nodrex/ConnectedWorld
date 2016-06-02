@@ -12,7 +12,6 @@ import android.view.View;
 import com.nodrex.android.tools.Util;
 import com.nodrex.connectedworld.MainActivity;
 import com.nodrex.connectedworld.R;
-import com.nodrex.connectedworld.unit.LightBulb;
 
 import java.util.ArrayList;
 import java.util.List;
