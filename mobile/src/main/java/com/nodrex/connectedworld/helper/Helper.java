@@ -8,15 +8,19 @@ import android.os.AsyncTask;
 import com.nodrex.android.tools.Util;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.UUID;
 
 /**
@@ -38,6 +42,7 @@ public abstract class Helper {
         protected String doInBackground(Integer... params) {
             try {
                 return pingESP();
+                //return pingESPWithSocket();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -102,8 +107,21 @@ public abstract class Helper {
         new Ping().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+    public static final String pingESPWithSocket() throws IOException {
+        Socket socket = new Socket();
+        socket.connect(new InetSocketAddress("192.168.2.103", 80), 10000);
+
+        DataOutputStream DataOut = new DataOutputStream(socket.getOutputStream());
+        DataOut.writeBytes("pin=2");
+        DataOut.flush();
+
+        socket.close();
+        return "bla";
+    }
+
     public static final String pingESP() throws Exception {
-        String data = /*"/?" +*/ /*URLEncoder.encode("pin", "UTF-8") + "=" +*/ URLEncoder.encode("11", "UTF-8");
+        //String data = /*"/?" +*/ /*URLEncoder.encode("pin", "UTF-8") + "=" +*/ URLEncoder.encode("6", "UTF-8");
+        String data = "/?pin=4";
         Util.log("trying to send data: " + data);
 
         String text = null;
@@ -112,17 +130,19 @@ public abstract class Helper {
         // Send data
         try {
 
-            URL url = new URL("http://192.168.2.107:80");
+            URL url = new URL("http://192.168.2.103:80"+ data);
             // Send POST data request 192.168.2.107
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoOutput(true);
-            conn.setChunkedStreamingMode(0);
+            conn.setDoInput(true); //conn.setDoOutput(true);
+
+            //conn.setChunkedStreamingMode(0);
+
             //conn.setConnectTimeout(timeOut);
 
-            OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+            /*OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
             wr.write(data);
-            wr.flush();
+            wr.flush();*/
 
             Util.log("data sent: " + data);
 

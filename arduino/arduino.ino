@@ -46,7 +46,7 @@ void loop()
     
     if(esp8266.find("+IPD,"))
     {
-     delay(1000); // wait for the serial buffer to fill up (read all the serial data)
+     delay(1500); // wait for the serial buffer to fill up (read all the serial data)
      // get the connection id so that we can then disconnect
      int connectionId = esp8266.read()-48; // subtract 48 because the read() function returns 
                                            // the ASCII decimal value and 0 (the first decimal number) starts at 48
@@ -54,10 +54,17 @@ void loop()
      Serial.print("+IPD was found: connectionId= ");
      Serial.println(connectionId);
           
-     //esp8266.find("pin="); // advance cursor to "pin="
+     esp8266.find("pin="); // advance cursor to "pin="
           
-     int pinNumber = (esp8266.read()-48); // get first number i.e. if the pin 13 then the 1st number is 1
+     int pinNumber = (esp8266.read()/*-48*/); // get first number i.e. if the pin 13 then the 1st number is 1
      Serial.println(pinNumber);
+     //tu pinNumber movida uarofiti mashin responsi gaugzavno aplikacias ro xelaxla gamomigzavnos protokolo radgan ver gavige
+     //sanam dadebiti ricxvi ar iqneba manamde gavardzeleb amas,
+     //aseve taimauti unda qondes, magalitan to 1 wuti gavida da isev uaryipitebi momdis an mtrolavs vigaca an raagac ar gamodis da users utxra ro ragac problemaa da mogvianebit cados an deviasi daaresetos.
+     Serial.println("pin after convert");
+     /*int convertedNumber*/ pinNumber = pinNumber - 48; //49 - pinNumber;
+     Serial.println(pinNumber);
+     /*
      int secondNumber = (esp8266.read()-48);
      Serial.println(secondNumber);
      if(secondNumber>=0 && secondNumber<=9)
@@ -66,17 +73,18 @@ void loop()
       pinNumber +=secondNumber; // get second number, i.e. if the pin number is 13 then the 2nd number is 3, then add to the first number
      }
      Serial.println("__________________________");
-     Serial.println(pinNumber);
+     Serial.println(pinNumber);*/
      Serial.println("_________Done______________");
      
-     digitalWrite(pinNumber, !digitalRead(pinNumber)); // toggle pin    
+     //digitalWrite(pinNumber, !digitalRead(pinNumber)); // toggle pin    
      
      // build string that is send back to device that is requesting pin toggle
      String content;
      content = "Pin ";
      content += pinNumber;
      content += " is ";
-     
+
+     /*
      if(digitalRead(pinNumber))
      {
        content += "ON";
@@ -85,6 +93,9 @@ void loop()
      {
        content += "OFF";
      }
+     */
+
+     content += "Something else";
      
      sendHTTPResponse(connectionId,content);
      
