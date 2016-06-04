@@ -61,6 +61,9 @@ void loop()
      //tu pinNumber movida uarofiti mashin responsi gaugzavno aplikacias ro xelaxla gamomigzavnos protokolo radgan ver gavige
      //sanam dadebiti ricxvi ar iqneba manamde gavardzeleb amas,
      //aseve taimauti unda qondes, magalitan to 1 wuti gavida da isev uaryipitebi momdis an mtrolavs vigaca an raagac ar gamodis da users utxra ro ragac problemaa da mogvianebit cados an deviasi daaresetos.
+
+    //an sheileba jer ver moaswro shevseba da vacado ro xelaxla shevides am loopshi da daushvat tu kide uaryipits damibrunebs mere zevit xsenebuli gavimeoro.
+     
      Serial.println("pin after convert");
      /*int convertedNumber*/ pinNumber = pinNumber - 48; //49 - pinNumber;
      Serial.println(pinNumber);
