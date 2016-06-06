@@ -8,6 +8,8 @@ import com.nodrex.connectedworld.protocol.Protocol;
 
 public class MainAsyncTask extends AsyncTask<AsyncTaskParam,Void,Void> {
 
+    public static final int MAIN_ASYNC_TASK_TRY_COUNTER = 2;
+
     private AsyncTaskParam asyncTaskParam;
     private int protocol;
 
@@ -29,7 +31,7 @@ public class MainAsyncTask extends AsyncTask<AsyncTaskParam,Void,Void> {
 
     public static void ping(AsyncTaskParam asyncTaskParam){
         try{
-            for(int i = 0; i< Constants.MAIN_ASYNC_TASK_TRY_COUNTER ; i++){
+            for(int i = 0; i< MAIN_ASYNC_TASK_TRY_COUNTER ; i++){
                 MainAsyncTask mainAsyncTask = new MainAsyncTask();
                 mainAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,asyncTaskParam);
                 break;

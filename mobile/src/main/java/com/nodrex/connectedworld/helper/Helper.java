@@ -42,7 +42,6 @@ public abstract class Helper {
         protected String doInBackground(Integer... params) {
             try {
                 return pingESP();
-                //return pingESPWithSocket();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -97,7 +96,7 @@ public abstract class Helper {
 
     public static void goB0(){
         try {
-            mmOutputStream.write("Hellow from fucked world".getBytes());
+            mmOutputStream.write("Hellow from android world".getBytes());
         } catch (IOException e) {
             Util.log(e.toString());
         }
@@ -105,18 +104,6 @@ public abstract class Helper {
 
     public static void go(){
         new Ping().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    public static final String pingESPWithSocket() throws IOException {
-        Socket socket = new Socket();
-        socket.connect(new InetSocketAddress("192.168.2.103", 80), 10000);
-
-        DataOutputStream DataOut = new DataOutputStream(socket.getOutputStream());
-        DataOut.writeBytes("pin=2");
-        DataOut.flush();
-
-        socket.close();
-        return "bla";
     }
 
     public static final String pingESP() throws Exception {
@@ -134,15 +121,12 @@ public abstract class Helper {
             // Send POST data request 192.168.2.107
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoInput(true); //conn.setDoOutput(true);
+            conn.setDoInput(true);
 
             //conn.setChunkedStreamingMode(0);
 
             //conn.setConnectTimeout(timeOut);
 
-            /*OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-            wr.write(data);
-            wr.flush();*/
 
             Util.log("data sent: " + data);
 
