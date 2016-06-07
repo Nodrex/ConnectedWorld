@@ -8,12 +8,12 @@ package com.nodrex.connectedworld.unit;
  */
 public class GasSensor extends Device {
 
-    public GasSensor(int id) {
-        this(id,null);
+    public GasSensor(int id,String ipAndPort) {
+        this(id,ipAndPort,null);
     }
 
-    public GasSensor(int id,String name){
-        super(Types.GasSensor,id,name,"Gas Sensor");
+    public GasSensor(int id,String ipAndPort,String name){
+        super(Types.GasSensor,id,ipAndPort,name,"Gas Sensor");
     }
 
     @Override

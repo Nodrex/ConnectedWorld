@@ -137,10 +137,10 @@ public class MainActivity extends AppCompatActivity {
 
         List<Device> data = new ArrayList<>();
         for(int i=0; i<10; i++)
-            data.add(new LightBulb(0));
+            data.add(new LightBulb(0,""));
 
         for(int i=0; i<10; i++)
-            data.add(new GasSensor(0));
+            data.add(new GasSensor(0,""));
 
         Collections.shuffle(data);
 

@@ -20,6 +20,7 @@ public abstract class Device {
 
     protected int type;
     protected int id;
+    protected String ipAndPort;
     /**
      * User assigned name.
      */
@@ -29,9 +30,10 @@ public abstract class Device {
      */
     protected String description = "Device";
 
-    public Device(int type,int id,String name,String description){
+    public Device(int type,int id,String ipAndPort,String name,String description){
         this.type = type;
         this.id = id;
+        this.ipAndPort = ipAndPort;
         this.name = name;
         this.description = description;
     }
@@ -54,6 +56,10 @@ public abstract class Device {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getIpAndPort(){
+        return this.ipAndPort;
     }
 
     @Override

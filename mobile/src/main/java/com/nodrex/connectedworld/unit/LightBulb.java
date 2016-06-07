@@ -12,16 +12,16 @@ public class LightBulb extends Device{
 
     private boolean on;
 
-    public LightBulb(int id){
-        this(id,null,false);
+    public LightBulb(int id,String ipAndPort){
+        this(id,ipAndPort,null,false);
     }
 
-    public LightBulb(int id,String name){
-        this(id, name, false);
+    public LightBulb(int id,String ipAndPort,String name){
+        this(id,ipAndPort,name,false);
     }
 
-    public LightBulb(int id, String name, boolean isOn){
-        super(Types.LightBulb,id,name,"Light Bulb");
+    public LightBulb(int id,String ipAndPort,String name, boolean isOn){
+        super(Types.LightBulb,id,ipAndPort,name,"Light Bulb");
         this.on = isOn;
     }
 
@@ -56,7 +56,7 @@ public class LightBulb extends Device{
 
     @Override
     protected LightBulb clone() throws CloneNotSupportedException {
-        return new LightBulb(this.id,this.name,this.on);
+        return new LightBulb(this.id,this.ipAndPort,this.name,this.on);
     }
 
 }

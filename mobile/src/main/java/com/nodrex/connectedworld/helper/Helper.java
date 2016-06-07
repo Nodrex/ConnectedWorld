@@ -7,20 +7,10 @@ import android.os.AsyncTask;
 
 import com.nodrex.android.tools.Util;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.UUID;
 
 /**
@@ -105,7 +95,5 @@ public abstract class Helper {
     public static void go(){
         new Ping().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
-
-
 
 }

@@ -3,14 +3,20 @@ package com.nodrex.connectedworld.ui;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.PopupWindow;
 
 import com.nodrex.connectedworld.MainActivity;
 import com.nodrex.connectedworld.R;
+import com.nodrex.connectedworld.asynctasks.MainAsyncTask;
 import com.nodrex.connectedworld.helper.Helper;
+import com.nodrex.connectedworld.protocol.AsyncTaskParam;
+import com.nodrex.connectedworld.protocol.LedOff;
+import com.nodrex.connectedworld.protocol.LedOn;
 import com.nodrex.connectedworld.unit.Device;
 
 import java.util.List;
@@ -36,21 +42,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.data = data;
         this.gridLayoutManager = gridLayoutManager;
     }
-
-    /*private void initPopupWindow(){
-        if(popupWindow != null) return;
-        inflater = (LayoutInflater) activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        moreTools = inflater.inflate(R.layout.more_tools, null);
-        int lParam = LayoutParams.WRAP_CONTENT;
-        popupWindow = new PopupWindow(moreTools, lParam,lParam);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setFocusable(true);
-        renameInput = moreTools.findViewById(R.id.renameInput);
-        View v = moreTools.findViewById(R.id.rename);
-        v.setOnClickListener(this);
-        popupWindow.setOnDismissListener(this);
-
-    }*/
 
     @Override
     public boolean onLongClick(final View v) {
@@ -134,18 +125,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
-    class LightBulb extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class LightBulb extends RecyclerView.ViewHolder implements View.OnClickListener , CompoundButton.OnCheckedChangeListener {
+
+        SwitchCompat switchCompat;
 
         public LightBulb(View v) {
             super(v);
-            v.setOnClickListener(this);
-            v.setOnLongClickListener(RecyclerViewAdapter.this);
+            switchCompat = (SwitchCompat) v.findViewById(R.id.onOff);
+            switchCompat.setOnCheckedChangeListener(this);
+            //v.setOnClickListener(this);
+            //v.setOnLongClickListener(RecyclerViewAdapter.this);
         }
 
         @Override
         public void onClick(View v) {
 
+        }
 
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            int position = getAdapterPosition();
+            if(position == RecyclerView.NO_POSITION)return;
+            Device device = data.get(position);
+            if(device == null)return;
+            String ipAndPort = device.getIpAndPort();
+            MainAsyncTask.ping(isChecked ? new LedOn(ipAndPort) : new LedOff(ipAndPort));
         }
 
     }

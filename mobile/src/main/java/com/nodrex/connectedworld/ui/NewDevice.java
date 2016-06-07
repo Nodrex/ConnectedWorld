@@ -16,9 +16,6 @@ import com.nodrex.connectedworld.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by nchum on 4/18/2016.
- */
 public class NewDevice extends FragmentPagerAdapter{
 
     private MainActivity activity;
