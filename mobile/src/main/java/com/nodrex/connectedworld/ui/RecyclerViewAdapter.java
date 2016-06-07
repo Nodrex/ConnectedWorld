@@ -46,7 +46,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public boolean onLongClick(final View v) {
         //TODO /////////////////////////////////////////////////////////
-        Helper.go();
+        //Helper.go();
         //Helper.goB();
         //TODO /////////////////////////////////////////////////////////
 
@@ -131,10 +131,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public LightBulb(View v) {
             super(v);
+            v.setOnLongClickListener(RecyclerViewAdapter.this);
             switchCompat = (SwitchCompat) v.findViewById(R.id.onOff);
-            switchCompat.setOnCheckedChangeListener(this);
+            if(switchCompat != null) switchCompat.setOnCheckedChangeListener(this);
             //v.setOnClickListener(this);
-            //v.setOnLongClickListener(RecyclerViewAdapter.this);
         }
 
         @Override
