@@ -13,8 +13,6 @@ import android.widget.PopupWindow;
 import com.nodrex.connectedworld.MainActivity;
 import com.nodrex.connectedworld.R;
 import com.nodrex.connectedworld.asynctasks.MainAsyncTask;
-import com.nodrex.connectedworld.helper.Helper;
-import com.nodrex.connectedworld.protocol.AsyncTaskParam;
 import com.nodrex.connectedworld.protocol.LedOff;
 import com.nodrex.connectedworld.protocol.LedOn;
 import com.nodrex.connectedworld.unit.Device;
