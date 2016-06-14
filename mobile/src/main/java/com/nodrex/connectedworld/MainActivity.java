@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
+
         handleIntent(getIntent());
 
         Util.log(savedInstanceState  + "");
