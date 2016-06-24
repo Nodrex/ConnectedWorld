@@ -34,6 +34,6 @@
         android:layout_marginRight="26dp"
         android:background="@drawable/save_ripple"
         android:elevation="5dp"
-        android:src="@drawable/ic_done_white_24px" />
+        android:src="@drawable/ic_done_white_24dp" />
 
 </RelativeLayout>

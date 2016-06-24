@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/jarvis"
-        android:icon="@drawable/ic_mic_white_24px"
+        android:icon="@drawable/ic_mic_white_24dp"
         android:orderInCategory="1"
         android:title="Mic"
         app:showAsAction="always" />
@@ -17,7 +17,7 @@
 
     <item
         android:id="@+id/delete"
-        android:icon="@drawable/ic_delete_forever_white_24px"
+        android:icon="@drawable/ic_delete_forever_white_24dp"
         android:orderInCategory="2"
         android:title="Delete"
         app:showAsAction="always" />

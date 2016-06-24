@@ -403,7 +403,7 @@ public class MainActivity extends AppCompatActivity {
 
                 {
                     ImageView image = new ImageView(this);
-                    image.setImageResource(R.drawable.ic_delete_forever_white_24px);
+                    image.setImageResource(R.drawable.ic_delete_forever_white_24dp);
                     delete.setActionView(image);
                 }
 

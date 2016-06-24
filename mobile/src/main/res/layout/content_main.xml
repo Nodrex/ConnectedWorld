@@ -48,7 +48,7 @@
             android:layout_weight="0.1"
             android:background="@drawable/save_ripple"
             android:elevation="5dp"
-            android:src="@drawable/ic_done_white_24px" />
+            android:src="@drawable/ic_done_white_24dp" />
 
     </LinearLayout>
 
