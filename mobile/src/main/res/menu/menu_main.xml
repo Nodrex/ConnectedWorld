@@ -24,7 +24,7 @@
 
     <item
         android:id="@+id/rename"
-        android:icon="@drawable/ic_mode_edit_white_24px"
+        android:icon="@drawable/ic_mode_edit_white_24dp"
         android:orderInCategory="3"
         android:title="Rename"
         app:showAsAction="always" />
