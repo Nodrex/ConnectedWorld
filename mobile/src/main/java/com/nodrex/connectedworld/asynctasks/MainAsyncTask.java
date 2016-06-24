@@ -94,7 +94,7 @@ public class MainAsyncTask extends AsyncTask<AsyncTaskParam,Void,Void> {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException ie) {
-                    for(int j=0; j<5000; j++);//Just trying to spend time.
+                    for(int j=0; j<50000; j++);//Just trying to spend time.
                 }
             }
         }
