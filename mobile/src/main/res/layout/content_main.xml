@@ -10,46 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:id="@+id/renameLayout"
+    <!--<include layout="@layout/rename"/>-->
+
+
+    <ViewStub
+        android:id="@+id/renameViewStub"
+        android:inflatedId="@+id/renameLayout"
+        android:layout="@layout/rename"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/rename"
-        android:elevation="10dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.9"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-
-            <EditText
-                android:id="@+id/renameInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:textColor="@android:color/black" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <ImageView
-            android:id="@+id/RenameDone"
-            android:layout_width="35dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="0.1"
-            android:background="@drawable/save_ripple"
-            android:elevation="5dp"
-            android:src="@drawable/ic_done_white_24dp" />
-
-    </LinearLayout>
+        android:layout_marginRight="20dp" />
 
 </RelativeLayout>

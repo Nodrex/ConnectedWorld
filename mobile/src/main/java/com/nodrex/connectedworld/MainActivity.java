@@ -17,8 +17,10 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -163,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         newDevice.setTranslationY(Util.dpToPixel(this, 250));
         newDevice.setVisibility(View.VISIBLE);
 
-        renameLayout = findViewById(R.id.renameLayout);
+        //renameLayout = findViewById(R.id.renameLayout);
 
     }
 
@@ -421,14 +423,32 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.more) {
             //TODO change lang of app.
             return true;
-        }else if(id == R.id.rename && renameLayout.getVisibility() == View.GONE){
+        }else if(id == R.id.rename /*&& renameLayout.getVisibility() == View.GONE*/ ){
+
+            if(renameLayout == null){
+                View viewStab = ((ViewStub) findViewById(R.id.renameViewStub)).inflate();
+                if(viewStab == null) {
+                    //show problem to user.
+                    return super.onOptionsItemSelected(item);
+                }
+                renameLayout = viewStab.findViewById(R.id.renameLayout);
+            }else if(renameLayout.getVisibility() == View.VISIBLE) return super.onOptionsItemSelected(item);
+
             renameLayout.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.rename_show));
             renameLayout.setVisibility(View.VISIBLE);
             isRenameOpen = true;
 
+            renameLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    EditText rename = (EditText) renameLayout.findViewById(R.id.renameInput);
+                    if(rename != null) rename.requestFocus();
+                    Util.showKeyboard(MainActivity.this,rename);
+                }
+            });
+
             postRenameAction(true);
         }else if(id == R.id.jarvis){
-            //jarvis();
             Butler.start(this,Butler.Types.Jarvis);
         }
         return super.onOptionsItemSelected(item);
