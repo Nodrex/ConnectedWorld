@@ -91,8 +91,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         handleIntent(getIntent());
 
         Util.log(savedInstanceState  + "");
@@ -150,9 +148,20 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewAdapter = new RecyclerViewAdapter(this, data,gridLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
 
-        new NewDevice(this,getSupportFragmentManager());
+    }
 
-        newDevice = findViewById(R.id.newDevice);
+    private void inflateNewDeviceView(){
+        if(newDevice == null){
+            Util.log("newDevice is null");
+            View viewStab = ((ViewStub) findViewById(R.id.newDeviceViewStab)).inflate();
+            if(viewStab == null) {
+                //show problem to user.
+                return;
+            }
+            newDevice = viewStab.findViewById(R.id.newDevice);
+
+            new NewDevice(this,newDevice,getSupportFragmentManager());
+        }
 
         if(Util.isLandscapeMode(this)){
             Point p = Util.getDisplayPoint(this);
@@ -164,9 +173,6 @@ public class MainActivity extends AppCompatActivity {
 
         newDevice.setTranslationY(Util.dpToPixel(this, 250));
         newDevice.setVisibility(View.VISIBLE);
-
-        //renameLayout = findViewById(R.id.renameLayout);
-
     }
 
     private void calcFabAnimationForDeviceSearch(){
@@ -251,6 +257,8 @@ public class MainActivity extends AppCompatActivity {
 
         searchDevice.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.search_device_show));
         searchDevice.setVisibility(View.VISIBLE);
+
+        inflateNewDeviceView();//TODO
 
         r = new Runnable() {
             @Override
@@ -403,14 +411,11 @@ public class MainActivity extends AppCompatActivity {
         delete = menu.findItem(R.id.delete);
         delete.setVisible(false);
 
-                {
-                    ImageView image = new ImageView(this);
-                    image.setImageResource(R.drawable.ic_delete_forever_white_24dp);
-                    delete.setActionView(image);
-                }
-
-
-
+        {
+            ImageView image = new ImageView(this);
+            image.setImageResource(R.drawable.ic_delete_forever_white_24dp);
+            delete.setActionView(image);
+        }
 
         rename = menu.findItem(R.id.rename);
         rename.setVisible(false);

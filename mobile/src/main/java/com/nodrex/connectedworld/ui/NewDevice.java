@@ -29,21 +29,22 @@ public class NewDevice extends FragmentPagerAdapter{
         tabTitles.add(title);
     }
 
-    public NewDevice(final MainActivity activity,FragmentManager fm){
+    public NewDevice(final MainActivity activity,View newDeviceView,FragmentManager fm){
         super(fm);
         this.activity = activity;
-        tabLayout = (TabLayout) activity.findViewById(R.id.tabLayout);
+        if(newDeviceView == null) return;
+        tabLayout = (TabLayout) newDeviceView.findViewById(R.id.tabLayout);
         tabLayout.setSelectedTabIndicatorColor(Util.getColorFromRes(activity, android.R.color.white));
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-        activity.findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
+        newDeviceView.findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Util.log("clicked");
             }
         });
 
-        viewPager = (ViewPager) activity.findViewById(R.id.viewPager);
+        viewPager = (ViewPager) newDeviceView.findViewById(R.id.viewPager);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
