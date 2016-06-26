@@ -2,6 +2,7 @@ package com.nodrex.connectedworld.asynctasks;
 
 import android.os.AsyncTask;
 
+import com.nodrex.android.tools.Util;
 import com.nodrex.connectedworld.protocol.AsyncTaskParam;
 import com.nodrex.connectedworld.protocol.LedOff;
 import com.nodrex.connectedworld.protocol.LedOn;
@@ -15,7 +16,9 @@ import java.net.URL;
 public class MainAsyncTask extends AsyncTask<AsyncTaskParam,Void,Void> {
 
     public static final int MAIN_ASYNC_TASK_TRY_COUNTER = 3;
-    public static final int CONNECTION_TIME_OUT = 10000;
+    public static final int CONNECTION_TIME_OUT = 5000;
+    public static final int CONNECTION_TIME_OUT_ITERATION = 500000;
+
 
     private AsyncTaskParam asyncTaskParam;
     private int protocol;
@@ -37,25 +40,47 @@ public class MainAsyncTask extends AsyncTask<AsyncTaskParam,Void,Void> {
     }
 
     private Void ledOn(){
+        Util.log("Trying led on");
         LedOn ledOn = (LedOn) asyncTaskParam;
         String value =  ledOn.getValue();
-        sendDataToESP(value);
+        String answer = sendDataToESP(value);
+        Util.log(answer);
+        if("-1\n".equals(answer) || "-1".equals(answer)){
+            Util.log("recall of ledOn");
+            try {
+                Thread.sleep(CONNECTION_TIME_OUT);
+            } catch (InterruptedException e) {
+                for(int j=0; j<CONNECTION_TIME_OUT_ITERATION; j++);//Just trying to spend time.
+            }
+            ping(asyncTaskParam);
+            cancel(true);
+        }
         return null;
     }
 
     private Void ledOff(){
         LedOff ledOff = (LedOff) asyncTaskParam;
         String value =  ledOff.getValue();
-        sendDataToESP(value);
+        String answer = sendDataToESP(value);
+        Util.log(answer);
+        if("-1\n".equals(answer) || "-1".equals(answer)){
+            Util.log("recall of ledOff");
+            try {
+                Thread.sleep(CONNECTION_TIME_OUT);
+            } catch (InterruptedException e) {
+                for(int j=0; j<CONNECTION_TIME_OUT_ITERATION; j++);//Just trying to spend time.
+            }
+            ping(asyncTaskParam);
+            cancel(true);
+        }
         return null;
     }
 
     public static final String sendDataToESP(String ipPortAndData) {
-        //String data = /*"/?" +*/ /*URLEncoder.encode("pin", "UTF-8") + "=" +*/ URLEncoder.encode("6", "UTF-8");
+        Util.log("Trying to send data: " + ipPortAndData);
         String text = null;
         BufferedReader reader = null;
         try {
-            //URL url = new URL("http://192.168.2.103:80"+ data);
             URL url = new URL(ipPortAndData);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoInput(true);
@@ -74,8 +99,8 @@ public class MainAsyncTask extends AsyncTask<AsyncTaskParam,Void,Void> {
                 sb.append(line + "\n");
             }
             text = sb.toString();
-        } catch (Exception ex) {
-            //throw new Exception("GetStringFromUrl: " + ex.toString());
+        } catch (Exception e) {
+            Util.log("problem in sendDataToESP: " + e.toString());
         } finally {
             try {
                 reader.close();
@@ -94,7 +119,7 @@ public class MainAsyncTask extends AsyncTask<AsyncTaskParam,Void,Void> {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException ie) {
-                    for(int j=0; j<50000; j++);//Just trying to spend time.
+                    for(int j=0; j<CONNECTION_TIME_OUT_ITERATION; j++);//Just trying to spend time.
                 }
             }
         }

@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.nodrex.android.tools.Util;
+import com.nodrex.connectedworld.helper.Constants;
 import com.nodrex.connectedworld.helper.FPoint;
 import com.nodrex.connectedworld.helper.Helper;
 import com.nodrex.connectedworld.ui.FABBehavior;
@@ -133,10 +134,10 @@ public class MainActivity extends AppCompatActivity {
 
         List<Device> data = new ArrayList<>();
         for(int i=0; i<10; i++)
-            data.add(new LightBulb(0,"ip and port should be here"));
+            data.add(new LightBulb(0, Constants.IP_PORT));
 
         for(int i=0; i<10; i++)
-            data.add(new GasSensor(0,"ip and port should be here"));
+            data.add(new GasSensor(0,Constants.IP_PORT));
 
         Collections.shuffle(data);
 

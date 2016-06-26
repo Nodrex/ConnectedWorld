@@ -2,7 +2,7 @@ package com.nodrex.connectedworld.protocol;
 
 public class LedOff extends AsyncTaskParam {
 
-    private final String Error = "ipAndPort should not be null or empty";
+    private final String Error = "IP_PORT should not be null or empty";
 
     private String value;
 

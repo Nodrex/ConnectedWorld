@@ -7,12 +7,8 @@ SoftwareSerial esp8266(2,3); // make RX Arduino line is pin 2, make TX Arduino l
                              // and the RX line from the esp to the Arduino's pin 3
 void setup()
 {
-  Serial.begin(115200);
-  esp8266.begin(115200); // your esp's baud rate might be different
 
-  Serial.println("setup");
-  
-  /*
+/*
   pinMode(11,OUTPUT);
   digitalWrite(11,LOW);
   
@@ -25,89 +21,64 @@ void setup()
   pinMode(10,OUTPUT);
   digitalWrite(10,LOW);
   */
-   
-  sendCommand("AT+RST\r\n",2000,DEBUG); // reset module
-  sendCommand("AT+CWMODE=1\r\n",1000,DEBUG); // configure as access point
-  //sendCommand("AT+CWJAP=\"mySSID\",\"myPassword\"\r\n",3000,DEBUG);
-  sendCommand("AT+CWJAP=\"NODREX\",\"vergamoicnobt\"\r\n",3000,DEBUG);
-  delay(10000);
-  sendCommand("AT+CIFSR\r\n",10000,DEBUG); // get ip address
-  sendCommand("AT+CIPMUX=1\r\n",1000,DEBUG); // configure for multiple connections
-  sendCommand("AT+CIPSERVER=1,80\r\n",1000,DEBUG); // turn on server on port 80
   
+  Serial.begin(115200);
+  esp8266.begin(115200); // your esp's baud rate might be different
+
+  Serial.println("setup");
+   
+  sendCommand("AT+RST\r\n",100,DEBUG); // reset module 2000 , 500
+  Serial.println("ESP reset done");
+  sendCommand("AT+CWMODE=1\r\n",100,DEBUG); // configure as access point 1000 , 500
+  Serial.println("ESP mode is setted");
+  sendCommand("AT+CWJAP=\"NODREX\",\"vergamoicnobt\"\r\n",3000,DEBUG); // , 1000 , 500
+  Serial.println("SSID and password is setted");
+  delay(10000); // , 5000
+  sendCommand("AT+CIFSR\r\n",10000,false); // get ip address 
+  Serial.println("got ip");
+  sendCommand("AT+CIPMUX=1\r\n",100,DEBUG); // configure for multiple connections 1000 , 500
+  Serial.println("multiconnection mode is done");
+  sendCommand("AT+CIPSERVER=1,80\r\n",100,DEBUG); // turn on server on port (80) 1000 , 500
   Serial.println("Server Ready");
 }
  
 void loop()
 {
   if(esp8266.available()) // check if the esp is sending a message 
-  {
- 
-    
+  { 
     if(esp8266.find("+IPD,"))
     {
-     delay(1500); // wait for the serial buffer to fill up (read all the serial data)
-     // get the connection id so that we can then disconnect
-     int connectionId = esp8266.read()-48; // subtract 48 because the read() function returns 
-                                           // the ASCII decimal value and 0 (the first decimal number) starts at 48
-
-     Serial.print("+IPD was found: connectionId= ");
+     delay(1500); // wait for the serial buffer to fill up (read all the serial data) 
+     //get the connection id so that we can then disconnect
+     int connectionId = esp8266.read()-48; // subtract 48 because the read() function returns the ASCII decimal value and 0 (the first decimal number) starts at 48
+     Serial.print("connectionId= ");
      Serial.println(connectionId);
-          
-     esp8266.find("pin="); // advance cursor to "pin="
-          
+     esp8266.find("data="); // advance cursor to "data="
      int pinNumber = (esp8266.read()/*-48*/); // get first number i.e. if the pin 13 then the 1st number is 1
-     Serial.println(pinNumber);
-     //tu pinNumber movida uarofiti mashin responsi gaugzavno aplikacias ro xelaxla gamomigzavnos protokolo radgan ver gavige
-     //sanam dadebiti ricxvi ar iqneba manamde gavardzeleb amas,
-     //aseve taimauti unda qondes, magalitan to 1 wuti gavida da isev uaryipitebi momdis an mtrolavs vigaca an raagac ar gamodis da users utxra ro ragac problemaa da mogvianebit cados an deviasi daaresetos.
-
-    //an sheileba jer ver moaswro shevseba da vacado ro xelaxla shevides am loopshi da daushvat tu kide uaryipits damibrunebs mere zevit xsenebuli gavimeoro.
-     
-     Serial.println("pin after convert");
-     /*int convertedNumber*/ pinNumber = pinNumber - 48; //49 - pinNumber;
-     Serial.println(pinNumber);
-     /*
-     int secondNumber = (esp8266.read()-48);
-     Serial.println(secondNumber);
-     if(secondNumber>=0 && secondNumber<=9)
-     {
-      pinNumber*=10;
-      pinNumber +=secondNumber; // get second number, i.e. if the pin number is 13 then the 2nd number is 3, then add to the first number
+     if(pinNumber > 0 ) {
+         //aseve taimauti unda qondes, magalitan to 1 wuti gavida da isev uaryipitebi momdis an mtrolavs vigaca an raagac ar gamodis da users utxra ro ragac problemaa da mogvianebit cados an deviasi daaresetos.
+         pinNumber = pinNumber - 48; //49 - pinNumber;
+         Serial.println(pinNumber);
+         String content;
+         content = "";
+         content += pinNumber;
+         content += ",d";//d means done, f means fail and e mewns error
+         sendHTTPResponse(connectionId,content);
+         // make close command
+         String closeCommand = "AT+CIPCLOSE="; 
+         closeCommand+=connectionId; // append connection id
+         closeCommand+="\r\n";
+         
+         sendCommand(closeCommand,1000,DEBUG); // close connection
+     }else{
+        Serial.println("unknown protocol");
+        sendHTTPResponse(connectionId,"-1");
+         // make close command
+         String closeCommand = "AT+CIPCLOSE="; 
+         closeCommand+=connectionId; // append connection id
+         closeCommand+="\r\n";
+         sendCommand(closeCommand,1000,DEBUG); // close connection
      }
-     Serial.println("__________________________");
-     Serial.println(pinNumber);*/
-     Serial.println("_________Done______________");
-     
-     //digitalWrite(pinNumber, !digitalRead(pinNumber)); // toggle pin    
-     
-     // build string that is send back to device that is requesting pin toggle
-     String content;
-     content = "Pin ";
-     content += pinNumber;
-     content += " is ";
-
-     /*
-     if(digitalRead(pinNumber))
-     {
-       content += "ON";
-     }
-     else
-     {
-       content += "OFF";
-     }
-     */
-
-     content += "Something else";
-     
-     sendHTTPResponse(connectionId,content);
-     
-     // make close command
-     String closeCommand = "AT+CIPCLOSE="; 
-     closeCommand+=connectionId; // append connection id
-     closeCommand+="\r\n";
-     
-     sendCommand(closeCommand,1000,DEBUG); // close connection
     }
   }
 }
@@ -127,12 +98,6 @@ String sendData(String command, const int timeout, boolean debug)
     command.toCharArray(data,dataSize);
            
     esp8266.write(data,dataSize); // send the read character to the esp8266
-    if(debug)
-    {
-      Serial.println("\r\n====== HTTP Response From Arduino ======");
-      Serial.write(data,dataSize);
-      Serial.println("\r\n========================================");
-    }
     
     long int time = millis();
     
@@ -149,9 +114,9 @@ String sendData(String command, const int timeout, boolean debug)
     
     if(debug)
     {
-      Serial.print(response);
+      //Serial.print(response);
+      Serial.println("Done");
     }
-    
     return response;
 }
  
@@ -161,7 +126,6 @@ String sendData(String command, const int timeout, boolean debug)
 */
 void sendHTTPResponse(int connectionId, String content)
 {
-     
      // build HTTP response
      String httpResponse;
      String httpHeader;
@@ -199,43 +163,23 @@ void sendCIPData(int connectionId, String data)
 */
 String sendCommand(String command, const int timeout, boolean debug)
 {
-    String response = "";
-
-    Serial.print("sendCommand: "); 
-    Serial.println(command); 
-           
+    String response = "";    
     esp8266.print(command); // send the read character to the esp8266
-    
     long int time = millis();
-    
     while( (time+timeout) > millis())
     {
       while(esp8266.available())
       {
-        
         // The esp has data so display its output to the serial window 
         char c = esp8266.read(); // read the next character.
-
-        
-        Serial.print("c: ");
-        Serial.print(c);
-        Serial.println("");
-        
-        
         response+=c;
         delay(100);
       }  
     }
-
-    Serial.print("responce: ");
-    Serial.print(response);
-
-    Serial.println("");
-    
-    if(debug)
+    if(!debug)
     {
-      //Serial.print(response);
+      Serial.print(response);
     }
-    
     return response;
 }
+
