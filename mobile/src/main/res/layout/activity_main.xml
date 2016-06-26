@@ -37,19 +37,20 @@
 
     <include layout="@layout/content_main" />
 
-    <View
-        android:id="@+id/fabBackColor"
+    <ViewStub
+        android:id="@+id/fabBackColorViewStab"
+        android:inflatedId="@+id/fabBackColor"
+        android:layout="@layout/fab_back_color"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"/>
+        android:layout_height="match_parent" />
 
-    <include layout="@layout/search_device" />
-
-   <!-- <include layout="@layout/new_device"
-        android:id="@+id/newDevice"
+    <ViewStub
+        android:id="@+id/searchDeviceViewStab"
+        android:inflatedId="@+id/searchDevice"
+        android:layout="@layout/search_device"
         android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        android:layout_gravity="bottom"/>-->
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
     <ViewStub
         android:id="@+id/newDeviceViewStab"

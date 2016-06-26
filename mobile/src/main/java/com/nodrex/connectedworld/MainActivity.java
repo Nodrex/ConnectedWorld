@@ -104,14 +104,10 @@ public class MainActivity extends AppCompatActivity {
 
         Util.keepScreenOn(this, true);
 
-        searchDevice = findViewById(R.id.searchDevice);
-
         display = Util.getDisplayPoint(MainActivity.this);
 
         calcFabAnimationForDeviceSearch();
         calcFabAnimationFornewDevice();
-
-        fabBackColor = findViewById(R.id.fabBackColor);
 
         //newDeviceFabLocation = findViewById(R.id.newDeviceFabLocation);
 
@@ -220,6 +216,14 @@ public class MainActivity extends AppCompatActivity {
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                if(fabBackColor == null){
+                    View viewStab = ((ViewStub) findViewById(R.id.fabBackColorViewStab)).inflate();
+                    if(viewStab == null) {
+                        //show problem to user.
+                        return;
+                    }
+                    fabBackColor = viewStab.findViewById(R.id.fabBackColor);
+                }
                 fabBackColor.setBackgroundColor((Integer) valueAnimator.getAnimatedValue());
             }
         });
@@ -242,6 +246,17 @@ public class MainActivity extends AppCompatActivity {
         anim.start();
     }
 
+    private void inflateSearchDevice(){
+        if(searchDevice == null){
+            View viewStab = ((ViewStub) findViewById(R.id.searchDeviceViewStab)).inflate();
+            if(viewStab == null) {
+                //show problem to user.
+                return;
+            }
+            searchDevice = viewStab.findViewById(R.id.searchDevice);
+        }
+    }
+
     private void searchDevice(){
         letBeDark();
 
@@ -255,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
 
         fabState = 1;
 
+        inflateSearchDevice();
         searchDevice.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.search_device_show));
         searchDevice.setVisibility(View.VISIBLE);
 
