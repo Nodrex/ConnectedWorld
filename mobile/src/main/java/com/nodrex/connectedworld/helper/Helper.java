@@ -3,7 +3,6 @@ package com.nodrex.connectedworld.helper;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.os.AsyncTask;
 
 import com.nodrex.android.tools.Util;
 
@@ -25,25 +24,6 @@ public abstract class Helper {
     public static final String newLine = "\n";
     public static final String unknownDevice = "Unknown Device";
     public static final String GEORGIAN = "ge";
-
-    public static class Ping extends AsyncTask<Integer,Void,String>{
-
-        @Override
-        protected String doInBackground(Integer... params) {
-            try {
-                //return pingESP();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String data) {
-            super.onPostExecute(data);
-            Util.log(data);
-        }
-    }
 
     public static BluetoothDevice a007;
     public static BluetoothSocket mmSocket;
@@ -81,7 +61,6 @@ public abstract class Helper {
             Util.log(e.toString());
         }
 
-
     }
 
     public static void goB0(){
@@ -90,10 +69,6 @@ public abstract class Helper {
         } catch (IOException e) {
             Util.log(e.toString());
         }
-    }
-
-    public static void go(){
-        new Ping().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 }
