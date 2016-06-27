@@ -12,7 +12,7 @@ import android.widget.PopupWindow;
 
 import com.nodrex.connectedworld.MainActivity;
 import com.nodrex.connectedworld.R;
-import com.nodrex.connectedworld.asynctasks.MainAsyncTask;
+import com.nodrex.connectedworld.communication.WifiC;
 import com.nodrex.connectedworld.protocol.LedOff;
 import com.nodrex.connectedworld.protocol.LedOn;
 import com.nodrex.connectedworld.unit.Device;
@@ -147,7 +147,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             Device device = data.get(position);
             if(device == null)return;
             String ipAndPort = device.getIpAndPort();
-            MainAsyncTask.ping(isChecked ? new LedOn(ipAndPort) : new LedOff(ipAndPort));
+            WifiC.ping(isChecked ? new LedOn(ipAndPort) : new LedOff(ipAndPort));
         }
 
     }

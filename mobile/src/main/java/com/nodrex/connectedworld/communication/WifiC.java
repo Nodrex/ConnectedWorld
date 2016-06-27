@@ -1,4 +1,4 @@
-package com.nodrex.connectedworld.asynctasks;
+package com.nodrex.connectedworld.communication;
 
 import android.os.AsyncTask;
 
@@ -13,13 +13,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class MainAsyncTask extends AsyncTask<AsyncTaskParam,Void,Void> {
+public class WifiC extends AsyncTask<AsyncTaskParam,Void,Void> {
 
     public static final int MAIN_ASYNC_TASK_TRY_COUNTER = 3;
     public static final int CONNECTION_TIME_OUT = 5000;
     public static final int CONNECTION_TIME_OUT_ITERATION = 500000;
-
-
+    
     private AsyncTaskParam asyncTaskParam;
     private int protocol;
 
@@ -112,7 +111,7 @@ public class MainAsyncTask extends AsyncTask<AsyncTaskParam,Void,Void> {
     public static void ping(AsyncTaskParam asyncTaskParam){
         for(int i = 0; i< MAIN_ASYNC_TASK_TRY_COUNTER ; i++){
             try{
-                MainAsyncTask mainAsyncTask = new MainAsyncTask();
+                WifiC mainAsyncTask = new WifiC();
                 mainAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,asyncTaskParam);
                 break;
             }catch (Exception e){
