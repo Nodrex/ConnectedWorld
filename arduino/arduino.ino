@@ -1,6 +1,8 @@
 #include <SoftwareSerial.h>
  
 #define DEBUG true
+
+int LIGHT_BULB = 7;//light bulb pin
  
 SoftwareSerial esp8266(2,3); // make RX Arduino line is pin 2, make TX Arduino line is pin 3.
                              // This means that you need to connect the TX line from the esp to the Arduino's pin 2
@@ -21,6 +23,9 @@ void setup()
   pinMode(10,OUTPUT);
   digitalWrite(10,LOW);
   */
+
+  pinMode(LIGHT_BULB,OUTPUT); 
+  digitalWrite(LIGHT_BULB, HIGH);
   
   Serial.begin(115200);
   esp8266.begin(115200); // your esp's baud rate might be different
@@ -59,6 +64,11 @@ void loop()
          //aseve taimauti unda qondes, magalitan to 1 wuti gavida da isev uaryipitebi momdis an mtrolavs vigaca an raagac ar gamodis da users utxra ro ragac problemaa da mogvianebit cados an deviasi daaresetos.
          pinNumber = pinNumber - 48; //49 - pinNumber;
          Serial.println(pinNumber);
+         if(pinNumber == 1){
+          digitalWrite(LIGHT_BULB, LOW);
+         }else{
+          digitalWrite(LIGHT_BULB, HIGH);
+         }
          String content;
          content = "";
          content += pinNumber;

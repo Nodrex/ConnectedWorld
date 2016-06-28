@@ -18,7 +18,7 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Void> {
     public static final int MAIN_ASYNC_TASK_TRY_COUNTER = 3;
     public static final int CONNECTION_TIME_OUT = 5000;
     public static final int CONNECTION_TIME_OUT_ITERATION = 500000;
-    
+
     private AsyncTaskParam asyncTaskParam;
     private int protocol;
 
