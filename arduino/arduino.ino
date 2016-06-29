@@ -1,29 +1,14 @@
 #include <SoftwareSerial.h>
- 
+
 #define DEBUG true
 
 int LIGHT_BULB = 7;//light bulb pin
- 
+
 SoftwareSerial esp8266(2,3); // make RX Arduino line is pin 2, make TX Arduino line is pin 3.
                              // This means that you need to connect the TX line from the esp to the Arduino's pin 2
                              // and the RX line from the esp to the Arduino's pin 3
 void setup()
 {
-
-/*
-  pinMode(11,OUTPUT);
-  digitalWrite(11,LOW);
-  
-  pinMode(12,OUTPUT);
-  digitalWrite(12,LOW);
-  
-  pinMode(13,OUTPUT);
-  digitalWrite(13,LOW);
-  
-  pinMode(10,OUTPUT);
-  digitalWrite(10,LOW);
-  */
-
   pinMode(LIGHT_BULB,OUTPUT); 
   digitalWrite(LIGHT_BULB, HIGH);
   
@@ -49,21 +34,26 @@ void setup()
  
 void loop()
 {
-  if(esp8266.available()) // check if the esp is sending a message 
+  if(esp8266.available() ) // check if the esp is sending a message 
   { 
-    if(esp8266.find("+IPD,"))
-    {
+    //if(esp8266.find("+IPD,")){
      delay(1500); // wait for the serial buffer to fill up (read all the serial data) 
      //get the connection id so that we can then disconnect
      int connectionId = esp8266.read()-48; // subtract 48 because the read() function returns the ASCII decimal value and 0 (the first decimal number) starts at 48
      Serial.print("connectionId= ");
      Serial.println(connectionId);
-     esp8266.find("data="); // advance cursor to "data="
+     esp8266.find("d="); // advance cursor to "d="
      int pinNumber = (esp8266.read()/*-48*/); // get first number i.e. if the pin 13 then the 1st number is 1
      if(pinNumber > 0 ) {
          //aseve taimauti unda qondes, magalitan to 1 wuti gavida da isev uaryipitebi momdis an mtrolavs vigaca an raagac ar gamodis da users utxra ro ragac problemaa da mogvianebit cados an deviasi daaresetos.
          pinNumber = pinNumber - 48; //49 - pinNumber;
          Serial.println(pinNumber);
+
+          while(esp8266.available()){
+            int g = esp8266.read();
+            Serial.println("g: " + g);
+          }
+         
          if(pinNumber == 1){
           digitalWrite(LIGHT_BULB, LOW);
          }else{
@@ -81,7 +71,16 @@ void loop()
          
          sendCommand(closeCommand,1000,DEBUG); // close connection
      }else{
+
+      
+      
         Serial.println("unknown protocol");
+
+
+      esp8266.find("d="); // advance cursor to "d="
+      int pinNumber = (esp8266.read()/*-48*/); // get first number i.e. if the pin 13 then the 1st number is 1
+      Serial.println("second try: " + pinNumber);
+        
         sendHTTPResponse(connectionId,"-1");
          // make close command
          String closeCommand = "AT+CIPCLOSE="; 
@@ -89,7 +88,7 @@ void loop()
          closeCommand+="\r\n";
          sendCommand(closeCommand,1000,DEBUG); // close connection
      }
-    }
+    //}
   }
 }
  
@@ -163,6 +162,7 @@ void sendCIPData(int connectionId, String data)
    cipSend +="\r\n";
    sendCommand(cipSend,1000,DEBUG);
    sendData(data,1000,DEBUG);
+   Serial.println("responce sent");
 }
  
 /*
