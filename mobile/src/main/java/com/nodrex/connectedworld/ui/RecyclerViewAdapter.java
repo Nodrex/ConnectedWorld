@@ -126,12 +126,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     class LightBulb extends RecyclerView.ViewHolder implements View.OnClickListener , CompoundButton.OnCheckedChangeListener {
 
         SwitchCompat switchCompat;
+        View progressBar;
 
         public LightBulb(View v) {
             super(v);
             v.setOnLongClickListener(RecyclerViewAdapter.this);
             switchCompat = (SwitchCompat) v.findViewById(R.id.onOff);
             if(switchCompat != null) switchCompat.setOnCheckedChangeListener(this);
+            progressBar = v.findViewById(R.id.progressBar);
             //v.setOnClickListener(this);
         }
 
@@ -147,7 +149,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             Device device = data.get(position);
             if(device == null)return;
             String ipAndPort = device.getIpAndPort();
-            WifiC.ping(isChecked ? new LedOn(ipAndPort) : new LedOff(ipAndPort));
+            WifiC.ping(isChecked ? new LedOn(ipAndPort,progressBar,switchCompat) : new LedOff(ipAndPort,progressBar,switchCompat));
         }
 
     }

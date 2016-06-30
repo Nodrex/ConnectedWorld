@@ -2,11 +2,14 @@
 
 #define DEBUG true
 
-int LIGHT_BULB = 7;//light bulb pin
+#define LIGHT_BULB 7 //light bulb pin
 
 SoftwareSerial esp8266(2,3); // make RX Arduino line is pin 2, make TX Arduino line is pin 3.
                              // This means that you need to connect the TX line from the esp to the Arduino's pin 2
                              // and the RX line from the esp to the Arduino's pin 3
+
+bool on = false;
+                             
 void setup()
 {
   pinMode(LIGHT_BULB,OUTPUT); 
@@ -15,49 +18,40 @@ void setup()
   Serial.begin(115200);
   esp8266.begin(115200); // your esp's baud rate might be different
 
-  Serial.println("setup");
-   
   sendCommand("AT+RST\r\n",100,DEBUG); // reset module 2000 , 500
-  Serial.println("ESP reset done");
   sendCommand("AT+CWMODE=1\r\n",100,DEBUG); // configure as access point 1000 , 500
-  Serial.println("ESP mode is setted");
   sendCommand("AT+CWJAP=\"NODREX\",\"vergamoicnobt\"\r\n",3000,DEBUG); // , 1000 , 500
-  Serial.println("SSID and password is setted");
   delay(10000); // , 5000
   sendCommand("AT+CIFSR\r\n",10000,false); // get ip address 
-  Serial.println("got ip");
   sendCommand("AT+CIPMUX=1\r\n",100,DEBUG); // configure for multiple connections 1000 , 500
-  Serial.println("multiconnection mode is done");
   sendCommand("AT+CIPSERVER=1,80\r\n",100,DEBUG); // turn on server on port (80) 1000 , 500
+  Serial.println("");
   Serial.println("Server Ready");
 }
  
 void loop()
 {
-  if(esp8266.available() ) // check if the esp is sending a message 
+  if(esp8266.available() > 0 ) // check if the esp is sending a message 
   { 
-    //if(esp8266.find("+IPD,")){
-     delay(1500); // wait for the serial buffer to fill up (read all the serial data) 
+    if(esp8266.find("+IPD,")){
+      delay(100);
+     //delay(1000); // wait for the serial buffer to fill up (read all the serial data) 
      //get the connection id so that we can then disconnect
      int connectionId = esp8266.read()-48; // subtract 48 because the read() function returns the ASCII decimal value and 0 (the first decimal number) starts at 48
-     Serial.print("connectionId= ");
-     Serial.println(connectionId);
      esp8266.find("d="); // advance cursor to "d="
      int pinNumber = (esp8266.read()/*-48*/); // get first number i.e. if the pin 13 then the 1st number is 1
      if(pinNumber > 0 ) {
          //aseve taimauti unda qondes, magalitan to 1 wuti gavida da isev uaryipitebi momdis an mtrolavs vigaca an raagac ar gamodis da users utxra ro ragac problemaa da mogvianebit cados an deviasi daaresetos.
-         pinNumber = pinNumber - 48; //49 - pinNumber;
-         Serial.println(pinNumber);
-
-          while(esp8266.available()){
+         pinNumber = pinNumber - 48;
+          while(esp8266.available() > 0){
             int g = esp8266.read();
-            Serial.println("g: " + g);
-          }
-         
-         if(pinNumber == 1){
+          }      
+         if(pinNumber >= 8){
           digitalWrite(LIGHT_BULB, LOW);
+          on = true;
          }else{
           digitalWrite(LIGHT_BULB, HIGH);
+          on = false;
          }
          String content;
          content = "";
@@ -69,26 +63,27 @@ void loop()
          closeCommand+=connectionId; // append connection id
          closeCommand+="\r\n";
          
-         sendCommand(closeCommand,1000,DEBUG); // close connection
-     }else{
-
-      
-      
-        Serial.println("unknown protocol");
-
-
-      esp8266.find("d="); // advance cursor to "d="
-      int pinNumber = (esp8266.read()/*-48*/); // get first number i.e. if the pin 13 then the 1st number is 1
-      Serial.println("second try: " + pinNumber);
-        
-        sendHTTPResponse(connectionId,"-1");
+         //sendCommand(closeCommand,1000,DEBUG); // close connection
+         sendCommand(closeCommand,500,DEBUG);
+     }else{        
+        if(on){
+          digitalWrite(LIGHT_BULB, HIGH);
+          on = false;
+          sendHTTPResponse(connectionId,"6,d");
+        }else{
+          digitalWrite(LIGHT_BULB, LOW);
+          on = true;
+          sendHTTPResponse(connectionId,"8,d");
+        }
+        //sendHTTPResponse(connectionId,"-1");
          // make close command
          String closeCommand = "AT+CIPCLOSE="; 
          closeCommand+=connectionId; // append connection id
          closeCommand+="\r\n";
-         sendCommand(closeCommand,1000,DEBUG); // close connection
+         //sendCommand(closeCommand,1000,DEBUG); // close connection
+         sendCommand(closeCommand,500,DEBUG); // close connection
      }
-    //}
+    }
   }
 }
  
@@ -124,7 +119,7 @@ String sendData(String command, const int timeout, boolean debug)
     if(debug)
     {
       //Serial.print(response);
-      Serial.println("Done");
+      //Serial.println("Done");
     }
     return response;
 }
@@ -160,9 +155,11 @@ void sendCIPData(int connectionId, String data)
    cipSend += ",";
    cipSend +=data.length();
    cipSend +="\r\n";
-   sendCommand(cipSend,1000,DEBUG);
-   sendData(data,1000,DEBUG);
-   Serial.println("responce sent");
+   //sendCommand(cipSend,1000,DEBUG);
+   sendCommand(cipSend,500,DEBUG);
+   //sendData(data,1000,DEBUG);
+   sendData(data,500,DEBUG);
+   //Serial.println("responce sent");
 }
  
 /*

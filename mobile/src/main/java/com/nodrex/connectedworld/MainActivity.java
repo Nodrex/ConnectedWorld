@@ -133,13 +133,15 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         List<Device> data = new ArrayList<>();
-        for(int i=0; i<10; i++)
+        data.add(new LightBulb(0, Constants.IP_PORT));
+
+        /*for(int i=0; i<10; i++)
             data.add(new LightBulb(0, Constants.IP_PORT));
 
         for(int i=0; i<10; i++)
             data.add(new GasSensor(0,Constants.IP_PORT));
 
-        Collections.shuffle(data);
+        Collections.shuffle(data);*/
 
         recyclerViewAdapter = new RecyclerViewAdapter(this, data,gridLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
