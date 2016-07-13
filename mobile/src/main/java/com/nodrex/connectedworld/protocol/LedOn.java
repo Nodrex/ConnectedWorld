@@ -3,6 +3,9 @@ package com.nodrex.connectedworld.protocol;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 
+import com.nodrex.android.tools.Util;
+import com.nodrex.connectedworld.helper.Helper;
+
 public class LedOn extends AsyncTaskParam {
 
     private final String Error = "IP_PORT should not be null or empty";
@@ -26,12 +29,22 @@ public class LedOn extends AsyncTaskParam {
 
     private void start(){
         if(switchCompat != null) switchCompat.setEnabled(false);
-        if(progressBar != null) progressBar.setVisibility(View.VISIBLE);
+        if(progressBar != null) {
+            progressBar.setVisibility(View.VISIBLE);
+            Util.log("progressBar is not null....................");
+        }
     }
 
     public void done(){
-        if(switchCompat != null) switchCompat.setEnabled(true);
-        if(progressBar != null) progressBar.setVisibility(View.GONE);
+        if(switchCompat != null) {
+            Helper.recheckByDevice = true;
+            switchCompat.setEnabled(true);
+            switchCompat.setChecked(false);
+        }
+        if(progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+            Util.log("hiding progressbar____________");
+        }
     }
 
 }

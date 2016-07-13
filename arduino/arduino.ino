@@ -12,6 +12,13 @@ bool on = false;
                              
 void setup()
 {
+
+  for(int i=0; i<14; i++){
+    if(i == 2 || i == 3) continue;
+    pinMode(i,OUTPUT); 
+  }
+
+  
   pinMode(LIGHT_BULB,OUTPUT); 
   digitalWrite(LIGHT_BULB, HIGH);
   
@@ -28,62 +35,31 @@ void setup()
   Serial.println("");
   Serial.println("Server Ready");
 }
- 
+
 void loop()
 {
   if(esp8266.available() > 0 ) // check if the esp is sending a message 
   { 
-    if(esp8266.find("+IPD,")){
-      delay(100);
+    //if(esp8266.find("+IPD,")){
+      //delay(100);
      //delay(1000); // wait for the serial buffer to fill up (read all the serial data) 
      //get the connection id so that we can then disconnect
-     int connectionId = esp8266.read()-48; // subtract 48 because the read() function returns the ASCII decimal value and 0 (the first decimal number) starts at 48
-     esp8266.find("d="); // advance cursor to "d="
-     int pinNumber = (esp8266.read()/*-48*/); // get first number i.e. if the pin 13 then the 1st number is 1
-     if(pinNumber > 0 ) {
-         //aseve taimauti unda qondes, magalitan to 1 wuti gavida da isev uaryipitebi momdis an mtrolavs vigaca an raagac ar gamodis da users utxra ro ragac problemaa da mogvianebit cados an deviasi daaresetos.
-         pinNumber = pinNumber - 48;
-          while(esp8266.available() > 0){
-            int g = esp8266.read();
-          }      
-         if(pinNumber >= 8){
-          digitalWrite(LIGHT_BULB, LOW);
-          on = true;
-         }else{
-          digitalWrite(LIGHT_BULB, HIGH);
-          on = false;
-         }
-         String content;
-         content = "";
-         content += pinNumber;
-         content += ",d";//d means done, f means fail and e mewns error
-         sendHTTPResponse(connectionId,content);
-         // make close command
-         String closeCommand = "AT+CIPCLOSE="; 
-         closeCommand+=connectionId; // append connection id
-         closeCommand+="\r\n";
-         
-         //sendCommand(closeCommand,1000,DEBUG); // close connection
-         sendCommand(closeCommand,500,DEBUG);
-     }else{        
-        if(on){
-          digitalWrite(LIGHT_BULB, HIGH);
-          on = false;
-          sendHTTPResponse(connectionId,"6,d");
-        }else{
-          digitalWrite(LIGHT_BULB, LOW);
-          on = true;
-          sendHTTPResponse(connectionId,"8,d");
-        }
-        //sendHTTPResponse(connectionId,"-1");
-         // make close command
-         String closeCommand = "AT+CIPCLOSE="; 
-         closeCommand+=connectionId; // append connection id
-         closeCommand+="\r\n";
-         //sendCommand(closeCommand,1000,DEBUG); // close connection
-         sendCommand(closeCommand,500,DEBUG); // close connection
-     }
-    }
+     int connectionId = esp8266.read()-48;
+     if(on){
+        digitalWrite(LIGHT_BULB, HIGH);
+        on = false;
+        //sendHTTPResponse(connectionId,"6,d");
+      }else{
+        digitalWrite(LIGHT_BULB, LOW);
+        on = true;
+        //sendHTTPResponse(connectionId,"8,d");
+      }
+       // make close command
+       String closeCommand = "AT+CIPCLOSE="; 
+       closeCommand+=connectionId; // append connection id
+       closeCommand+="\r\n";
+     sendCommand(closeCommand,500,DEBUG);
+    //}
   }
 }
  

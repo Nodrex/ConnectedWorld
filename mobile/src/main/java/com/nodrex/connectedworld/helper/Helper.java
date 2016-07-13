@@ -25,4 +25,6 @@ public abstract class Helper {
     public static final String unknownDevice = "Unknown Device";
     public static final String GEORGIAN = "ge";
 
+    public static boolean recheckByDevice;
+
 }

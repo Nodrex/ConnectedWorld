@@ -89,12 +89,13 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
         BufferedReader reader = null;
         InputStreamReader inputStreamReader = null;
         HttpURLConnection conn = null;
+        URL url = null;
         try {
-            URL url = new URL(ipPortAndData);
+            url = new URL(ipPortAndData);
             conn = (HttpURLConnection) url.openConnection();
-            conn.setDoInput(true);
+            //conn.setDoInput(true);
             conn.setConnectTimeout(CONNECTION_TIME_OUT);
-            //conn.setReadTimeout(CONNECTION_TIME_OUT);
+            conn.setReadTimeout(CONNECTION_TIME_OUT);
             Util.log("Connection was established");
             String line = null;
             StringBuilder sb = new StringBuilder();
@@ -114,18 +115,36 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
                 Util.log("in while______");
             }
             text = sb.toString();
-        } catch (Exception e) {
+        }catch (NullPointerException npe){
+            try{
+                Thread.sleep(CONNECTION_TIME_OUT);
+            }catch (Exception e){
+                for(int j=0; j<CONNECTION_TIME_OUT_ITERATION; j++);//Just trying to spend time.
+            }
+            return "d";
+        }catch (Exception e) {
             Util.log("problem in sendDataToESP: " + e.toString());
+            return "d";
             //return "-1\n";
         } finally {
             try {
-                Util.log("closing connections");
-                conn.disconnect();
-                Util.log("closing inputStreamReader");
-                inputStreamReader.close();
                 Util.log("closing reader");
                 reader.close();
-                Util.log("connections closed");
+                Util.log("reader closed");
+            } catch (Exception ex) {
+                Util.log("problem in closing connections: " + ex.toString());
+            }
+            try {
+                Util.log("closing inputStreamReader");
+                inputStreamReader.close();
+                Util.log("inputStreamReader closed");
+            } catch (Exception ex) {
+                Util.log("problem in closing connections: " + ex.toString());
+            }
+            try {
+                Util.log("closing connection");
+                conn.disconnect();
+                Util.log("connection closed");
             } catch (Exception ex) {
                 Util.log("problem in closing connections: " + ex.toString());
             }

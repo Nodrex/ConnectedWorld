@@ -13,6 +13,7 @@ import android.widget.PopupWindow;
 import com.nodrex.connectedworld.MainActivity;
 import com.nodrex.connectedworld.R;
 import com.nodrex.connectedworld.communication.WifiC;
+import com.nodrex.connectedworld.helper.Helper;
 import com.nodrex.connectedworld.protocol.LedOff;
 import com.nodrex.connectedworld.protocol.LedOn;
 import com.nodrex.connectedworld.unit.Device;
@@ -144,6 +145,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if( Helper.recheckByDevice){
+                Helper.recheckByDevice = false;
+                return;
+            }
             int position = getAdapterPosition();
             if(position == RecyclerView.NO_POSITION)return;
             Device device = data.get(position);
