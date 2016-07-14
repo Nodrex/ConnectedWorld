@@ -4,14 +4,18 @@ import android.os.AsyncTask;
 import android.os.Handler;
 
 import com.nodrex.android.tools.Util;
+import com.nodrex.connectedworld.helper.Constants;
 import com.nodrex.connectedworld.protocol.AsyncTaskParam;
 import com.nodrex.connectedworld.protocol.LedOff;
 import com.nodrex.connectedworld.protocol.LedOn;
 import com.nodrex.connectedworld.protocol.Protocol;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.net.URL;
 
 public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
@@ -81,6 +85,45 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
             return false;
         }
         return true;
+    }
+
+    public String sendDataToESPSocket(String ipPortAndData) {
+        Util.log("Trying to send data socket: " + ipPortAndData);
+
+        Socket socket = new Socket();
+        try {
+            socket.connect(new InetSocketAddress("192.168.2.107", 80), CONNECTION_TIME_OUT);//TODO porti shevcvali: gavzardo 2000 is zevit
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /*DataOutputStream DataOut = new DataOutputStream(socket.getOutputStream());
+        DataOut.writeBytes(message);
+        DataOut.flush();*/
+
+        InputStreamReader inputStreamReader = null;
+        try {
+            inputStreamReader = new InputStreamReader(socket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Util.log("BufferedReader");
+        BufferedReader reader = new BufferedReader(inputStreamReader);
+
+        String tmp = "";
+        try {
+            tmp = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return tmp;
     }
 
     public String sendDataToESP(String ipPortAndData) {
