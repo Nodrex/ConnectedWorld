@@ -11,6 +11,7 @@ import com.nodrex.connectedworld.protocol.LedOn;
 import com.nodrex.connectedworld.protocol.Protocol;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -54,7 +55,8 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
         Util.log("Trying led on");
         LedOn ledOn = (LedOn) asyncTaskParam;
         String value =  ledOn.getValue();
-        String answer = sendDataToESP(value);
+        //String answer = sendDataToESP(value);
+        String answer = sendDataToESPSocket(value);
         Util.log(answer);
         if("-1\n".equals(answer) || "-1".equals(answer)){
             Util.log("recall of ledOn");
@@ -72,7 +74,8 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
     private boolean ledOff(){
         LedOff ledOff = (LedOff) asyncTaskParam;
         String value =  ledOff.getValue();
-        String answer = sendDataToESP(value);
+        //String answer = sendDataToESP(value);
+        String answer = sendDataToESPSocket(value);
         Util.log(answer);
         if("-1\n".equals(answer) || "-1".equals(answer)){
             Util.log("recall of ledOff");
@@ -88,20 +91,25 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
     }
 
     public String sendDataToESPSocket(String ipPortAndData) {
-        Util.log("Trying to send data socket: " + ipPortAndData);
+        Util.log("Trying to send data socket: " + "192.168.2.105:80");
 
         Socket socket = new Socket();
         try {
-            socket.connect(new InetSocketAddress("192.168.2.107", 80), CONNECTION_TIME_OUT);//TODO porti shevcvali: gavzardo 2000 is zevit
+            socket.connect(new InetSocketAddress("192.168.2.105", 80), CONNECTION_TIME_OUT);//TODO porti shevcvali: gavzardo 2000 is zevit
         } catch (IOException e) {
-            e.printStackTrace();
+            Util.log("problem when connecting with socket: " + e.toString());
         }
 
-        /*DataOutputStream DataOut = new DataOutputStream(socket.getOutputStream());
-        DataOut.writeBytes(message);
-        DataOut.flush();*/
+        try {
+        DataOutputStream DataOut = new DataOutputStream(socket.getOutputStream());
+        DataOut.writeBytes("hi");
+        DataOut.flush();
+        }catch (Exception e){
+            Util.log("problem in sendDataToESPSocket: " + e.toString());
+        }
 
-        InputStreamReader inputStreamReader = null;
+
+        /*InputStreamReader inputStreamReader = null;
         try {
             inputStreamReader = new InputStreamReader(socket.getInputStream());
         } catch (IOException e) {
@@ -115,20 +123,22 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
             tmp = reader.readLine();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         try {
+            Util.log("closing socket");
             socket.close();
+            Util.log("socket is closed");
         } catch (IOException e) {
-            e.printStackTrace();
+            Util.log("problem when closing oscket: " + e.toString());
         }
 
-        return tmp;
+        return "S";
     }
 
     public String sendDataToESP(String ipPortAndData) {
         Util.log("Trying to send data: " + ipPortAndData);
-        String text = null;
+        //String text = null;
         BufferedReader reader = null;
         InputStreamReader inputStreamReader = null;
         HttpURLConnection conn = null;
@@ -138,52 +148,51 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
             conn = (HttpURLConnection) url.openConnection();
             //conn.setDoInput(true);
             conn.setConnectTimeout(CONNECTION_TIME_OUT);
-            conn.setReadTimeout(CONNECTION_TIME_OUT);
+            //conn.setReadTimeout(CONNECTION_TIME_OUT);//TODO
+            //Util.log("Disable read timeOut");
             Util.log("Connection was established");
             String line = null;
-            StringBuilder sb = new StringBuilder();
-            int tryCounter = 1;
-            for (int i = 0; i < tryCounter; i++) {
-                try {
-                    Util.log("inputStreamReader");
-                    inputStreamReader = new InputStreamReader(conn.getInputStream());
-                    Util.log("BufferedReader");
-                    reader = new BufferedReader(inputStreamReader);
-                    Util.log("already read...");
-                    break;
-                } catch (Exception e) {}
-            }
-            while ((line = reader.readLine()) != null) {
+            //StringBuilder sb = new StringBuilder();
+            //try {
+            //Util.log("inputStreamReader");
+            inputStreamReader = new InputStreamReader(conn.getInputStream());
+            //Util.log("BufferedReader");
+            reader = new BufferedReader(inputStreamReader);
+            //Util.log("already read...");
+            /*} catch (Exception e) {
+                Util.log("Problem in main read: " + e.toString());
+            }*/
+            /*while ((line = reader.readLine()) != null) {
                 sb.append(line + "\n");
                 Util.log("in while______");
             }
-            text = sb.toString();
+            text = sb.toString();*/
         }catch (NullPointerException npe){
-            try{
+            /*try{
                 Thread.sleep(CONNECTION_TIME_OUT);
             }catch (Exception e){
                 for(int j=0; j<CONNECTION_TIME_OUT_ITERATION; j++);//Just trying to spend time.
-            }
+            }*/
             return "d";
         }catch (Exception e) {
             Util.log("problem in sendDataToESP: " + e.toString());
             return "d";
             //return "-1\n";
         } finally {
-            try {
+            /*try {
                 Util.log("closing reader");
                 reader.close();
                 Util.log("reader closed");
             } catch (Exception ex) {
-                Util.log("problem in closing connections: " + ex.toString());
+                Util.log("problem in closing reader: " + ex.toString());
             }
             try {
                 Util.log("closing inputStreamReader");
                 inputStreamReader.close();
                 Util.log("inputStreamReader closed");
             } catch (Exception ex) {
-                Util.log("problem in closing connections: " + ex.toString());
-            }
+                Util.log("problem in closing inputStreamReader: " + ex.toString());
+            }*/
             try {
                 Util.log("closing connection");
                 conn.disconnect();
@@ -192,7 +201,7 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
                 Util.log("problem in closing connections: " + ex.toString());
             }
         }
-        return text;
+        return "d";
     }
 
     @Override

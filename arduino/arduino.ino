@@ -40,7 +40,7 @@ void loop()
 {
   if(esp8266.available() > 0 ) // check if the esp is sending a message 
   { 
-    //if(esp8266.find("+IPD,")){
+    if(esp8266.find("+IPD,")){
       //delay(100);
      //delay(1000); // wait for the serial buffer to fill up (read all the serial data) 
      //get the connection id so that we can then disconnect
@@ -58,8 +58,8 @@ void loop()
        String closeCommand = "AT+CIPCLOSE="; 
        closeCommand+=connectionId; // append connection id
        closeCommand+="\r\n";
-     sendCommand(closeCommand,500,DEBUG);
-    //}
+     sendCommand(closeCommand,1000,false);
+    }
   }
 }
  
@@ -149,16 +149,15 @@ String sendCommand(String command, const int timeout, boolean debug)
     String response = "";    
     esp8266.print(command); // send the read character to the esp8266
     long int time = millis();
-    while( (time+timeout) > millis())
-    {
+    //while( (time+timeout) > millis()){
       while(esp8266.available())
       {
         // The esp has data so display its output to the serial window 
         char c = esp8266.read(); // read the next character.
         response+=c;
-        delay(100);
+        delay(200);
       }  
-    }
+    //}
     if(!debug)
     {
       Serial.print(response);
