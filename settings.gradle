@@ -1,3 +1,3 @@
 include ':mobile', ':wear', ':tv'
-include ':app'
-project(':app').projectDir = new File('../AndroidTools/app')
+include ':Tools'
+project(':Tools').projectDir = new File('../AndroidTools/Tools')

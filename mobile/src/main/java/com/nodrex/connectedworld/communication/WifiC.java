@@ -91,11 +91,11 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
     }
 
     public String sendDataToESPSocket(String ipPortAndData) {
-        Util.log("Trying to send data socket: " + "192.168.2.105:80");
+        Util.log("Trying to send data socket: " + ipPortAndData);
 
         Socket socket = new Socket();
         try {
-            socket.connect(new InetSocketAddress("192.168.2.105", 80), CONNECTION_TIME_OUT);//TODO porti shevcvali: gavzardo 2000 is zevit
+            socket.connect(new InetSocketAddress(ipPortAndData/*Constants.IP*/, Constants.PORT), CONNECTION_TIME_OUT);//TODO porti shevcvali: gavzardo 2000 is zevit
         } catch (IOException e) {
             Util.log("problem when connecting with socket: " + e.toString());
         }

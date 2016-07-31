@@ -154,7 +154,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             Device device = data.get(position);
             if(device == null)return;
             String ipAndPort = device.getIpAndPort();
-            WifiC.ping(isChecked ? new LedOn(ipAndPort,progressBar,switchCompat) : new LedOff(ipAndPort,progressBar,switchCompat));
+            if(isChecked){
+                WifiC.ping(new LedOn(ipAndPort,progressBar,switchCompat));
+            }else WifiC.ping(new LedOff(ipAndPort,progressBar,switchCompat));
+            //WifiC.ping(isChecked ? new LedOn(ipAndPort,progressBar,switchCompat) : new LedOff(ipAndPort,progressBar,switchCompat));
         }
 
     }

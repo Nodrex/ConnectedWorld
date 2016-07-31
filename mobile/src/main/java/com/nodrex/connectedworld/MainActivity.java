@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         List<Device> data = new ArrayList<>();
-        data.add(new LightBulb(0, Constants.IP_PORT));
+        data.add(new LightBulb(0, Constants.IP));
 
         /*for(int i=0; i<10; i++)
             data.add(new LightBulb(0, Constants.IP_PORT));

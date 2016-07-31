@@ -25,9 +25,15 @@ void setup()
   Serial.begin(115200);
   esp8266.begin(115200); // your esp's baud rate might be different
 
-  sendCommand("AT+RST\r\n",100,DEBUG); // reset module 2000 , 500
-  sendCommand("AT+CWMODE=1\r\n",100,DEBUG); // configure as access point 1000 , 500
-  sendCommand("AT+CWJAP=\"NODREX\",\"vergamoicnobt\"\r\n",3000,DEBUG); // , 1000 , 500
+  sendCommand("AT+RST\r\n",500,DEBUG); // reset module 2000 , 500
+  sendCommand("AT+CWMODE=1\r\n",500,DEBUG); // configure as access point 1000 , 500
+  //NODREX
+  //vergamoicnobt
+
+  //DIR-300NRUB6
+  //password123
+  
+  sendCommand("AT+CWJAP=\"TP\",\"irakli141793\"\r\n",3000,false); // , 1000 , 500
   delay(10000); // , 5000
   sendCommand("AT+CIFSR\r\n",10000,false); // get ip address 
   sendCommand("AT+CIPMUX=1\r\n",100,DEBUG); // configure for multiple connections 1000 , 500
@@ -149,7 +155,7 @@ String sendCommand(String command, const int timeout, boolean debug)
     String response = "";    
     esp8266.print(command); // send the read character to the esp8266
     long int time = millis();
-    //while( (time+timeout) > millis()){
+    while( (time+timeout) > millis()){
       while(esp8266.available())
       {
         // The esp has data so display its output to the serial window 
@@ -157,11 +163,11 @@ String sendCommand(String command, const int timeout, boolean debug)
         response+=c;
         delay(200);
       }  
-    //}
-    if(!debug)
-    {
-      Serial.print(response);
     }
+    //if(!debug)
+    //{
+      Serial.println(response);
+    //}
     return response;
 }
 
