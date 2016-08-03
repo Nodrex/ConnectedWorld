@@ -95,7 +95,7 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
 
         Socket socket = new Socket();
         try {
-            socket.connect(new InetSocketAddress(ipPortAndData/*Constants.IP*/, Constants.PORT), CONNECTION_TIME_OUT);//TODO porti shevcvali: gavzardo 2000 is zevit
+            socket.connect(new InetSocketAddress(ipPortAndData, Constants.PORT), CONNECTION_TIME_OUT);//TODO porti shevcvali: gavzardo 2000 is zevit
         } catch (IOException e) {
             Util.log("problem when connecting with socket: " + e.toString());
         }
@@ -108,23 +108,6 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
             Util.log("problem in sendDataToESPSocket: " + e.toString());
         }
 
-
-        /*InputStreamReader inputStreamReader = null;
-        try {
-            inputStreamReader = new InputStreamReader(socket.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Util.log("BufferedReader");
-        BufferedReader reader = new BufferedReader(inputStreamReader);
-
-        String tmp = "";
-        try {
-            tmp = reader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
         try {
             Util.log("closing socket");
             socket.close();
@@ -132,6 +115,14 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
         } catch (IOException e) {
             Util.log("problem when closing oscket: " + e.toString());
         }
+
+        try {
+            Util.log("Thread sleep");
+            Thread.sleep(15000);
+        } catch (InterruptedException e) {
+            for (int i=0; i<500000; i++);
+        }
+        Util.log("Thread is up");
 
         return "S";
     }

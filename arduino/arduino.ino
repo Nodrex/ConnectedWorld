@@ -3,6 +3,8 @@
 #define DEBUG true
 
 #define LIGHT_BULB 7 //light bulb pin
+#define LED 8 //light bulb pin
+#define TEST 12 //light bulb pin
 
 SoftwareSerial esp8266(2,3); // make RX Arduino line is pin 2, make TX Arduino line is pin 3.
                              // This means that you need to connect the TX line from the esp to the Arduino's pin 2
@@ -21,9 +23,21 @@ void setup()
   
   pinMode(LIGHT_BULB,OUTPUT); 
   digitalWrite(LIGHT_BULB, HIGH);
+
+  pinMode(TEST,OUTPUT); 
+  digitalWrite(TEST, LOW);
+  
+  pinMode(LED,OUTPUT); 
+  digitalWrite(LED, HIGH);
+  delay(2000);
+  digitalWrite(LED, LOW);
+
+  
   
   Serial.begin(115200);
   esp8266.begin(115200); // your esp's baud rate might be different
+
+  Serial.println("configuring...");
 
   sendCommand("AT+RST\r\n",500,DEBUG); // reset module 2000 , 500
   sendCommand("AT+CWMODE=1\r\n",500,DEBUG); // configure as access point 1000 , 500
@@ -32,18 +46,23 @@ void setup()
 
   //DIR-300NRUB6
   //password123
+
+  //TP
+  //irakli141793
   
-  sendCommand("AT+CWJAP=\"TP\",\"irakli141793\"\r\n",3000,false); // , 1000 , 500
+  sendCommand("AT+CWJAP=\"NODREX\",\"vergamoicnobt\"\r\n",3000,false); // , 1000 , 500
   delay(10000); // , 5000
   sendCommand("AT+CIFSR\r\n",10000,false); // get ip address 
   sendCommand("AT+CIPMUX=1\r\n",100,DEBUG); // configure for multiple connections 1000 , 500
   sendCommand("AT+CIPSERVER=1,80\r\n",100,DEBUG); // turn on server on port (80) 1000 , 500
   Serial.println("");
   Serial.println("Server Ready");
+  digitalWrite(LED, HIGH);
 }
 
 void loop()
 {
+  digitalWrite(LED, HIGH);
   if(esp8266.available() > 0 ) // check if the esp is sending a message 
   { 
     if(esp8266.find("+IPD,")){
@@ -53,10 +72,12 @@ void loop()
      int connectionId = esp8266.read()-48;
      if(on){
         digitalWrite(LIGHT_BULB, HIGH);
+        digitalWrite(TEST, LOW);
         on = false;
         //sendHTTPResponse(connectionId,"6,d");
       }else{
         digitalWrite(LIGHT_BULB, LOW);
+        digitalWrite(TEST, HIGH);
         on = true;
         //sendHTTPResponse(connectionId,"8,d");
       }
