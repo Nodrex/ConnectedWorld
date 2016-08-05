@@ -22,8 +22,8 @@ public class WifiC extends AsyncTask<Param,Param,Param> {
 
     public static final int MAIN_ASYNC_TASK_TRY_COUNTER = 3;
     public static final int CONNECTION_TIME_OUT = 10000;
-    public static final int CONNECTION_TIME_OUT_ITERATION = 50000;
-    public static final int SLEEP_INTERVAL = 1000;
+    public static final int ITERATION = Integer.MAX_VALUE/100;//iteration number if thread fails to sleep.
+    public static final int SLEEP_INTERVAL = 15000;
 
     private Param param;
     private Protocol protocol;
@@ -33,7 +33,6 @@ public class WifiC extends AsyncTask<Param,Param,Param> {
         if(params == null || params.length < 1)return null;
         param = params[0];
         protocol = param.getProtocol();
-
         switch(protocol){
             case LED_ON:
                 ledOn();
@@ -41,60 +40,34 @@ public class WifiC extends AsyncTask<Param,Param,Param> {
             case LED_OFF:
                 ledOff();
                 break;
-            //some more protocols
-            default: //do something
+            default: Util.log("unknown protocol in doInBackground: " + protocol);
         }
-
         return param;
     }
 
-    private boolean ledOn(){
+    private void ledOn(){
         Util.log("Trying led on");
         LedOn ledOn = (LedOn) param;
         String ip =  ledOn.getIp();
-        //String answer = sendDataToESP(value);
         String answer = sendDataToESPSocket(ip,LedOn.DATA);
         Util.log(answer);
-        /*if("-1\n".equals(answer) || "-1".equals(answer)){
-            Util.log("recall of ledOn");
-            try {
-                Thread.sleep(SLEEP_INTERVAL);
-            } catch (InterruptedException e) {
-                for(int j=0; j<CONNECTION_TIME_OUT_ITERATION; j++);//Just trying to spend time.
-            }
-            Util.log("ping ledOn again");
-            return false;
-        }*/
-        return true;
     }
 
-    private boolean ledOff(){
+    private void ledOff(){
         Util.log("Trying led off");
         LedOff ledOff = (LedOff) param;
         String ip =  ledOff.getIp();
-        //String answer = sendDataToESP(value);
         String answer = sendDataToESPSocket(ip,LedOff.DATA);
         Util.log(answer);
-        /*if("-1\n".equals(answer) || "-1".equals(answer)){
-            Util.log("recall of ledOff");
-            try {
-                Thread.sleep(SLEEP_INTERVAL);
-            } catch (InterruptedException e) {
-                for(int j=0; j<CONNECTION_TIME_OUT_ITERATION; j++);//Just trying to spend time.
-            }
-            Util.log("ping ledOff again");
-            return false;
-        }*/
-        return true;
     }
 
-    public String sendDataToESPSocket(String ip,String data) {
+    private String sendDataToESPSocket(String ip,String data) {
         Util.log("Trying to send data socket: " + ip);
 
         Socket socket = new Socket();
         try {
-            InetSocketAddress socketAddr = new InetSocketAddress(ip, Constants.PORT);
-            socket.connect(socketAddr, CONNECTION_TIME_OUT);//TODO porti shevcvali: gavzardo 2000 is zevit
+            InetSocketAddress address = new InetSocketAddress(ip, Constants.PORT);
+            socket.connect(address, CONNECTION_TIME_OUT);//TODO porti shevcvali: gavzardo 2000 is zevit
         } catch (IOException e) {
             Util.log("problem when connecting with socket: " + e.toString());
         }
@@ -129,14 +102,66 @@ public class WifiC extends AsyncTask<Param,Param,Param> {
 
         try {
             Util.log("Thread sleep");
-            Thread.sleep(15000);
+            Thread.sleep(SLEEP_INTERVAL);
         } catch (InterruptedException e) {
-            for (int i=0; i<500000; i++);
+            for (int i = 0; i< ITERATION; i++);
         }
         Util.log("Thread is up");
 
         return "S";
     }
+
+    @Override
+    protected void onPostExecute(Param result) {
+        super.onPostExecute(result);
+        if(result == null) return;
+        protocol = result.getProtocol();
+        switch(protocol){
+            case LED_ON:
+                LedOn ledOn = (LedOn) result;
+                if (ledOn.isFailed()) ledOn.failed();
+                else ledOn.done();
+                break;
+            case LED_OFF:
+                LedOff ledoff = (LedOff) result;
+                if(ledoff.isFailed()) ledoff.failed();
+                else ledoff.done();
+                break;
+            default: Util.log("Unknown protocol in onPostExecute:" + protocol);
+        }
+    }
+
+    public static void ping(Param asyncTaskParam){
+        for(int i = 0; i< MAIN_ASYNC_TASK_TRY_COUNTER ; i++){
+            try{
+                WifiC mainAsyncTask = new WifiC();
+                mainAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,asyncTaskParam);
+                break;
+            }catch (Exception e){
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ie) {
+                    for(int j = 0; j< ITERATION; j++);//Just trying to spend time.
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public String sendDataToESP(String ipPortAndData) {
         Util.log("Trying to send data: " + ipPortAndData);
@@ -173,7 +198,7 @@ public class WifiC extends AsyncTask<Param,Param,Param> {
             /*try{
                 Thread.sleep(CONNECTION_TIME_OUT);
             }catch (Exception e){
-                for(int j=0; j<CONNECTION_TIME_OUT_ITERATION; j++);//Just trying to spend time.
+                for(int j=0; j<ITERATION; j++);//Just trying to spend time.
             }*/
             return "d";
         }catch (Exception e) {
@@ -204,43 +229,6 @@ public class WifiC extends AsyncTask<Param,Param,Param> {
             }
         }
         return "d";
-    }
-
-    @Override
-    protected void onPostExecute(Param result) {
-        super.onPostExecute(result);
-        if(result == null) return;
-        protocol = result.getProtocol();
-        switch(protocol){
-            case LED_ON:
-                LedOn ledOn = (LedOn) result;
-                if (ledOn.isFailed()) ledOn.failed();
-                else ledOn.done();
-                break;
-            case LED_OFF:
-                LedOff ledoff = (LedOff) result;
-                if(ledoff.isFailed()) ledoff.failed();
-                else ledoff.done();
-                break;
-            //some more protocols
-            default: //do something
-        }
-    }
-
-    public static void ping(Param asyncTaskParam){
-        for(int i = 0; i< MAIN_ASYNC_TASK_TRY_COUNTER ; i++){
-            try{
-                WifiC mainAsyncTask = new WifiC();
-                mainAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,asyncTaskParam);
-                break;
-            }catch (Exception e){
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException ie) {
-                    for(int j=0; j<CONNECTION_TIME_OUT_ITERATION; j++);//Just trying to spend time.
-                }
-            }
-        }
     }
 
 }
