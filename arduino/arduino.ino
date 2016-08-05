@@ -6,7 +6,7 @@
 #define LED 8 //light bulb pin
 #define TEST 12 //light bulb pin
 
-SoftwareSerial esp8266(2,3); // make RX Arduino line is pin 2, make TX Arduino line is pin 3.
+//SoftwareSerial esp8266(2,3); // make RX Arduino line is pin 2, make TX Arduino line is pin 3.
                              // This means that you need to connect the TX line from the esp to the Arduino's pin 2
                              // and the RX line from the esp to the Arduino's pin 3
 
@@ -20,7 +20,6 @@ void setup()
     pinMode(i,OUTPUT); 
   }
 
-  
   pinMode(LIGHT_BULB,OUTPUT); 
   digitalWrite(LIGHT_BULB, HIGH);
 
@@ -35,9 +34,9 @@ void setup()
   
   
   Serial.begin(115200);
-  esp8266.begin(115200); // your esp's baud rate might be different
+  //esp8266.begin(115200); // your esp's baud rate might be different
 
-  Serial.println("configuring...");
+  //Serial.println("configuring...");
 
   sendCommand("AT+RST\r\n",500,DEBUG); // reset module 2000 , 500
   sendCommand("AT+CWMODE=1\r\n",500,DEBUG); // configure as access point 1000 , 500
@@ -55,21 +54,21 @@ void setup()
   sendCommand("AT+CIFSR\r\n",10000,false); // get ip address 
   sendCommand("AT+CIPMUX=1\r\n",100,DEBUG); // configure for multiple connections 1000 , 500
   sendCommand("AT+CIPSERVER=1,80\r\n",100,DEBUG); // turn on server on port (80) 1000 , 500
-  Serial.println("");
-  Serial.println("Server Ready");
+  //Serial.println("");
+  //Serial.println("Server Ready");
   digitalWrite(LED, HIGH);
 }
 
 void loop()
 {
   digitalWrite(LED, HIGH);
-  if(esp8266.available() > 0 ) // check if the esp is sending a message 
+  if(Serial.available() > 0 ) // check if the esp is sending a message 
   { 
-    if(esp8266.find("+IPD,")){
+    if(Serial.find("+IPD,")){
       //delay(100);
      //delay(1000); // wait for the serial buffer to fill up (read all the serial data) 
      //get the connection id so that we can then disconnect
-     int connectionId = esp8266.read()-48;
+     int connectionId = Serial.read()-48;
      if(on){
         digitalWrite(LIGHT_BULB, HIGH);
         digitalWrite(TEST, LOW);
@@ -104,17 +103,17 @@ String sendData(String command, const int timeout, boolean debug)
     char data[dataSize];
     command.toCharArray(data,dataSize);
            
-    esp8266.write(data,dataSize); // send the read character to the esp8266
+    Serial.write(data,dataSize); // send the read character to the esp8266
     
     long int time = millis();
     
     while( (time+timeout) > millis())
     {
-      while(esp8266.available())
+      while(Serial.available())
       {
         
         // The esp has data so display its output to the serial window 
-        char c = esp8266.read(); // read the next character.
+        char c = Serial.read(); // read the next character.
         response+=c;
       }  
     }
@@ -174,20 +173,20 @@ void sendCIPData(int connectionId, String data)
 String sendCommand(String command, const int timeout, boolean debug)
 {
     String response = "";    
-    esp8266.print(command); // send the read character to the esp8266
+    Serial.print(command); // send the read character to the esp8266
     long int time = millis();
     while( (time+timeout) > millis()){
-      while(esp8266.available())
+      while(Serial.available())
       {
         // The esp has data so display its output to the serial window 
-        char c = esp8266.read(); // read the next character.
+        char c = Serial.read(); // read the next character.
         response+=c;
         delay(200);
       }  
     }
     //if(!debug)
     //{
-      Serial.println(response);
+      //Serial.println(response);
     //}
     return response;
 }

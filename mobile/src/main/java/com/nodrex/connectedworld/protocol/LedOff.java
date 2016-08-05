@@ -9,42 +9,41 @@ import com.nodrex.connectedworld.helper.Helper;
 
 public class LedOff extends AsyncTaskParam {
 
-    private final String Error = "IP_PORT should not be null or empty";
+    private final String Error = "IP should not be null or empty";
 
-    private String value;
+    private String ip;
+    public static final String DATA = "d=6 ";
     private View progressBar;
     private SwitchCompat switchCompat;
 
-    public String getValue(){
-        return value;
-    }
-
-    public LedOff(String ipAndPort,View progressBar,SwitchCompat switchCompat) {
+    public LedOff(String ip,View progressBar,SwitchCompat switchCompat) {
         super(Protocol.LED_OFF);
-        if(ipAndPort == null || "".equals(ipAndPort)) throw new NullPointerException(ipAndPort);
-        this.value = ipAndPort;//Constants.IP;//ipAndPort + Protocol.LED_OFF_ARDUINO;
+        if(ip == null || "".equals(ip)) throw new NullPointerException(ip);
+        this.ip = ip;
         this.progressBar = progressBar;
         this.switchCompat =switchCompat;
         start();
     }
 
+    public String getIp(){
+        return ip;
+    }
+
     private void start(){
-        if(switchCompat != null) switchCompat.setEnabled(false);
+        //if(switchCompat != null) switchCompat.setEnabled(false);
         if(progressBar != null) {
             progressBar.setVisibility(View.VISIBLE);
-            Util.log("progressBar is not null...........................");
         }
     }
 
     public void done(){
-        if(switchCompat != null) {
+        /*if(switchCompat != null) {
             Helper.recheckByDevice = true;
             switchCompat.setEnabled(true);
             switchCompat.setChecked(false);
-        }
+        }*/
         if(progressBar != null) {
             progressBar.setVisibility(View.GONE);
-            Util.log("hiding progressbar____________");
         }
     }
 }

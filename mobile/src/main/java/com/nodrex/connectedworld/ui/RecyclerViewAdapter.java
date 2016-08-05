@@ -145,18 +145,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if( Helper.recheckByDevice){
+            /*if( Helper.recheckByDevice){
                 Helper.recheckByDevice = false;
                 return;
-            }
+            }*/
             int position = getAdapterPosition();
             if(position == RecyclerView.NO_POSITION)return;
             Device device = data.get(position);
             if(device == null)return;
-            String ipAndPort = device.getIpAndPort();
+            String ip = device.getIp();
             if(isChecked){
-                WifiC.ping(new LedOn(ipAndPort,progressBar,switchCompat));
-            }else WifiC.ping(new LedOff(ipAndPort,progressBar,switchCompat));
+                WifiC.ping(new LedOn(ip,progressBar,switchCompat));
+            }else WifiC.ping(new LedOff(ip,progressBar,switchCompat));
             //WifiC.ping(isChecked ? new LedOn(ipAndPort,progressBar,switchCompat) : new LedOff(ipAndPort,progressBar,switchCompat));
         }
 

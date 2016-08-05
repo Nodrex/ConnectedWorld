@@ -1,7 +1,6 @@
 package com.nodrex.connectedworld.communication;
 
 import android.os.AsyncTask;
-import android.os.Handler;
 
 import com.nodrex.android.tools.Util;
 import com.nodrex.connectedworld.helper.Constants;
@@ -54,11 +53,11 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
     private boolean ledOn(){
         Util.log("Trying led on");
         LedOn ledOn = (LedOn) asyncTaskParam;
-        String value =  ledOn.getValue();
+        String ip =  ledOn.getIp();
         //String answer = sendDataToESP(value);
-        String answer = sendDataToESPSocket(value);
+        String answer = sendDataToESPSocket(ip,LedOn.DATA);
         Util.log(answer);
-        if("-1\n".equals(answer) || "-1".equals(answer)){
+        /*if("-1\n".equals(answer) || "-1".equals(answer)){
             Util.log("recall of ledOn");
             try {
                 Thread.sleep(SLEEP_INTERVAL);
@@ -67,17 +66,17 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
             }
             Util.log("ping ledOn again");
             return false;
-        }
+        }*/
         return true;
     }
 
     private boolean ledOff(){
         LedOff ledOff = (LedOff) asyncTaskParam;
-        String value =  ledOff.getValue();
+        String ip =  ledOff.getIp();
         //String answer = sendDataToESP(value);
-        String answer = sendDataToESPSocket(value);
+        String answer = sendDataToESPSocket(ip,LedOff.DATA);
         Util.log(answer);
-        if("-1\n".equals(answer) || "-1".equals(answer)){
+        /*if("-1\n".equals(answer) || "-1".equals(answer)){
             Util.log("recall of ledOff");
             try {
                 Thread.sleep(SLEEP_INTERVAL);
@@ -86,27 +85,40 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
             }
             Util.log("ping ledOff again");
             return false;
-        }
+        }*/
         return true;
     }
 
-    public String sendDataToESPSocket(String ipPortAndData) {
-        Util.log("Trying to send data socket: " + ipPortAndData);
+    public String sendDataToESPSocket(String ip,String data) {
+        Util.log("Trying to send data socket: " + ip);
 
         Socket socket = new Socket();
         try {
-            socket.connect(new InetSocketAddress(ipPortAndData, Constants.PORT), CONNECTION_TIME_OUT);//TODO porti shevcvali: gavzardo 2000 is zevit
+            socket.connect(new InetSocketAddress(ip, Constants.PORT), CONNECTION_TIME_OUT);//TODO porti shevcvali: gavzardo 2000 is zevit
         } catch (IOException e) {
             Util.log("problem when connecting with socket: " + e.toString());
         }
 
         try {
         DataOutputStream DataOut = new DataOutputStream(socket.getOutputStream());
-        DataOut.writeBytes("hi");
+        //DataOut.writeBytes("hi");
+        Util.log("Sending data: " + data);
+        DataOut.writeBytes(data);
         DataOut.flush();
         }catch (Exception e){
             Util.log("problem in sendDataToESPSocket: " + e.toString());
         }
+
+/*
+        try {
+            DataInputStream datain = new DataInputStream(socket.getInputStream());
+            Util.log("Reading data: " + data);
+            String result = datain.readUTF();
+            Util.log("Result: " + result);
+        }catch (Exception e){
+            Util.log("problem in sendDataToESPSocket: " + e.toString());
+        }
+*/
 
         try {
             Util.log("closing socket");
