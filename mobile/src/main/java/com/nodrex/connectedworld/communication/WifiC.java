@@ -209,23 +209,22 @@ public class WifiC extends AsyncTask<Param,Param,Param> {
     @Override
     protected void onPostExecute(Param result) {
         super.onPostExecute(result);
-        if(param == null) return;
-        protocol = param.getProtocol();
+        if(result == null) return;
+        protocol = result.getProtocol();
         switch(protocol){
             case LED_ON:
-                LedOn ledOn = (LedOn) param;
+                LedOn ledOn = (LedOn) result;
                 if (ledOn.isFailed()) ledOn.failed();
                 else ledOn.done();
                 break;
             case LED_OFF:
-                LedOff ledoff = (LedOff) param;
+                LedOff ledoff = (LedOff) result;
                 if(ledoff.isFailed()) ledoff.failed();
                 else ledoff.done();
                 break;
             //some more protocols
             default: //do something
         }
-
     }
 
     public static void ping(Param asyncTaskParam){
