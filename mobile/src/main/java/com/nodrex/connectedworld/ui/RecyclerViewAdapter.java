@@ -14,6 +14,7 @@ import com.nodrex.connectedworld.MainActivity;
 import com.nodrex.connectedworld.R;
 import com.nodrex.connectedworld.communication.WifiC;
 import com.nodrex.connectedworld.helper.Helper;
+import com.nodrex.connectedworld.protocol.AsyncTaskParam;
 import com.nodrex.connectedworld.protocol.LedOff;
 import com.nodrex.connectedworld.protocol.LedOn;
 import com.nodrex.connectedworld.unit.Device;
@@ -145,19 +146,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            /*if( Helper.recheckByDevice){
+            if( Helper.recheckByDevice){
                 Helper.recheckByDevice = false;
                 return;
-            }*/
+            }
             int position = getAdapterPosition();
             if(position == RecyclerView.NO_POSITION)return;
             Device device = data.get(position);
             if(device == null)return;
             String ip = device.getIp();
+            AsyncTaskParam asyncTaskParam = null;
             if(isChecked){
-                WifiC.ping(new LedOn(ip,progressBar,switchCompat));
-            }else WifiC.ping(new LedOff(ip,progressBar,switchCompat));
-            //WifiC.ping(isChecked ? new LedOn(ipAndPort,progressBar,switchCompat) : new LedOff(ipAndPort,progressBar,switchCompat));
+                asyncTaskParam = new LedOn(activity,ip,progressBar,switchCompat);
+            }else {
+                asyncTaskParam = new LedOff(activity,ip,progressBar,switchCompat);
+            }
+            WifiC.ping(asyncTaskParam);
         }
 
     }

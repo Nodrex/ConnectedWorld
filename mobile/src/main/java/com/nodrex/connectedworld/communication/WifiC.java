@@ -71,6 +71,7 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
     }
 
     private boolean ledOff(){
+        Util.log("Trying led off");
         LedOff ledOff = (LedOff) asyncTaskParam;
         String ip =  ledOff.getIp();
         //String answer = sendDataToESP(value);
@@ -94,17 +95,17 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
 
         Socket socket = new Socket();
         try {
-            socket.connect(new InetSocketAddress(ip, Constants.PORT), CONNECTION_TIME_OUT);//TODO porti shevcvali: gavzardo 2000 is zevit
+            InetSocketAddress socketAddr = new InetSocketAddress(ip, Constants.PORT);
+            socket.connect(socketAddr, CONNECTION_TIME_OUT);//TODO porti shevcvali: gavzardo 2000 is zevit
         } catch (IOException e) {
             Util.log("problem when connecting with socket: " + e.toString());
         }
 
         try {
-        DataOutputStream DataOut = new DataOutputStream(socket.getOutputStream());
-        //DataOut.writeBytes("hi");
-        Util.log("Sending data: " + data);
-        DataOut.writeBytes(data);
-        DataOut.flush();
+            DataOutputStream DataOut = new DataOutputStream(socket.getOutputStream());
+            Util.log("Sending data: " + data);
+            DataOut.writeBytes(data);
+            DataOut.flush();
         }catch (Exception e){
             Util.log("problem in sendDataToESPSocket: " + e.toString());
         }
@@ -215,7 +216,6 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
             ping(asyncTaskParam);
         }else{
             protocol = asyncTaskParam.getProtocol();
-
 
             switch(protocol){
                 case Protocol.LED_ON:
