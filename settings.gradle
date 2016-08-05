@@ -1,3 +1,5 @@
 include ':mobile', ':wear', ':tv'
 include ':Tools'
 project(':Tools').projectDir = new File('../AndroidTools/Tools')
+include ':ServerProtocol'
+project(':ServerProtocol').projectDir = new File('../GenericServerProtocol/ServerProtocol')

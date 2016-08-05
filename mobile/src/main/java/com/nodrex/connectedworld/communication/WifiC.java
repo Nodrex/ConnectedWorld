@@ -4,10 +4,10 @@ import android.os.AsyncTask;
 
 import com.nodrex.android.tools.Util;
 import com.nodrex.connectedworld.helper.Constants;
-import com.nodrex.connectedworld.protocol.AsyncTaskParam;
-import com.nodrex.connectedworld.protocol.LedOff;
-import com.nodrex.connectedworld.protocol.LedOn;
-import com.nodrex.connectedworld.protocol.Protocol;
+import com.nodrex.connectedworld.order.LedOff;
+import com.nodrex.connectedworld.order.LedOn;
+import com.nodrex.generic.server.protocol.Param;
+import com.nodrex.generic.server.protocol.Protocol;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -18,41 +18,39 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
 
-public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
+public class WifiC extends AsyncTask<Param,Param,Param> {
 
     public static final int MAIN_ASYNC_TASK_TRY_COUNTER = 3;
     public static final int CONNECTION_TIME_OUT = 10000;
     public static final int CONNECTION_TIME_OUT_ITERATION = 50000;
     public static final int SLEEP_INTERVAL = 1000;
 
-    private AsyncTaskParam asyncTaskParam;
-    private int protocol;
+    private Param param;
+    private Protocol protocol;
 
     @Override
-    protected Boolean doInBackground(AsyncTaskParam... params) {
+    protected Param doInBackground(Param... params) {
         if(params == null || params.length < 1)return null;
-        asyncTaskParam = params[0];
-        protocol = asyncTaskParam.getProtocol();
-
-        boolean result = false;
+        param = params[0];
+        protocol = param.getProtocol();
 
         switch(protocol){
-            case Protocol.LED_ON:
-                result = ledOn();
+            case LED_ON:
+                ledOn();
                 break;
-            case Protocol.LED_OFF:
-                result = ledOff();
+            case LED_OFF:
+                ledOff();
                 break;
             //some more protocols
             default: //do something
         }
 
-        return result;
+        return param;
     }
 
     private boolean ledOn(){
         Util.log("Trying led on");
-        LedOn ledOn = (LedOn) asyncTaskParam;
+        LedOn ledOn = (LedOn) param;
         String ip =  ledOn.getIp();
         //String answer = sendDataToESP(value);
         String answer = sendDataToESPSocket(ip,LedOn.DATA);
@@ -72,7 +70,7 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
 
     private boolean ledOff(){
         Util.log("Trying led off");
-        LedOff ledOff = (LedOff) asyncTaskParam;
+        LedOff ledOff = (LedOff) param;
         String ip =  ledOff.getIp();
         //String answer = sendDataToESP(value);
         String answer = sendDataToESPSocket(ip,LedOff.DATA);
@@ -209,30 +207,28 @@ public class WifiC extends AsyncTask<AsyncTaskParam,Void,Boolean> {
     }
 
     @Override
-    protected void onPostExecute(Boolean result) {
+    protected void onPostExecute(Param result) {
         super.onPostExecute(result);
-        if(!result) {
-            Util.log("onPostExecute");
-            ping(asyncTaskParam);
-        }else{
-            protocol = asyncTaskParam.getProtocol();
-
-            switch(protocol){
-                case Protocol.LED_ON:
-                    LedOn ledOn = (LedOn) asyncTaskParam;
-                    ledOn.done();
-                    break;
-                case Protocol.LED_OFF:
-                    LedOff ledoff = (LedOff) asyncTaskParam;
-                    ledoff.done();
-                    break;
-                //some more protocols
-                default: //do something
-            }
+        if(param == null) return;
+        protocol = param.getProtocol();
+        switch(protocol){
+            case LED_ON:
+                LedOn ledOn = (LedOn) param;
+                if (ledOn.isFailed()) ledOn.failed();
+                else ledOn.done();
+                break;
+            case LED_OFF:
+                LedOff ledoff = (LedOff) param;
+                if(ledoff.isFailed()) ledoff.failed();
+                else ledoff.done();
+                break;
+            //some more protocols
+            default: //do something
         }
+
     }
 
-    public static void ping(AsyncTaskParam asyncTaskParam){
+    public static void ping(Param asyncTaskParam){
         for(int i = 0; i< MAIN_ASYNC_TASK_TRY_COUNTER ; i++){
             try{
                 WifiC mainAsyncTask = new WifiC();

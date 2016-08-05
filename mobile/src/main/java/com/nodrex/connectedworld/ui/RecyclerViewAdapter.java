@@ -14,10 +14,10 @@ import com.nodrex.connectedworld.MainActivity;
 import com.nodrex.connectedworld.R;
 import com.nodrex.connectedworld.communication.WifiC;
 import com.nodrex.connectedworld.helper.Helper;
-import com.nodrex.connectedworld.protocol.AsyncTaskParam;
-import com.nodrex.connectedworld.protocol.LedOff;
-import com.nodrex.connectedworld.protocol.LedOn;
+import com.nodrex.connectedworld.order.LedOff;
+import com.nodrex.connectedworld.order.LedOn;
 import com.nodrex.connectedworld.unit.Device;
+import com.nodrex.generic.server.protocol.Param;
 
 import java.util.List;
 
@@ -155,13 +155,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             Device device = data.get(position);
             if(device == null)return;
             String ip = device.getIp();
-            AsyncTaskParam asyncTaskParam = null;
+            Param param = null;
             if(isChecked){
-                asyncTaskParam = new LedOn(activity,ip,progressBar,switchCompat);
+                param = new LedOn(activity,ip,progressBar,switchCompat);
             }else {
-                asyncTaskParam = new LedOff(activity,ip,progressBar,switchCompat);
+                param = new LedOff(activity,ip,progressBar,switchCompat);
             }
-            WifiC.ping(asyncTaskParam);
+            WifiC.ping(param);
         }
 
     }
