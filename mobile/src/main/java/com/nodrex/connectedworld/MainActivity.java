@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setLogo(R.drawable.cast_ic_notification_on);
+        //toolbar.setLogo(R.drawable.cast_ic_notification_on);
 
         Util.keepScreenOn(this, true);
 
@@ -135,9 +135,11 @@ public class MainActivity extends AppCompatActivity {
         List<Device> data = new ArrayList<>();
         data.add(new LightBulb(0, Constants.IP));
 
-        /*for(int i=0; i<10; i++)
-            data.add(new LightBulb(0, Constants.IP_PORT));
+        /*for(int i=0; i<20; i++)
+            data.add(new LightBulb(0, Constants.IP));
+*/
 
+        /*
         for(int i=0; i<10; i++)
             data.add(new GasSensor(0,Constants.IP_PORT));
 
