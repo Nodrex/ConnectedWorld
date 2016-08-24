@@ -9,6 +9,8 @@
         <item name="colorAccent">@color/actionBar</item> <!-- FloatingActionButton color -->
         <item name="colorControlActivated">@color/green</item>
 
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
