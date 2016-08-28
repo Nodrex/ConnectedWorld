@@ -27,7 +27,7 @@
             app:expandedTitleMarginStart="48dp"-->
 
             <ImageView
-                android:id="@+id/backdrop"
+                android:id="@+id/toolbarImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"

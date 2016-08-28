@@ -3,8 +3,10 @@ package com.nodrex.connectedworld;
 import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +19,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -148,6 +151,22 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewAdapter = new RecyclerViewAdapter(this, data,gridLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
 
+        /*final View toolbarImage = findViewById(R.id.toolbarImage);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            toolbarImage.post(new Runnable() {
+                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void run() {
+                    int cx = toolbarImage.getWidth() / 2;
+                    int cy = toolbarImage.getHeight() / 2;
+                    float finalRadius = (float) Math.hypot(cx, cy);
+                    Animator anim = ViewAnimationUtils.createCircularReveal(toolbarImage, cx, cy, 0, finalRadius);
+                    toolbarImage.setVisibility(View.VISIBLE);
+                    anim.start();
+                }
+            });
+        }else toolbarImage.setVisibility(View.VISIBLE);
+*/
     }
 
     private void inflateNewDeviceView(){
@@ -512,5 +531,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Util.hideKeyboard(getWindow());
+
     }
+
 }
