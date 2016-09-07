@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Build;
@@ -15,9 +16,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewStub;
@@ -26,6 +29,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.nodrex.android.tools.Swipe;
 import com.nodrex.android.tools.Util;
 import com.nodrex.connectedworld.helper.Constants;
 import com.nodrex.connectedworld.helper.FPoint;
@@ -150,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewAdapter = new RecyclerViewAdapter(this, data,gridLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
 
+
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -163,6 +168,34 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+       /* recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Swipe.onTouch(v,event);
+                int action = event.getAction();
+                switch (action){
+                    case MotionEvent.ACTION_DOWN:
+                        Swipe.actionDown(MainActivity.this,v,event);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        Swipe.actionMove(MainActivity.this,v,event);
+                        int dir = Swipe.getDirrectionY();
+                        Util.log("dir: "+ dir);
+                        if (dir > 0){
+                            Helper.scrollingUp = false;
+                        }else {
+                            Helper.scrollingUp = true;
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Swipe.actionUp(MainActivity.this,v,event);
+                        break;
+                }
+                return false;
+            }
+        });*/
 
         /*final View toolbarImage = findViewById(R.id.toolbarImage);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
