@@ -7,6 +7,8 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
 import android.widget.PopupWindow;
 
@@ -199,7 +201,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder ViewHolder, int position) {
+        animate(ViewHolder);
+    }
 
+
+    public void animate(RecyclerView.ViewHolder viewHolder) {
+        int animId;
+        if(Helper.scrollingUp){
+            animId = R.anim.recycler_view_down_scroll_animation;
+        }else{
+            animId = R.anim.recycler_view_up_scroll_animation;
+        }
+        final Animation animAnticipateOvershoot = AnimationUtils.loadAnimation(activity,animId);
+        viewHolder.itemView.setAnimation(animAnticipateOvershoot);
     }
 
     @Override

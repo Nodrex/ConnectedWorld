@@ -138,9 +138,8 @@ public class MainActivity extends AppCompatActivity {
         List<Device> data = new ArrayList<>();
         data.add(new LightBulb(0, Constants.IP));
 
-        /*for(int i=0; i<20; i++)
-            data.add(new LightBulb(0, Constants.IP));
-*/
+        for(int i=0; i<20; i++) data.add(new LightBulb(0, Constants.IP));
+
 
         /*
         for(int i=0; i<10; i++)
@@ -150,6 +149,20 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerViewAdapter = new RecyclerViewAdapter(this, data,gridLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
+
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(dy > 0){
+                    Helper.scrollingUp = true;
+                    //up
+                }else {
+                    Helper.scrollingUp = false;
+                    //down
+                }
+            }
+        });
 
         /*final View toolbarImage = findViewById(R.id.toolbarImage);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {

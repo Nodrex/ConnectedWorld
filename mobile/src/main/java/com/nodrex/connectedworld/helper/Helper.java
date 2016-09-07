@@ -37,4 +37,6 @@ public abstract class Helper {
         if(data == null || "".equals(data)) throw new NullPointerException();
     }
 
+    public static boolean scrollingUp = true;
+
 }
