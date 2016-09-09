@@ -7,6 +7,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -214,6 +215,8 @@ public class MainActivity extends AppCompatActivity {
         }else toolbarImage.setVisibility(View.VISIBLE);
 */
     }
+
+
 
     private void inflateNewDeviceView(){
         if(newDevice == null){
