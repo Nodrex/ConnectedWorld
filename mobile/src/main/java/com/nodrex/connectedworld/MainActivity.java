@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewAdapter = new RecyclerViewAdapter(this, data,gridLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
 
-
+/*
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -169,34 +169,44 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+*/
 
-
-       /* recyclerView.setOnTouchListener(new View.OnTouchListener() {
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 Swipe.onTouch(v,event);
                 int action = event.getAction();
                 switch (action){
                     case MotionEvent.ACTION_DOWN:
-                        Swipe.actionDown(MainActivity.this,v,event);
+                        //Swipe.actionDown(MainActivity.this,v,event);
+                        oldy = event.getY();
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        Swipe.actionMove(MainActivity.this,v,event);
+                        /*Swipe.actionMove(MainActivity.this,v,event);
                         int dir = Swipe.getDirrectionY();
                         Util.log("dir: "+ dir);
                         if (dir > 0){
                             Helper.scrollingUp = false;
                         }else {
                             Helper.scrollingUp = true;
+                        }*/
+                        float y= event.getY();
+                        float dir = oldy - y;
+                        Util.log("dir: "+ dir);
+                        if(dir < 0){
+                            Helper.scrollingUp = false;
+                        }else {
+                            Helper.scrollingUp = true;
                         }
+                        oldy = y;
                         break;
                     case MotionEvent.ACTION_UP:
-                        Swipe.actionUp(MainActivity.this,v,event);
+                        //Swipe.actionUp(MainActivity.this,v,event);
                         break;
                 }
                 return false;
             }
-        });*/
+        });
 
         /*final View toolbarImage = findViewById(R.id.toolbarImage);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -216,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
 */
     }
 
-
+    private float oldy;
 
     private void inflateNewDeviceView(){
         if(newDevice == null){
