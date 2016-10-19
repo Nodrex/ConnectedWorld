@@ -193,6 +193,10 @@ public class MainActivity extends AppCompatActivity {
                         float y= event.getY();
                         float dir = oldy - y;
                         Util.log("dir: "+ dir);
+                        if(Math.abs(dir)< 10){
+                            Util.log("diff is too small, so skipping");
+                            break;
+                        }
                         if(dir < 0){
                             Helper.scrollingUp = false;
                         }else {
