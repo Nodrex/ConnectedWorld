@@ -22,7 +22,7 @@ public class LedOn extends Param {
     private SwitchCompat switchCompat;
 
     public LedOn(Activity activity,String ip, View progressBar, SwitchCompat switchCompat){
-        super(Protocol.LED_ON);
+        //super(Protocol.LED_ON);
         Helper.checkStrContent(ip);
         this.activity = activity;
         this.ip = ip;

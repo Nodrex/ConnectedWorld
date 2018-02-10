@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.nodrex.connectedworld.MainActivity;
 import com.nodrex.connectedworld.R;
@@ -131,6 +132,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         SwitchCompat switchCompat;
         View progressBar;
+        TextView name;
 
         public LightBulb(View v) {
             super(v);
@@ -138,6 +140,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             switchCompat = (SwitchCompat) v.findViewById(R.id.onOff);
             if(switchCompat != null) switchCompat.setOnCheckedChangeListener(this);
             progressBar = v.findViewById(R.id.progressBar);
+            name = (TextView) v.findViewById(R.id.textView);
             //v.setOnClickListener(this);
         }
 
@@ -148,6 +151,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if(true) return;
             if( Helper.recheckByDevice){
                 Helper.recheckByDevice = false;
                 return;
@@ -200,8 +204,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder ViewHolder, int position) {
-        animate(ViewHolder);
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        try {
+            LightBulb lightBulb = (LightBulb) viewHolder;
+            lightBulb.name.setText(data.get(position).getName());
+        }catch (Exception e){
+
+        }
+
+        //animate(ViewHolder);
     }
 
 

@@ -141,16 +141,27 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         List<Device> data = new ArrayList<>();
-        data.add(new LightBulb(0, Constants.IP));
+        LightBulb lightBulb = new LightBulb(0, Constants.IP);
+        lightBulb.setName(Util.getStrFromRes(this,R.string.mainRoom));
+        data.add(lightBulb);
+        lightBulb = new LightBulb(0, Constants.IP);
+        lightBulb.setName(Util.getStrFromRes(this,R.string.bedRoom));
+        data.add(lightBulb);
+        lightBulb = new LightBulb(0, Constants.IP);
+        lightBulb.setName(Util.getStrFromRes(this,R.string.kitchen));
+        data.add(lightBulb);
+        lightBulb = new LightBulb(0, Constants.IP);
+        lightBulb.setName(Util.getStrFromRes(this,R.string.cabinet));
+        data.add(lightBulb);
 
-        for(int i=0; i<20; i++) data.add(new LightBulb(0, Constants.IP));
+        GasSensor gasSensor = new GasSensor(0,Constants.IP);
+        gasSensor.setName(Util.getStrFromRes(this,R.string.kitchen));
+        data.add(gasSensor);
+        gasSensor = new GasSensor(0,Constants.IP);
+        gasSensor.setName(Util.getStrFromRes(this,R.string.mainRoom));
+        data.add(gasSensor);
 
-
-        /*
-        for(int i=0; i<10; i++)
-            data.add(new GasSensor(0,Constants.IP_PORT));
-
-        Collections.shuffle(data);*/
+        Collections.shuffle(data);
 
         recyclerViewAdapter = new RecyclerViewAdapter(this, data,gridLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);

@@ -22,7 +22,7 @@ public class LedOff extends Param {
     private SwitchCompat switchCompat;
 
     public LedOff(Activity activity, String ip, View progressBar, SwitchCompat switchCompat) {
-        super(Protocol.LED_OFF);
+        //super(Protocol.LED_OFF);
         Helper.checkStrContent(ip);
         this.activity = activity;
         this.ip = ip;

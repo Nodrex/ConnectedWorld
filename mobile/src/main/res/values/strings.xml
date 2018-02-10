@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">Connected World</string>
+    <string name="app_name">Smart Home</string>
     <string name="jarvis">jarvis</string>
     <string name="home">home</string>
     <string name="smartHome">smart home</string>
@@ -16,5 +16,10 @@
     <string name="deviceName">"Device name"</string>
     <string name="wifiName">"Wifi name"</string>
     <string name="wifiPassword">"Wifi password"</string>
+
+    <string name="mainRoom">"Main room"</string>
+    <string name="bedRoom">"Bed room"</string>
+    <string name="kitchen">"Kitchen"</string>
+    <string name="cabinet">"Cabinet"</string>
 
 </resources>

@@ -2,8 +2,11 @@
 <resources>
 
     <color name="lightBulb">#ffbb00</color>
-    <color name="statusBar">#E65100</color>
-    <color name="actionBar">#F57C00</color>
+    <!--<color name="statusBar">#E65100</color>-->
+    <color name="statusBar">#303F9F</color>
+    <!--<color name="actionBar">#F57C00</color>-->
+    <color name="actionBar">#3F51B5</color>
+    <color name="fab">#448AFF</color>
     <color name="gasSensor">#616161</color>
     <color name="green">#388E3C</color>
     <color name="greyLight">#757575</color>
