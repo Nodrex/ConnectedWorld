@@ -66,7 +66,7 @@ public class Butler {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
 
-        String prompt = "Jarvis is ready";
+        String prompt = "Home assistant is ready";//"Jarvis is ready";
         switch (type){
             case Types.Home: prompt= "Home is ready"; break;
             case Types.SmartHome: prompt = "Smart home is ready"; break;
