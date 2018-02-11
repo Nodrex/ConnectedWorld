@@ -29,7 +29,7 @@
             android:background="@android:color/white"
             android:maxLines="1"
             android:ellipsize="end"
-            android:paddingLeft="5dp"
+            android:paddingLeft="7dp"
             android:text="Name ofbulb"
             android:textColor="@color/name"
             android:textSize="18dp" />

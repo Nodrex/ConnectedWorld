@@ -18,6 +18,6 @@
     <color name="name">#757575</color>
     <color name="WaterTemperature">#2196F3</color>
     <color name="WaterTemperatureHot">#F44336</color>
-
+    <color name="wall_socket">#dedcdc</color>
 
 </resources>

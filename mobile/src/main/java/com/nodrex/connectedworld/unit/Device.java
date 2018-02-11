@@ -18,6 +18,7 @@ public abstract class Device {
         int GasSensor = 1;
         int Garage = 2;
         int WaterTemperature = 3;
+        int WallSocket = 4;
     }
 
     protected int type;

@@ -124,6 +124,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         selectedItemCount = 0;
     }
 
+    class WallSocket extends RecyclerView.ViewHolder {
+
+        TextView name;
+
+        public WallSocket(View v) {
+            super(v);
+            v.setOnLongClickListener(RecyclerViewAdapter.this);
+            name = (TextView) v.findViewById(R.id.textView);
+        }
+
+    }
+
     class WaterTemperature extends RecyclerView.ViewHolder {
 
         TextView name;
@@ -234,6 +246,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 view = inflate(parent,R.layout.water_temperature);
                 return new WaterTemperature(view);
             }
+            case Device.Types.WallSocket:{
+                view = inflate(parent,R.layout.wall_socket);
+                return new WallSocket(view);
+            }
             default: return null;
         }
     }
@@ -260,6 +276,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 waterTemperature.name.setText(item.getName());
                 int colorId = item.isHot() ? R.color.WaterTemperatureHot : R.color.WaterTemperature ;
                 waterTemperature.itemView.findViewById(R.id.mainL).setBackgroundColor(Util.getColorFromRes(activity,colorId));
+            }else if(viewHolder instanceof WallSocket){
+                WallSocket wallSocket = (WallSocket) viewHolder;
+                wallSocket.name.setText(data.get(position).getName());
             }
         }catch (Exception e){
 

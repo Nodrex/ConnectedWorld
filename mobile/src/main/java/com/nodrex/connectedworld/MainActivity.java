@@ -42,6 +42,7 @@ import com.nodrex.connectedworld.unit.Device;
 import com.nodrex.connectedworld.unit.Garage;
 import com.nodrex.connectedworld.unit.GasSensor;
 import com.nodrex.connectedworld.unit.LightBulb;
+import com.nodrex.connectedworld.unit.WallSocket;
 import com.nodrex.connectedworld.unit.WaterTemperature;
 
 import java.util.ArrayList;
@@ -172,6 +173,13 @@ public class MainActivity extends AppCompatActivity {
         waterTemperature = new WaterTemperature(0,Constants.IP,Util.getStrFromRes(this,R.string.bathroom));
         waterTemperature.setHot(true);
         data.add(waterTemperature);
+
+        WallSocket wallSocket = new WallSocket(0,Constants.IP,Util.getStrFromRes(this,R.string.mainRoom));
+        data.add(wallSocket);
+        wallSocket = new WallSocket(0,Constants.IP,Util.getStrFromRes(this,R.string.cabinet));
+        data.add(wallSocket);
+        wallSocket = new WallSocket(0,Constants.IP,Util.getStrFromRes(this,R.string.bedRoom));
+        data.add(wallSocket);
 
         Collections.shuffle(data);
 
