@@ -13,8 +13,10 @@
     <string name="wifiPassword">"Wifi პაროლი"</string>
 
     <string name="mainRoom">"მთავარი ოთახი"</string>
-    <string name="bedRoom">"საძინებელი ოთახი"</string>
+    <string name="bedRoom">"საძინებელი"</string>
     <string name="kitchen">"სამზარეულო"</string>
     <string name="cabinet">"კაბინეტი"</string>
+    <string name="garage">"ავტოსადგომი"</string>
+    <string name="bathroom">"აბაზანა"</string>
 
 </resources>

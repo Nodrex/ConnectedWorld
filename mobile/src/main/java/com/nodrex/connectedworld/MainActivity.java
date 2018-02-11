@@ -39,8 +39,10 @@ import com.nodrex.connectedworld.ui.FABBehavior;
 import com.nodrex.connectedworld.ui.NewDevice;
 import com.nodrex.connectedworld.ui.RecyclerViewAdapter;
 import com.nodrex.connectedworld.unit.Device;
+import com.nodrex.connectedworld.unit.Garage;
 import com.nodrex.connectedworld.unit.GasSensor;
 import com.nodrex.connectedworld.unit.LightBulb;
+import com.nodrex.connectedworld.unit.WaterTemperature;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -160,6 +162,16 @@ public class MainActivity extends AppCompatActivity {
         gasSensor = new GasSensor(0,Constants.IP);
         gasSensor.setName(Util.getStrFromRes(this,R.string.mainRoom));
         data.add(gasSensor);
+
+        Garage garage = new Garage(0,Constants.IP,Util.getStrFromRes(this,R.string.garage));
+        data.add(garage);
+
+        WaterTemperature waterTemperature = new WaterTemperature(0,Constants.IP,Util.getStrFromRes(this,R.string.kitchen));
+        data.add(waterTemperature);
+
+        waterTemperature = new WaterTemperature(0,Constants.IP,Util.getStrFromRes(this,R.string.bathroom));
+        waterTemperature.setHot(true);
+        data.add(waterTemperature);
 
         Collections.shuffle(data);
 

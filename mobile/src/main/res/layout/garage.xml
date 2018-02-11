@@ -12,13 +12,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/lightBulb">
+        android:background="@color/garage">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:src="@drawable/light_bulb" />
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:src="@drawable/garage" />
 
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/onOff"
@@ -39,16 +41,16 @@
             android:visibility="gone"
             android:layout_height="130dp"/>-->
 
-<!--
-        <android.support.v7.widget.CardView
+        <!--
+                <android.support.v7.widget.CardView
 
-            android:id="@+id/searchDeviceLocation"
-            android:layout_width="match_parent"
-            android:layout_height="126dp"
-            android:layout_gravity="center"
-            android:visibility="visible"
-            android:background="@color/soSoTransparent"
-            />-->
+                    android:id="@+id/searchDeviceLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="126dp"
+                    android:layout_gravity="center"
+                    android:visibility="visible"
+                    android:background="@color/soSoTransparent"
+                    />-->
 
         <TextView
             android:id="@+id/textView"
@@ -78,24 +80,24 @@
             android:layout_height="wrap_content"
             android:checked="false" />
 
-<!--
+        <!--
 
-        <LinearLayout
-            android:id="@+id/selection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView"
-            android:background="@android:color/white"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone">
+                <LinearLayout
+                    android:id="@+id/selection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
-            <android.support.v7.widget.AppCompatCheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                    <android.support.v7.widget.AppCompatCheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-        </LinearLayout>
--->
+                </LinearLayout>
+        -->
 
     </RelativeLayout>
 

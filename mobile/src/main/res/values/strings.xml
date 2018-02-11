@@ -18,8 +18,10 @@
     <string name="wifiPassword">"Wifi password"</string>
 
     <string name="mainRoom">"Main room"</string>
-    <string name="bedRoom">"Bed room"</string>
+    <string name="bedRoom">"Bedroom"</string>
     <string name="kitchen">"Kitchen"</string>
     <string name="cabinet">"Cabinet"</string>
+    <string name="garage">"Garage"</string>
+    <string name="bathroom">"bathroom"</string>
 
 </resources>

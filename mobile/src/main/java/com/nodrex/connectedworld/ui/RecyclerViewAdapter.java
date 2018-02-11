@@ -13,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.nodrex.android.tools.Util;
 import com.nodrex.connectedworld.MainActivity;
 import com.nodrex.connectedworld.R;
 import com.nodrex.connectedworld.communication.WifiC;
@@ -20,9 +21,13 @@ import com.nodrex.connectedworld.helper.Helper;
 import com.nodrex.connectedworld.order.LedOff;
 import com.nodrex.connectedworld.order.LedOn;
 import com.nodrex.connectedworld.unit.Device;
+import com.nodrex.connectedworld.unit.GasSensor;
+import com.nodrex.connectedworld.unit.WaterTemperature;
 import com.nodrex.generic.server.protocol.Param;
 
 import java.util.List;
+
+import static com.nodrex.connectedworld.R.color.garage;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnLongClickListener, View.OnClickListener, PopupWindow.OnDismissListener{
 
@@ -119,11 +124,38 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         selectedItemCount = 0;
     }
 
+    class WaterTemperature extends RecyclerView.ViewHolder {
+
+        TextView name;
+
+        public WaterTemperature(View v) {
+            super(v);
+            v.setOnLongClickListener(RecyclerViewAdapter.this);
+            name = (TextView) v.findViewById(R.id.textView);
+        }
+
+    }
+
+    class Garage extends RecyclerView.ViewHolder {
+
+        TextView name;
+
+        public Garage(View v) {
+            super(v);
+            v.setOnLongClickListener(RecyclerViewAdapter.this);
+            name = (TextView) v.findViewById(R.id.textView);
+        }
+
+    }
+
     class GasSensor extends RecyclerView.ViewHolder {
+
+        TextView name;
 
         public GasSensor(View v) {
             super(v);
             v.setOnLongClickListener(RecyclerViewAdapter.this);
+            name = (TextView) v.findViewById(R.id.textView);
         }
 
     }
@@ -194,7 +226,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 view = inflate(parent,R.layout.gas_sensor);
                 return new GasSensor(view);
             }
-
+            case Device.Types.Garage:{
+                view = inflate(parent,R.layout.garage);
+                return new Garage(view);
+            }
+            case Device.Types.WaterTemperature:{
+                view = inflate(parent,R.layout.water_temperature);
+                return new WaterTemperature(view);
+            }
             default: return null;
         }
     }
@@ -206,8 +245,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         try {
-            LightBulb lightBulb = (LightBulb) viewHolder;
-            lightBulb.name.setText(data.get(position).getName());
+            if(viewHolder instanceof LightBulb){
+                LightBulb lightBulb = (LightBulb) viewHolder;
+                lightBulb.name.setText(data.get(position).getName());
+            }else if(viewHolder instanceof GasSensor){
+                GasSensor gasSensor = (GasSensor) viewHolder;
+                gasSensor.name.setText(data.get(position).getName());
+            }else if(viewHolder instanceof Garage){
+                Garage garage = (Garage) viewHolder;
+                garage.name.setText(data.get(position).getName());
+            }else if(viewHolder instanceof WaterTemperature){
+                WaterTemperature waterTemperature = (WaterTemperature) viewHolder;
+                com.nodrex.connectedworld.unit.WaterTemperature item = (com.nodrex.connectedworld.unit.WaterTemperature) data.get(position);
+                waterTemperature.name.setText(item.getName());
+                int colorId = item.isHot() ? R.color.WaterTemperatureHot : R.color.WaterTemperature ;
+                waterTemperature.itemView.findViewById(R.id.mainL).setBackgroundColor(Util.getColorFromRes(activity,colorId));
+            }
         }catch (Exception e){
 
         }

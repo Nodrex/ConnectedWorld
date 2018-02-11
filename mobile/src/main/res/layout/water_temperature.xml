@@ -12,13 +12,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gasSensor">
+        android:id="@+id/mainL"
+        android:background="@color/WaterTemperature">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="127dp"
-            android:src="@drawable/gas_mask" />
+            android:src="@drawable/water_temperature_1" />
+
 
         <TextView
             android:id="@+id/textView"
@@ -28,6 +30,7 @@
             android:background="@android:color/white"
             android:maxLines="1"
             android:ellipsize="end"
+            android:translationY="1dp"
             android:paddingLeft="5dp"
             android:text="Name ofbulb"
             android:textColor="@color/name"

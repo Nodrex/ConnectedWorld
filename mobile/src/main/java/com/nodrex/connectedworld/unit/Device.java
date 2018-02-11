@@ -16,6 +16,8 @@ public abstract class Device {
     public interface Types {
         int LightBulb = 0;
         int GasSensor = 1;
+        int Garage = 2;
+        int WaterTemperature = 3;
     }
 
     protected int type;

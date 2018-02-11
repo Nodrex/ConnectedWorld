@@ -14,5 +14,10 @@
     <color name="lightGreen">#00BFA5</color>
     <color name="greyLighter">#FAFAFA</color>
     <color name="brown">#8D6E63</color>
+    <color name="garage">#795548</color>
+    <color name="name">#757575</color>
+    <color name="WaterTemperature">#2196F3</color>
+    <color name="WaterTemperatureHot">#F44336</color>
+
 
 </resources>
