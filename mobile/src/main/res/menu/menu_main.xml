@@ -10,10 +10,18 @@
         android:title="Mic"
         app:showAsAction="always" />
 
-    <item
+    <!--<item
         android:id="@+id/more"
         android:orderInCategory="2"
         android:title="@string/action_settings" />
+-->
+
+    <item
+        android:id="@+id/more"
+        android:icon="@drawable/language"
+        android:orderInCategory="2"
+        android:title="Delete"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/delete"

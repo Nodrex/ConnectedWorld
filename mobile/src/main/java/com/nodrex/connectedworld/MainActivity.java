@@ -110,9 +110,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        //toolbar.setLogo(R.drawable.cast_ic_notification_on);
+        //toolbar.setLogo(R.drawable.main_logo);
 
-        Util.keepScreenOn(this, true);
+        //Util.keepScreenOn(this, true);
 
         display = Util.getDisplayPoint(MainActivity.this);
 
@@ -268,13 +268,13 @@ public class MainActivity extends AppCompatActivity {
             new NewDevice(this,newDevice,getSupportFragmentManager());
         }
 
-        if(Util.isLandscapeMode(this)){
+        /*if(Util.isLandscapeMode(this)){
             Point p = Util.getDisplayPoint(this);
             CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) newDevice.getLayoutParams();
             params.width = p.y;
             params.gravity = Gravity.RIGHT | Gravity.BOTTOM;
             newDevice.setLayoutParams(params);
-        }
+        }*/
 
         newDevice.setTranslationY(Util.dpToPixel(this, 250));
         newDevice.setVisibility(View.VISIBLE);

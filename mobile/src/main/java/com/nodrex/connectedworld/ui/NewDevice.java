@@ -47,6 +47,9 @@ public class NewDevice extends FragmentPagerAdapter{
         viewPager = (ViewPager) newDeviceView.findViewById(R.id.viewPager);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            private int oldPosition;
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -54,6 +57,9 @@ public class NewDevice extends FragmentPagerAdapter{
 
             @Override
             public void onPageSelected(int position) {
+                Util.log("olt position: " + oldPosition);
+                Util.log("curr position: " + position);
+                boolean back = oldPosition > position;
                 if(position == 0){
 
                     ValueAnimator anim = new ValueAnimator();
@@ -69,10 +75,45 @@ public class NewDevice extends FragmentPagerAdapter{
                     anim.setDuration(200);
                     anim.start();
 
-                }else{
+                }else if (position == 1){
 
                     ValueAnimator anim = new ValueAnimator();
-                    anim.setIntValues(Util.getColorFromRes(activity,R.color.lightBulb),Util.getColorFromRes(activity,R.color.gasSensor));
+                    if(back){
+                        anim.setIntValues(Util.getColorFromRes(activity,R.color.garage),Util.getColorFromRes(activity,R.color.gasSensor));
+                    }else anim.setIntValues(Util.getColorFromRes(activity,R.color.lightBulb),Util.getColorFromRes(activity,R.color.gasSensor));
+                    anim.setEvaluator(new ArgbEvaluator());
+                    anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                            tabLayout.setBackgroundColor((Integer) valueAnimator.getAnimatedValue());
+                        }
+                    });
+
+                    anim.setDuration(200);
+                    anim.start();
+
+                }
+                else if (position == 2){
+
+                    ValueAnimator anim = new ValueAnimator();
+                    if(back){
+                        anim.setIntValues(Util.getColorFromRes(activity,R.color.WaterTemperatureHot),Util.getColorFromRes(activity,R.color.garage));
+                    }
+                    else anim.setIntValues(Util.getColorFromRes(activity,R.color.gasSensor),Util.getColorFromRes(activity,R.color.garage));
+                    anim.setEvaluator(new ArgbEvaluator());
+                    anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                            tabLayout.setBackgroundColor((Integer) valueAnimator.getAnimatedValue());
+                        }
+                    });
+
+                    anim.setDuration(200);
+                    anim.start();
+
+                }else if(position == 3){
+                    ValueAnimator anim = new ValueAnimator();
+                    anim.setIntValues(Util.getColorFromRes(activity,R.color.garage),Util.getColorFromRes(activity,R.color.WaterTemperatureHot));
                     anim.setEvaluator(new ArgbEvaluator());
                     anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
@@ -89,7 +130,9 @@ public class NewDevice extends FragmentPagerAdapter{
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                if(ViewPager.SCROLL_STATE_DRAGGING == state ){
+                    oldPosition = viewPager.getCurrentItem();
+                }
             }
         });
 
@@ -99,6 +142,12 @@ public class NewDevice extends FragmentPagerAdapter{
         lightBulbFragment = new LightBalbFragment();
         lightBulbFragment.setActivity(activity);
         this.addFragment(lightBulbFragment, "გაზის სენსორი");
+        lightBulbFragment = new LightBalbFragment();
+        lightBulbFragment.setActivity(activity);
+        this.addFragment(lightBulbFragment, "ავტოსადგომი");
+        lightBulbFragment = new LightBalbFragment();
+        lightBulbFragment.setActivity(activity);
+        this.addFragment(lightBulbFragment, "წყლის ტემპერატურის სენსორი     ");
 
         viewPager.setAdapter(this);
         tabLayout.setupWithViewPager(viewPager);
