@@ -1,12 +1,16 @@
 package com.nodrex.connectedworld.ui;
 
+import android.animation.Animator;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -58,10 +62,38 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public boolean onLongClick(final View v) {
         if(true){
             Dialog d = Util.create(activity,true,true,true,R.layout.context_menu);
-            LinearLayout linearLayout = (LinearLayout) d.findViewById(R.id.contextL);
-            ViewGroup.LayoutParams layoutParams = linearLayout.getLayoutParams();
+            final LinearLayout linearLayout = (LinearLayout) d.findViewById(R.id.contextL);
+            final ViewGroup.LayoutParams layoutParams = linearLayout.getLayoutParams();
             layoutParams.width = v.getWidth()-13;
             layoutParams.height = v.getHeight()-15;
+            linearLayout.setVisibility(View.INVISIBLE);
+            d.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialog) {
+                    int x = v.getWidth()/2;
+                    int y = v.getHeight()/2;
+                    int endRadius = (int) Math.hypot(x,y);
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        Animator anim = ViewAnimationUtils.createCircularReveal(linearLayout, x, y, 0, endRadius);
+                        anim.setDuration(200);
+                        linearLayout.setVisibility(View.VISIBLE);
+                        anim.start();
+                    }
+                }
+            });
+            d.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    int x = v.getWidth()/2;
+                    int y = v.getHeight()/2;
+                    int endRadius = (int) Math.hypot(x,y);
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        Animator anim = ViewAnimationUtils.createCircularReveal(linearLayout, x, y, endRadius, 0);
+                        anim.setDuration(200);
+                        anim.start();
+                    }
+                }
+            });
             d.show();
             return true;
         }

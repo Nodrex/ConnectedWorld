@@ -19,5 +19,6 @@
     <color name="WaterTemperature">#2196F3</color>
     <color name="WaterTemperatureHot">#F44336</color>
     <color name="wall_socket">#dedcdc</color>
+    <color name="moreLessTransparent">#c6000000</color>
 
 </resources>
