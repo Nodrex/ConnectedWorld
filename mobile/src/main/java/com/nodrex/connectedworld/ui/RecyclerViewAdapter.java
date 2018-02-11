@@ -1,5 +1,6 @@
 package com.nodrex.connectedworld.ui;
 
+import android.app.Dialog;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ import com.nodrex.generic.server.protocol.Param;
 
 import java.util.List;
 
+import static com.nodrex.connectedworld.R.color.fab;
 import static com.nodrex.connectedworld.R.color.garage;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnLongClickListener, View.OnClickListener, PopupWindow.OnDismissListener{
@@ -53,6 +56,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public boolean onLongClick(final View v) {
+        if(true){
+            Dialog d = Util.create(activity,true,true,true,R.layout.context_menu);
+            LinearLayout linearLayout = (LinearLayout) d.findViewById(R.id.contextL);
+            ViewGroup.LayoutParams layoutParams = linearLayout.getLayoutParams();
+            layoutParams.width = v.getWidth()-13;
+            layoutParams.height = v.getHeight()-15;
+            d.show();
+            return true;
+        }
         //TODO /////////////////////////////////////////////////////////
         //Helper.go();
         //Helper.goB();
