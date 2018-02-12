@@ -167,10 +167,7 @@ public class MainActivity extends AppCompatActivity {
         Garage garage = new Garage(0,Constants.IP,Util.getStrFromRes(this,R.string.garage));
         data.add(garage);
 
-        WaterTemperature waterTemperature = new WaterTemperature(0,Constants.IP,Util.getStrFromRes(this,R.string.kitchen));
-        data.add(waterTemperature);
-
-        waterTemperature = new WaterTemperature(0,Constants.IP,Util.getStrFromRes(this,R.string.bathroom));
+        WaterTemperature waterTemperature = new WaterTemperature(0,Constants.IP,Util.getStrFromRes(this,R.string.bathroom));
         waterTemperature.setHot(true);
         data.add(waterTemperature);
 
@@ -182,6 +179,9 @@ public class MainActivity extends AppCompatActivity {
         data.add(wallSocket);
 
         Collections.shuffle(data);
+
+        waterTemperature = new WaterTemperature(0,Constants.IP,Util.getStrFromRes(this,R.string.kitchen));
+        data.add(9,waterTemperature);
 
         recyclerViewAdapter = new RecyclerViewAdapter(this, data,gridLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
