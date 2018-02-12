@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,6 +68,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             layoutParams.width = v.getWidth()-13;
             layoutParams.height = v.getHeight()-15;
             linearLayout.setVisibility(View.INVISIBLE);
+
+            Util.setGravity(d,Gravity.LEFT | Gravity.TOP);
+            int [] location = Util.getExactLocation(v);
+            location[0] = (int) (location[0] + Util.dpToPixel(activity,2));
+            location[1] = (int) (location[1] - Util.dpToPixel(activity,22));
+            Util.setLocaion(d,location);
+
             d.setOnShowListener(new DialogInterface.OnShowListener() {
                 @Override
                 public void onShow(DialogInterface dialog) {
@@ -75,13 +83,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     int endRadius = (int) Math.hypot(x,y);
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                         Animator anim = ViewAnimationUtils.createCircularReveal(linearLayout, x, y, 0, endRadius);
-                        anim.setDuration(200);
+                        anim.setDuration(300);
                         linearLayout.setVisibility(View.VISIBLE);
                         anim.start();
                     }
                 }
             });
-            d.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            /*d.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     int x = v.getWidth()/2;
@@ -93,7 +101,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         anim.start();
                     }
                 }
-            });
+            });*/
             d.show();
             return true;
         }
